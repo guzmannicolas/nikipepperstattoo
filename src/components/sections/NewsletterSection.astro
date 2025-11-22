@@ -1,0 +1,25 @@
+---
+const { t } = Astro.props;
+---
+
+<section class="py-20 px-4 bg-neutral-50 border-y border-neutral-200">
+  <div class="max-w-3xl mx-auto text-center">
+    <h2 class="text-3xl font-bold mb-4 text-black">{t('home.newsletterTitle')}</h2>
+    <p class="text-neutral-600 mb-8">{t('home.newsletterDescription')}</p>
+    <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto" id="newsletter-form">
+      <input
+        type="email"
+        placeholder={t('home.emailPlaceholder')}
+        required
+        class="flex-1 px-4 py-3 bg-white border-2 border-neutral-200 rounded-lg focus:outline-none focus:border-green-500 transition-colors text-black"
+      />
+      <button
+        type="submit"
+        class="px-8 py-3 bg-black hover:bg-neutral-800 text-white rounded-lg font-semibold transition-colors whitespace-nowrap"
+      >
+        {t('home.subscribe')}
+      </button>
+    </form>
+    <p class="text-sm text-neutral-500 mt-4">{t('home.newsletterDisclaimer')}</p>
+  </div>
+</section>

@@ -1,0 +1,400 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Array de tatuajes reales - agrega más aquí
+const tattoos = [
+	{
+		id: 1,
+		image: '/images/tattoos/animals/koi-fish-tattoo-lily-pads-water-lilies.jpeg',
+		title: 'Koi Fish with Water Lilies',
+		categories: 'animals,botanical', // Pez koi (animals) + nenúfares (botanical)
+	},
+	{
+		id: 2,
+		image: '/images/tattoos/botanical/forearm-pink-lotus-tattoo-leaves.jpg',
+		title: 'Pink Lotus with Leaves',
+		categories: 'botanical', // Solo botánico
+	},
+		{
+		id: 3,
+		image: '/images/tattoos/botanical/pink-flower-tattoo-green-leaves-petals.jpg',
+		title: 'Pink Flower with Green Leaves',
+		categories: 'botanical,fineline,colour', 
+	},
+
+			{
+		id: 4,
+		image: '/images/tattoos/botanical/red-poppies-blue-cornflowers-arm-tattoo.jpeg',
+		title: 'Red Poppies with Blue Cornflowers',
+		categories: 'botanical,colour', 
+	},
+				{
+		id: 5,
+		image: '/images/tattoos/animals/bird-tattoo-orange-grey-feathers-flowers.jpg',
+		title: 'Bird with Orange and Grey Feathers',
+		categories: 'animals,botanical,colour', 
+	},	
+					{
+		id: 6,
+		image: '/images/tattoos/botanical/pink-flower-forearm-tattoo-wrist-design.jpg',
+		title: 'Pink Flower with Green Leaves',
+		categories: 'botanical,colour', 
+	},	
+						{
+		id: 7,
+		image: '/images/tattoos/botanical/red-poppy-tattoo-chest-closeup.jpeg',
+		title: 'Red Poppy Close-up',
+		categories: 'botanical,colour,fineline', 
+	},	
+						{
+		id: 8,
+		image: '/images/tattoos/animals/bird-tattoo-forearm-orange-grey-feathers.jpg',
+		title: 'Bird with Orange and Grey Feathers Forearm',
+		categories: 'animals,botanical,colour', 
+	},	
+
+							{
+		id: 9,
+		image: '/images/tattoos/botanical/blue-green-succulent-pink-yellow-flowers-tattoo.jpeg',
+		title: 'Blue-Green Succulent with Pink and Yellow Flowers',
+		categories: 'botanical,colour', 
+	},	
+
+							{
+		id: 10,
+		image: '/images/tattoos/botanical/purple-white-flower-forearm-tattoo-green-leaves.jpg',
+		title: 'Purple and White Flower with Green Leaves Forearm',
+		categories: 'botanical,colour', 
+	},	
+
+							{
+		id: 11,
+		image: '/images/tattoos/botanical/blue-flower-tattoo-green-leaves-forearm.jpg',
+		title: 'Blue Flower with Green Leaves Forearm',
+		categories: 'botanical,colour', 
+	},	
+
+	// Puedes agregar más tatuajes aquí cuando tengas más fotos
+];
+---
+
+<Layout title={`${t('tattoos.title')} - Niki Peppers`} description={t('tattoos.description')}>
+	<section class="py-20 px-4 max-w-7xl mx-auto">
+		<div class="text-center mb-16">
+			<h1 class="text-5xl font-bold mb-4 text-black">{t('tattoos.title')}</h1>
+			<p class="text-neutral-600 text-lg max-w-2xl mx-auto">
+				{t('tattoos.description')}
+			</p>
+		</div>
+
+		<!-- Filter Buttons -->
+		<div class="flex flex-wrap justify-center gap-4 mb-12">
+			<button class="filter-btn active px-6 py-2 rounded-full bg-black text-white font-semibold transition-all" data-filter="all">
+				{t('tattoos.filterAll')}
+			</button>
+			<button class="filter-btn px-6 py-2 rounded-full bg-white border-2 border-neutral-200 hover:border-black text-black font-semibold transition-all" data-filter="botanical">
+				{t('tattoos.filterBotanical')}
+			</button>
+			<button class="filter-btn px-6 py-2 rounded-full bg-white border-2 border-neutral-200 hover:border-black text-black font-semibold transition-all" data-filter="colour">
+				{t('tattoos.filterColour')}
+			</button>
+			<button class="filter-btn px-6 py-2 rounded-full bg-white border-2 border-neutral-200 hover:border-black text-black font-semibold transition-all" data-filter="fineline">
+				{t('tattoos.filterFineline')}
+			</button>
+			<button class="filter-btn px-6 py-2 rounded-full bg-white border-2 border-neutral-200 hover:border-black text-black font-semibold transition-all" data-filter="animals">
+				{t('tattoos.filterAnimals')}
+			</button>
+			<button class="filter-btn px-6 py-2 rounded-full bg-white border-2 border-neutral-200 hover:border-black text-black font-semibold transition-all" data-filter="otros">
+				{t('tattoos.filterOtros')}
+			</button>
+		</div>
+
+		<!-- Gallery Grid -->
+		<div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+			{/* Tatuajes reales */}
+			{tattoos.map((tattoo, index) => (
+				<div 
+					class:list={[
+						"gallery-item group relative aspect-square bg-neutral-100 rounded-xl overflow-hidden border-2 border-neutral-200 hover:border-green-400 hover:shadow-lg transition-all cursor-pointer",
+						index >= 6 ? "hidden" : ""
+					]}
+					data-categories={tattoo.categories}
+					data-index={index}
+				>
+					<img 
+						src={tattoo.image} 
+						alt={tattoo.title}
+						class="w-full h-full object-cover"
+					/>
+					<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+						<div>
+							<h3 class="text-xl font-bold mb-1 text-white">{tattoo.title}</h3>
+							<p class="text-neutral-300 text-sm">
+								{tattoo.categories.includes(',') 
+									? tattoo.categories.split(',').map(c => t(`tattoos.filter${c.charAt(0).toUpperCase() + c.slice(1)}`)).join(' + ') 
+									: t(`tattoos.filter${tattoo.categories.charAt(0).toUpperCase() + tattoo.categories.slice(1)}`)}
+							</p>
+						</div>
+					</div>
+				</div>
+			))}
+		</div>
+
+		<!-- Load More -->
+		<div id="load-more-container" class="text-center mt-12">
+			<button id="load-more-btn" class="px-8 py-3 bg-transparent border-2 border-black hover:bg-neutral-100 rounded-lg font-semibold transition-colors text-black">
+				{t('tattoos.loadMore')}
+			</button>
+		</div>
+	</section>
+
+	<!-- Lightbox Modal -->
+	<div id="lightbox-modal" class="fixed inset-0 bg-black/95 z-50 hidden flex items-center justify-center p-4">
+		<button id="close-lightbox" class="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10">
+			<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+			</svg>
+		</button>
+		
+		<button id="prev-image" class="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors p-2">
+			<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+			</svg>
+		</button>
+		
+		<button id="next-image" class="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors p-2">
+			<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+			</svg>
+		</button>
+		
+		<div class="max-w-6xl max-h-[90vh] flex flex-col items-center">
+			<img id="lightbox-image" src="" alt="" class="max-w-full max-h-[80vh] object-contain rounded-lg">
+			<div class="mt-4 text-center">
+				<h3 id="lightbox-title" class="text-2xl font-bold text-white mb-2"></h3>
+				<p id="lightbox-category" class="text-gray-300"></p>
+			</div>
+		</div>
+	</div>
+
+	<!-- CTA Section -->
+	<section class="py-20 px-4 bg-neutral-50 border-y border-neutral-200">
+		<div class="max-w-3xl mx-auto text-center">
+			<h2 class="text-3xl font-bold mb-4 text-black">{t('tattoos.ctaTitle')}</h2>
+			<p class="text-neutral-600 mb-8 text-lg">
+				{t('tattoos.ctaSubtitle')}
+			</p>
+			<a href={`/${lang === 'en' ? '' : lang + '/'}contact`} class="inline-block px-8 py-3 bg-black hover:bg-neutral-800 rounded-lg font-semibold transition-colors text-white">
+				{t('tattoos.ctaButton')}
+			</a>
+		</div>
+	</section>
+
+	<!-- Cross-Promotion Section -->
+	<section class="py-20 px-4 max-w-7xl mx-auto">
+		<div class="text-center mb-12">
+			<h2 class="text-3xl font-bold mb-4 text-black">Explorá Más de Mi Arte</h2>
+			<p class="text-neutral-600 text-lg">Descubrí mi trabajo en diferentes medios artísticos</p>
+		</div>
+
+		<div class="grid md:grid-cols-3 gap-8">
+			<!-- Ceramics -->
+			<a href={`/${lang === 'en' ? '' : lang + '/'}ceramics`} class="group bg-white rounded-xl overflow-hidden border-2 border-neutral-200 hover:border-black transition-all hover:shadow-lg">
+				<div class="aspect-video bg-gradient-to-br from-neutral-50 to-neutral-100 flex items-center justify-center">
+					<svg class="w-16 h-16 text-black group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+					</svg>
+				</div>
+				<div class="p-6">
+					<h3 class="text-xl font-bold mb-2 text-black group-hover:text-neutral-700 transition-colors">Trabajos en Cerámica</h3>
+					<p class="text-neutral-600 text-sm">Piezas de cerámica hechas a mano que combinan funcionalidad con expresión artística</p>
+				</div>
+			</a>
+
+			<!-- Artworks -->
+			<a href={`/${lang === 'en' ? '' : lang + '/'}works`} class="group bg-white rounded-xl overflow-hidden border-2 border-neutral-200 hover:border-black transition-all hover:shadow-lg">
+				<div class="aspect-video bg-gradient-to-br from-neutral-50 to-neutral-100 flex items-center justify-center">
+					<svg class="w-16 h-16 text-black group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+					</svg>
+				</div>
+				<div class="p-6">
+					<h3 class="text-xl font-bold mb-2 text-black group-hover:text-neutral-700 transition-colors">Pinturas & Obras</h3>
+					<p class="text-neutral-600 text-sm">Explorá mi colección de pinturas en diferentes series y técnicas</p>
+				</div>
+			</a>
+
+			<!-- Murals -->
+			<a href={`/${lang === 'en' ? '' : lang + '/'}murals`} class="group bg-white rounded-xl overflow-hidden border-2 border-neutral-200 hover:border-black transition-all hover:shadow-lg">
+				<div class="aspect-video bg-gradient-to-br from-neutral-50 to-neutral-100 flex items-center justify-center">
+					<svg class="w-16 h-16 text-black group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path>
+					</svg>
+				</div>
+				<div class="p-6">
+					<h3 class="text-xl font-bold mb-2 text-black group-hover:text-neutral-700 transition-colors">Murales</h3>
+					<p class="text-neutral-600 text-sm">Arte mural a gran escala transformando espacios desde hogares privados a instalaciones públicas</p>
+				</div>
+			</a>
+		</div>
+	</section>
+
+	<script>
+		const filterBtns = document.querySelectorAll('.filter-btn');
+		const galleryItems = document.querySelectorAll('.gallery-item');
+		const loadMoreBtn = document.getElementById('load-more-btn');
+		const loadMoreContainer = document.getElementById('load-more-container');
+		const lightboxModal = document.getElementById('lightbox-modal');
+		const lightboxImage = document.getElementById('lightbox-image') as HTMLImageElement;
+		const lightboxTitle = document.getElementById('lightbox-title');
+		const lightboxCategory = document.getElementById('lightbox-category');
+		const closeLightbox = document.getElementById('close-lightbox');
+		const prevImageBtn = document.getElementById('prev-image');
+		const nextImageBtn = document.getElementById('next-image');
+		let isExpanded = false;
+		let currentImageIndex = 0;
+		let visibleImages: Element[] = [];
+
+		// Load More functionality
+		loadMoreBtn?.addEventListener('click', () => {
+			isExpanded = true;
+			galleryItems.forEach(item => {
+				const index = parseInt(item.getAttribute('data-index') || '0');
+				if (index >= 6) {
+					item.classList.remove('hidden');
+				}
+			});
+			loadMoreContainer?.classList.add('hidden');
+		});
+
+		// Filter functionality
+		filterBtns.forEach(btn => {
+			btn.addEventListener('click', () => {
+				const filter = btn.getAttribute('data-filter');
+				
+				// Update active button
+				filterBtns.forEach(b => {
+					b.classList.remove('active', 'bg-black', 'text-white');
+					b.classList.add('bg-white', 'border-2', 'border-neutral-200', 'text-black');
+				});
+				btn.classList.add('active', 'bg-black', 'text-white');
+				btn.classList.remove('bg-white', 'border-2', 'border-neutral-200', 'text-black');
+
+				// Filter items - support multiple categories
+				let visibleCount = 0;
+				galleryItems.forEach(item => {
+					const categoriesAttr = item.getAttribute('data-categories');
+					const index = parseInt(item.getAttribute('data-index') || '0');
+					if (!categoriesAttr || !filter) return;
+					
+					const categories = categoriesAttr.split(',');
+					
+					if (filter === 'all' || categories.includes(filter)) {
+						// Show item only if: expanded OR it's in first 6
+						if (isExpanded || index < 6) {
+							item.classList.remove('hidden');
+							visibleCount++;
+						}
+					} else {
+						item.classList.add('hidden');
+					}
+				});
+
+				// Show/hide "Load More" button based on visible items
+				const totalItems = Array.from(galleryItems).filter(item => {
+					const categoriesAttr = item.getAttribute('data-categories');
+					if (!categoriesAttr || !filter) return false;
+					const categories = categoriesAttr.split(',');
+					return filter === 'all' || categories.includes(filter);
+				}).length;
+
+				if (totalItems > 6 && !isExpanded) {
+					loadMoreContainer?.classList.remove('hidden');
+				} else {
+					loadMoreContainer?.classList.add('hidden');
+				}
+			});
+		});
+
+		// Initial check: hide "Load More" if 6 or fewer items
+		if (galleryItems.length <= 6) {
+			loadMoreContainer?.classList.add('hidden');
+		}
+
+		// Lightbox functionality
+		function openLightbox(index: number) {
+			currentImageIndex = index;
+			updateLightboxImage();
+			lightboxModal?.classList.remove('hidden');
+			document.body.style.overflow = 'hidden';
+		}
+
+		function closeLightboxModal() {
+			lightboxModal?.classList.add('hidden');
+			document.body.style.overflow = '';
+		}
+
+		function updateLightboxImage() {
+			visibleImages = Array.from(galleryItems).filter(item => !item.classList.contains('hidden'));
+			
+			if (visibleImages[currentImageIndex]) {
+				const imgElement = visibleImages[currentImageIndex].querySelector('img') as HTMLImageElement;
+				const titleElement = visibleImages[currentImageIndex].querySelector('h3');
+				const categoryElement = visibleImages[currentImageIndex].querySelector('p');
+				
+				if (lightboxImage && imgElement) {
+					lightboxImage.src = imgElement.src;
+					lightboxImage.alt = imgElement.alt;
+				}
+				if (lightboxTitle && titleElement) {
+					lightboxTitle.textContent = titleElement.textContent;
+				}
+				if (lightboxCategory && categoryElement) {
+					lightboxCategory.textContent = categoryElement.textContent;
+				}
+			}
+		}
+
+		function nextImage() {
+			currentImageIndex = (currentImageIndex + 1) % visibleImages.length;
+			updateLightboxImage();
+		}
+
+		function prevImage() {
+			currentImageIndex = (currentImageIndex - 1 + visibleImages.length) % visibleImages.length;
+			updateLightboxImage();
+		}
+
+		// Add click event to gallery items
+		galleryItems.forEach((item, index) => {
+			item.addEventListener('click', () => {
+				openLightbox(index);
+			});
+		});
+
+		// Close lightbox events
+		closeLightbox?.addEventListener('click', closeLightboxModal);
+		lightboxModal?.addEventListener('click', (e) => {
+			if (e.target === lightboxModal) {
+				closeLightboxModal();
+			}
+		});
+
+		// Navigation buttons
+		nextImageBtn?.addEventListener('click', nextImage);
+		prevImageBtn?.addEventListener('click', prevImage);
+
+		// Keyboard navigation
+		document.addEventListener('keydown', (e) => {
+			if (lightboxModal?.classList.contains('hidden')) return;
+			
+			if (e.key === 'Escape') closeLightboxModal();
+			if (e.key === 'ArrowRight') nextImage();
+			if (e.key === 'ArrowLeft') prevImage();
+		});
+	</script>
+</Layout>

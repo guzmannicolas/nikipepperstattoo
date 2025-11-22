@@ -1,0 +1,88 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "slug": "mateta-pisces",
+      "title": "\"Mateta\" Pisces",
+      "description": "Gray clay. 10 cm.",
+      "price": "USD40",
+      "images": [
+        { "filename": "Mateta Pisces - Back", "path": "/images/ceramics/Mateta Pisces - Back.avif", "alt": "Mateta Pisces - Back" },
+        { "filename": "Mateta Pisces - Front", "path": "/images/ceramics/Mateta Pisces - Front.avif", "alt": "Mateta Pisces - Front" }
+      ],
+      "category": "decorative"
+    },
+    {
+      "id": 2,
+      "slug": "kisses-pot",
+      "title": "Kisses pot",
+      "description": "Gray clay. 10 cm.",
+      "price": "USD40",
+      "images": [
+        { "filename": "Kisses pot", "path": "/images/ceramics/Kisses pot.avif", "alt": "Kisses pot" }
+      ],
+      "category": "functional"
+    },
+    {
+      "id": 3,
+      "slug": "leaf-mask",
+      "title": "Leaf mask",
+      "description": "Gray clay. 15 cm.",
+      "price": "USD50",
+      "images": [
+        { "filename": "Leaf mask", "path": "/images/ceramics/Leaf mask.avif", "alt": "Leaf mask" }
+      ],
+      "category": "decorative"
+    },
+    {
+      "id": 5,
+      "slug": "pisces-bowl-inside",
+      "title": "Pisces bowl — From the series: Water",
+      "description": "Gray clay. 13 cm.",
+      "price": "USD40",
+      "images": [
+        { "filename": "Pisces bowl - Inside view", "path": "/images/ceramics/Pisces bowl - Inside view.avif", "alt": "Pisces bowl - Inside view" },
+        { "filename": "Pisces bowl - Side view", "path": "/images/ceramics/Pisces bowl - Side view.avif", "alt": "Pisces bowl - Side view" }
+      ],
+      "category": "decorative"
+    },
+    {
+      "id": 6,
+      "slug": "coral-candle-holder",
+      "title": "Coral candle holder — From the series: Water",
+      "description": "From the Water series",
+                  "price": "USD30",
+      "images": [
+        { "filename": "Coral candle holder", "path": "/images/ceramics/Coral candle holder.avif", "alt": "Coral candle holder" }
+      ],
+      "category": "decorative"
+    },
+
+    {
+      "id": 8,
+      "slug": "pop-pot",
+      "title": "Pop pot",
+      "description": "Gray clay. 13 cm.",
+        "price": "USD60",
+      "images": [
+        { "filename": "Pop pot - Back", "path": "/images/ceramics/Pop pot - Back.avif", "alt": "Pop pot - Back" },
+        { "filename": "Pop pot - Front", "path": "/images/ceramics/Pop pot - Front.avif", "alt": "Pop pot - Front" }
+      ],
+      "category": "decorative"
+    },
+    {
+      "id": 9,
+      "slug": "chrysanthemum-bowl",
+      "title": "Chrysanthemum bowl",
+      "description": "Gray clay. 17 cm.",
+            "price": "USD60",
+      "images": [
+        { "filename": "Chrysanthemum bowl - Side view", "path": "/images/ceramics/Chrysanthemum bowl - Side view.avif", "alt": "Chrysanthemum bowl - Side view" },
+        { "filename": "Chrysanthemum bowl - Inside view", "path": "/images/ceramics/Chrysanthemum bowl - Inside view.avif", "alt": "Chrysanthemum bowl - Inside view" }
+      ],
+      "category": "decorative"
+    }
+
+  ]
+}
+

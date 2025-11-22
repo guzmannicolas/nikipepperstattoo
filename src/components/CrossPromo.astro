@@ -1,0 +1,41 @@
+---
+const { lang = 'en' } = Astro.props;
+---
+<section class="py-20 px-4 max-w-7xl mx-auto">
+  <div class="text-center mb-12">
+    <h2 class="text-3xl font-bold mb-4 text-black">{lang === 'en' ? 'Explore More of My Art' : 'Explorá Más de Mi Arte'}</h2>
+    <p class="text-neutral-600 text-lg">{lang === 'en' ? 'Discover my work across different artistic mediums' : 'Descubrí mi trabajo en diferentes medios artísticos'}</p>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-8">
+    <a href={`/${lang === 'en' ? '' : lang + '/'}ceramics`} class="group bg-white rounded-xl overflow-hidden border-2 border-neutral-200 hover:border-black transition-all hover:shadow-lg">
+      <div class="aspect-video bg-gradient-to-br from-neutral-50 to-neutral-100 flex items-center justify-center">
+        <svg class="w-16 h-16 text-black group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+      </div>
+      <div class="p-6">
+        <h3 class="text-xl font-bold mb-2 text-black group-hover:text-neutral-700 transition-colors">{lang === 'en' ? 'Ceramic Works' : 'Trabajos en Cerámica'}</h3>
+        <p class="text-neutral-600 text-sm">{lang === 'en' ? 'Handcrafted ceramic pieces blending functionality with artistic expression' : 'Piezas de cerámica hechas a mano que combinan funcionalidad con expresión artística'}</p>
+      </div>
+    </a>
+
+    <a href={`/${lang === 'en' ? '' : lang + '/'}works`} class="group bg-white rounded-xl overflow-hidden border-2 border-neutral-200 hover:border-black transition-all hover:shadow-lg">
+      <div class="aspect-video bg-gradient-to-br from-neutral-50 to-neutral-100 flex items-center justify-center">
+        <svg class="w-16 h-16 text-black group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
+      </div>
+      <div class="p-6">
+        <h3 class="text-xl font-bold mb-2 text-black group-hover:text-neutral-700 transition-colors">{lang === 'en' ? 'Paintings & Artworks' : 'Pinturas & Obras'}</h3>
+        <p class="text-neutral-600 text-sm">{lang === 'en' ? 'Explore my collection of paintings across different series and techniques' : 'Explorá mi colección de pinturas en diferentes series y técnicas'}</p>
+      </div>
+    </a>
+
+    <a href={`/${lang === 'en' ? '' : lang + '/'}murals`} class="group bg-white rounded-xl overflow-hidden border-2 border-neutral-200 hover:border-black transition-all hover:shadow-lg">
+      <div class="aspect-video bg-gradient-to-br from-neutral-50 to-neutral-100 flex items-center justify-center">
+        <svg class="w-16 h-16 text-black group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path></svg>
+      </div>
+      <div class="p-6">
+        <h3 class="text-xl font-bold mb-2 text-black group-hover:text-neutral-700 transition-colors">{lang === 'en' ? 'Murals' : 'Murales'}</h3>
+        <p class="text-neutral-600 text-sm">{lang === 'en' ? 'Large-scale wall art transforming spaces from private homes to public installations' : 'Arte mural a gran escala transformando espacios desde hogares privados a instalaciones públicas'}</p>
+      </div>
+    </a>
+  </div>
+</section>

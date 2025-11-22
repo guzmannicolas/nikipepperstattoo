@@ -1,0 +1,127 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={`${t('ceramics.title')} - Niki Peppers`} description={t('ceramics.description')}>
+	<section class="py-20 px-4 max-w-7xl mx-auto">
+		<div class="text-center mb-16">
+			<h1 class="text-5xl font-bold mb-4 text-black">{t('ceramics.title')}</h1>
+			<p class="text-neutral-600 text-lg max-w-2xl mx-auto">
+				{t('ceramics.description')}
+			</p>
+		</div>
+
+		<!-- Filter Buttons -->
+		<div class="flex flex-wrap justify-center gap-4 mb-12">
+			<button class="filter-btn active px-6 py-2 rounded-full bg-green-500 text-white font-semibold" data-filter="all">
+				{t('ceramics.filterAll')}
+			</button>
+			<button class="filter-btn px-6 py-2 rounded-full bg-white border-2 border-neutral-200 hover:border-green-400 text-black font-semibold transition-all" data-filter="functional">
+				{t('ceramics.filterFunctional')}
+			</button>
+			<button class="filter-btn px-6 py-2 rounded-full bg-white border-2 border-neutral-200 hover:border-green-400 text-black font-semibold transition-all" data-filter="decorative">
+				{t('ceramics.filterDecorative')}
+			</button>
+			<button class="filter-btn px-6 py-2 rounded-full bg-white border-2 border-neutral-200 hover:border-green-400 text-black font-semibold transition-all" data-filter="sculptural">
+				{t('ceramics.filterSculptural')}
+			</button>
+		</div>
+
+		<!-- Gallery Grid -->
+		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+			{Array.from({ length: 9 }).map((_, i) => (
+				<div class="gallery-item group relative aspect-square bg-neutral-100 rounded-xl overflow-hidden border-2 border-neutral-200 hover:border-green-400 transition-all cursor-pointer hover:shadow-lg" data-category={['functional', 'decorative', 'sculptural'][i % 3]}>
+					<div class="w-full h-full flex items-center justify-center text-neutral-400">
+						<p>{t('ceramics.piecePlaceholder')} #{i + 1}</p>
+					</div>
+					<div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+						<div>
+							<h3 class="text-xl font-bold mb-1 text-white">{t('ceramics.handcrafted')}</h3>
+							<p class="text-neutral-200 text-sm">
+								{[t('ceramics.filterFunctional'), t('ceramics.filterDecorative'), t('ceramics.filterSculptural')][i % 3]}
+							</p>
+						</div>
+					</div>
+				</div>
+			))}
+		</div>
+
+		<!-- Load More -->
+		<div class="text-center mt-12">
+			<button class="px-8 py-3 bg-transparent border-2 border-black hover:bg-neutral-50 text-black rounded-lg font-semibold transition-colors">
+				{t('ceramics.loadMore')}
+			</button>
+		</div>
+	</section>
+
+	<!-- About Ceramics Section -->
+	<section class="py-20 px-4 bg-neutral-50 border-y border-neutral-200">
+		<div class="max-w-4xl mx-auto">
+			<h2 class="text-3xl font-bold mb-6 text-center text-black">{t('ceramics.aboutTitle')}</h2>
+			<div class="grid md:grid-cols-2 gap-8">
+				<div>
+					<p class="text-neutral-600 text-lg mb-4">
+						{t('ceramics.aboutText1')}
+					</p>
+					<p class="text-neutral-600 text-lg">
+						{t('ceramics.aboutText2')}
+					</p>
+				</div>
+				<div>
+					<h3 class="text-xl font-bold mb-4 text-green-600">{t('ceramics.techniquesTitle')}</h3>
+					<ul class="space-y-2 text-neutral-600">
+						<li>• {t('ceramics.technique1')}</li>
+						<li>• {t('ceramics.technique2')}</li>
+						<li>• {t('ceramics.technique3')}</li>
+						<li>• {t('ceramics.technique4')}</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- CTA Section -->
+	<section class="py-20 px-4">
+		<div class="max-w-3xl mx-auto text-center">
+			<h2 class="text-3xl font-bold mb-4 text-black">{t('ceramics.ctaTitle')}</h2>
+			<p class="text-neutral-600 mb-8 text-lg">
+				{t('ceramics.ctaSubtitle')}
+			</p>
+			<a href={`/${lang === 'en' ? '' : lang + '/'}contact`} class="inline-block px-8 py-3 bg-black hover:bg-neutral-800 text-white rounded-lg font-semibold transition-colors">
+				{t('ceramics.ctaButton')}
+			</a>
+		</div>
+	</section>
+
+	<script>
+		const filterBtns = document.querySelectorAll('.filter-btn');
+		const galleryItems = document.querySelectorAll('.gallery-item');
+
+		filterBtns.forEach(btn => {
+			btn.addEventListener('click', () => {
+				const filter = btn.getAttribute('data-filter');
+				
+				// Update active button
+				filterBtns.forEach(b => {
+					b.classList.remove('active', 'bg-green-500', 'text-white');
+					b.classList.add('bg-white', 'border-2', 'border-neutral-200', 'text-black');
+				});
+				btn.classList.add('active', 'bg-green-500', 'text-white');
+				btn.classList.remove('bg-white', 'border-2', 'border-neutral-200', 'text-black');
+
+				// Filter items
+				galleryItems.forEach(item => {
+					if (filter === 'all' || item.getAttribute('data-category') === filter) {
+						item.classList.remove('hidden');
+					} else {
+						item.classList.add('hidden');
+					}
+				});
+			});
+		});
+	</script>
+</Layout>

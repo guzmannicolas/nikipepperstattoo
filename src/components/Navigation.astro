@@ -1,0 +1,88 @@
+
+---
+import { getLangFromUrl, useTranslations, languages } from '../i18n/utils';
+import { Image } from 'astro:assets';
+import logoSrc from '../assets/home/titulo-header.png';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Get current path without language prefix
+const currentPath = Astro.url.pathname.replace(`/${lang}`, '').replace('/es', '') || '/';
+---
+
+<nav id="navbar" class="fixed w-full z-50 bg-white/95 backdrop-blur-sm shadow-sm transition-all duration-300">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="flex justify-between items-center h-20">
+			<a href={`/${lang === 'en' ? '' : lang + '/'}`} class="relative z-10">
+				<Image src={logoSrc} alt="Niki Peppers" class="h-12 w-auto" />
+			</a>
+			<div id="nav-links" class="hidden md:flex space-x-6 items-center">
+				<a href={`/${lang === 'en' ? '' : lang + '/'}tattoos`} class="nav-link text-black hover:text-green-500 transition-colors font-medium">{t('nav.tattoos')}</a>
+				<a href={`/${lang === 'en' ? '' : lang + '/'}ceramics`} class="nav-link text-black hover:text-green-500 transition-colors font-medium">{t('nav.ceramics')}</a>
+				<a href={`/${lang === 'en' ? '' : lang + '/'}works`} class="nav-link text-black hover:text-green-500 transition-colors font-medium">{t('nav.works')}</a>
+				<a href={`/${lang === 'en' ? '' : lang + '/'}faqs`} class="nav-link text-black hover:text-green-500 transition-colors font-medium">{t('nav.faqs')}</a>
+				<a href={`/${lang === 'en' ? '' : lang + '/'}orders`} class="nav-link text-black hover:text-green-500 transition-colors font-medium">{t('nav.orders')}</a>
+				<a href={`/${lang === 'en' ? '' : lang + '/'}murals`} class="nav-link text-black hover:text-green-500 transition-colors font-medium">{t('nav.murals')}</a>
+				<a href={`/${lang === 'en' ? '' : lang + '/'}biography`} class="nav-link text-black hover:text-green-500 transition-colors font-medium">{t('nav.biography')}</a>
+				<a href={`/${lang === 'en' ? '' : lang + '/'}contact`} class="nav-link text-black hover:text-green-500 transition-colors font-medium">{t('nav.contact')}</a>
+				
+				<!-- Language Switcher -->
+				<div id="lang-switcher" class="flex items-center gap-2 ml-4 pl-4 border-l border-neutral-200">
+					{Object.entries(languages).map(([l, label]) => (
+						<a 
+							href={l === 'en' ? currentPath : `/${l}${currentPath}`}
+							class:list={[
+								"px-2 py-1 rounded text-sm font-medium transition-colors",
+								l === lang ? "bg-green-500 text-white" : "lang-btn text-neutral-600 hover:bg-neutral-100"
+							]}
+							onclick={`document.cookie = 'preferred-language=${l}; path=/; max-age=31536000'`}
+						>
+							{l.toUpperCase()}
+						</a>
+					))}
+				</div>
+			</div>
+			<button id="mobile-menu-btn" class="md:hidden nav-link text-black">
+				<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+				</svg>
+			</button>
+		</div>
+	</div>
+	<div id="mobile-menu" class="hidden md:hidden bg-white border-t border-neutral-200">
+		<div class="px-2 pt-2 pb-3 space-y-1">
+			<a href={`/${lang === 'en' ? '' : lang + '/'}tattoos`} class="block px-3 py-2 text-black hover:bg-neutral-50 rounded-md font-medium">{t('nav.tattoos')}</a>
+			<a href={`/${lang === 'en' ? '' : lang + '/'}ceramics`} class="block px-3 py-2 text-black hover:bg-neutral-50 rounded-md font-medium">{t('nav.ceramics')}</a>
+			<a href={`/${lang === 'en' ? '' : lang + '/'}works`} class="block px-3 py-2 text-black hover:bg-neutral-50 rounded-md font-medium">{t('nav.works')}</a>
+			<a href={`/${lang === 'en' ? '' : lang + '/'}faqs`} class="block px-3 py-2 text-black hover:bg-neutral-50 rounded-md font-medium">{t('nav.faqs')}</a>
+			<a href={`/${lang === 'en' ? '' : lang + '/'}orders`} class="block px-3 py-2 text-black hover:bg-neutral-50 rounded-md font-medium">{t('nav.orders')}</a>
+			<a href={`/${lang === 'en' ? '' : lang + '/'}murals`} class="block px-3 py-2 text-black hover:bg-neutral-50 rounded-md font-medium">{t('nav.murals')}</a>
+			<a href={`/${lang === 'en' ? '' : lang + '/'}biography`} class="block px-3 py-2 text-black hover:bg-neutral-50 rounded-md font-medium">{t('nav.biography')}</a>
+			<a href={`/${lang === 'en' ? '' : lang + '/'}contact`} class="block px-3 py-2 text-black hover:bg-neutral-50 rounded-md font-medium">{t('nav.contact')}</a>
+			<div class="flex gap-2 px-3 py-2 border-t border-neutral-200 mt-2">
+				{Object.entries(languages).map(([l, label]) => (
+					<a 
+						href={l === 'en' ? currentPath : `/${l}${currentPath}`}
+						class:list={[
+							"px-3 py-1 rounded text-sm font-medium transition-colors flex-1 text-center",
+							l === lang ? "bg-green-500 text-white" : "bg-neutral-100 text-neutral-700"
+						]}
+						onclick={`document.cookie = 'preferred-language=${l}; path=/; max-age=31536000'`}
+					>
+						{label}
+					</a>
+				))}
+			</div>
+		</div>
+	</div>
+</nav>
+
+<script>
+	const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+	const mobileMenu = document.getElementById('mobile-menu');
+	
+	mobileMenuBtn?.addEventListener('click', () => {
+		mobileMenu?.classList.toggle('hidden');
+	});
+</script>

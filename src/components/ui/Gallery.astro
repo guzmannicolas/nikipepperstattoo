@@ -1,0 +1,98 @@
+---
+import { Image } from 'astro:assets';
+import FilterButtons from '../buttons/FilterButtons.astro';
+import LoadMore from '../buttons/LoadMore.astro';
+// Generic, reusable gallery component
+// Props:
+// - items: Array<{ image: string|object, title?: string, alt?: string, categories?: string|string[] }>
+// - id: optional string to scope the component (default: 'gallery')
+// - showInitialCount: number of items to show before load-more (default: 6)
+const { items = [], id = 'gallery', showInitialCount = 6, loadMoreLabel } = Astro.props as { items?: any[]; id?: string; showInitialCount?: number; loadMoreLabel?: string };
+
+// derive default filter buttons from categories
+const categorySet = new Set<string>();
+for (const it of items) {
+  if (!it) continue;
+  const cats = Array.isArray(it.categories) ? it.categories : (it.categories ? [it.categories] : []);
+  for (const c of cats) if (c) categorySet.add(String(c));
+}
+const defaultButtons = [{ label: 'All', value: 'all' }, ...Array.from(categorySet).map(c => ({ label: String(c).replace(/[-_]/g, ' '), value: String(c) }))];
+// Import PhotoSwipe CSS from the local package so it's bundled
+import 'photoswipe/style.css';
+---
+
+<section id={id} class="gallery-component">
+  <div class="mb-8 text-center">
+    <slot name="filters">
+      <FilterButtons buttons={defaultButtons} />
+    </slot>
+  </div>
+
+  <div id={`${id}-grid`} class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {items.map((item, i) => {
+      const srcVal = item?.image ?? item?.thumb ?? item?.src ?? '';
+      const src = typeof srcVal === 'string' ? srcVal : (srcVal && srcVal.src) ? srcVal.src : '';
+      const alt = item?.alt ?? item?.title ?? '';
+      const cats = Array.isArray(item?.categories) ? item.categories.join(',') : (item?.categories || '');
+      return (
+        <figure class:list={[ 'gallery-item relative overflow-hidden rounded-xl bg-neutral-100 border-2 border-neutral-200', i >= showInitialCount ? 'hidden' : '' ]} data-categories={cats} data-index={i}>
+          <a class="block" href={src} data-pswp-width="1600" data-pswp-height="1200" data-action="open-pswp" data-index={i}>
+            <img src={src} alt={alt} class="w-full h-full object-cover aspect-square" />
+            <div class="absolute inset-0 bg-black/0 hover:bg-black/40 transition-colors flex items-end opacity-0 hover:opacity-100">
+              <div class="p-4 text-white">
+                <h3 class="text-lg font-bold">{item?.title}</h3>
+                {item?.categories ? <p class="text-sm mt-1">{Array.isArray(item.categories) ? item.categories.join(', ') : item.categories}</p> : null}
+              </div>
+            </div>
+          </a>
+        </figure>
+      )
+    })}
+  </div>
+
+  <div class="text-center mt-8">
+    <LoadMore buttonId={`${id}-load-more-btn`} label={loadMoreLabel} />
+  </div>
+
+  <script type="module">
+    // Scoped client behavior for this gallery instance
+    const script = document.currentScript;
+    const root = script ? script.closest('section.gallery-component') : null;
+    if (!root) {
+      console.warn('[Gallery] root not found');
+    } else {
+      // Filtering
+      root.addEventListener('click', (e) => {
+        const btn = e.target.closest && e.target.closest('.filter-btn');
+        if (btn && root.contains(btn)) {
+          e.preventDefault();
+          const value = btn.dataset.value || btn.getAttribute('data-value') || btn.dataset.filter;
+          if (!value) return;
+          root.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          root.querySelectorAll('.gallery-item').forEach(item => {
+            const cats = (item.dataset.categories || '').split(',').map(s => s.trim()).filter(Boolean);
+            if (value === 'all' || cats.includes(value)) item.classList.remove('hidden'); else item.classList.add('hidden');
+          });
+        }
+      }, true);
+
+      // Load-more handled by `components/buttons/LoadMore.astro` (scoped, idempotent)
+
+      // PhotoSwipe lightbox (use PhotoSwipe Lightbox via CDN)
+      (async () => {
+        try {
+            const { default: PhotoSwipeLightbox } = await import('photoswipe/lightbox');
+            const lightbox = new PhotoSwipeLightbox({
+            gallery: `#${root.id}-grid`,
+            children: 'a',
+            pswpModule: () => import('photoswipe')
+            });
+            lightbox.init();
+        } catch (err) {
+          console.error('[Gallery] PhotoSwipe failed to load', err);
+        }
+      })();
+    }
+  </script>
+</section>

@@ -1,0 +1,31 @@
+---
+const { t, buttonId = 'load-more-btn', label } = Astro.props as { t?: any; buttonId?: string; label?: string };
+const btnLabel = label ?? (t ? t('tattoos.loadMore') : 'Load More');
+---
+
+<div id="load-more-container" class="text-center mt-12">
+  <button id={buttonId} data-button-id={buttonId} class="px-8 py-3 bg-transparent border-2 border-black hover:bg-neutral-50 text-black rounded-lg font-semibold transition-colors">
+    {btnLabel}
+  </button>
+</div>
+
+<script type="module">
+  // Delegated LoadMore handler: install once and handle clicks for any `button[data-button-id]`.
+  (function(){
+    if (globalThis.__loadMoreDelegatedInit) return;
+    globalThis.__loadMoreDelegatedInit = true;
+
+    document.addEventListener('click', (e) => {
+      const btn = e.target && e.target.closest ? e.target.closest('button[data-button-id]') : null;
+      if (!btn) return;
+      // Ensure button is attached to DOM
+      if (!btn.isConnected) return;
+      // Only respond to direct clicks on the button
+      try { e.preventDefault(); } catch (err) {}
+      const root = btn.closest && btn.closest('section.gallery-component') ? btn.closest('section.gallery-component') : document;
+      const hiddenItems = Array.from(root.querySelectorAll('.gallery-item.hidden'));
+      hiddenItems.forEach(it => it.classList.remove('hidden'));
+      btn.style.display = 'none';
+    }, true);
+  })();
+</script>

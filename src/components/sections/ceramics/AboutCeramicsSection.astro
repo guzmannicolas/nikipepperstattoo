@@ -1,0 +1,24 @@
+---
+const { t } = Astro.props as { t: any };
+---
+
+<section class="py-20 px-4 bg-neutral-50 border-y border-neutral-200">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold mb-6 text-center text-black">{t('ceramics.aboutTitle')}</h2>
+    <div class="grid md:grid-cols-2 gap-8 items-start">
+      <div>
+        <p class="text-neutral-600 text-lg mb-4">{t('ceramics.aboutText1')}</p>
+        <p class="text-neutral-600 text-lg">{t('ceramics.aboutText2')}</p>
+      </div>
+      <div>
+        <h3 class="text-xl font-bold mb-4 text-green-600">{t('ceramics.techniquesTitle')}</h3>
+        <ul class="space-y-2 text-neutral-600">
+          <li>• {t('ceramics.technique1')}</li>
+          <li>• {t('ceramics.technique2')}</li>
+          <li>• {t('ceramics.technique3')}</li>
+          <li>• {t('ceramics.technique4')}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
