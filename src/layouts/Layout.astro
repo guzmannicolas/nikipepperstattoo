@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import LoadingSplash from '../components/animation/loading/LoadingSplash.astro';
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
 import { ViewTransitions } from 'astro:transitions'
 
@@ -27,6 +28,7 @@ const { title, description = 'Tattoo artist, ceramist, and visual artist' } = As
 		<ViewTransitions />
 	</head>
 	<body class="min-h-screen bg-white text-neutral-900">
+		<LoadingSplash />
 		<Navigation />
 		<main>
 			<slot />

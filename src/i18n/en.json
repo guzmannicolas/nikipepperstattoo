@@ -17,18 +17,18 @@
   },
   "home": {
     "title": "Niki Peppers",
-    "subtitle": "Body art that tells your story",
+    "subtitle": "Multidisciplinary artist",
     "viewWorks": "View Works",
     "bookConsultation": "Book a Consultation",
-  "viewGallery": "View Gallery",
-  "bookSession": "Book a Consultation",
+    "viewGallery": "View Gallery",
+    "bookSession": "Book a Consultation",
     "stylesTitle": "Tattoo Styles",
-  "style1Title": "",
-  "style1Desc": "",
-  "style2Title": "",
-  "style2Desc": "",
-  "style3Title": "",
-  "style3Desc": "",
+    "style1Title": "",
+    "style1Desc": "",
+    "style2Title": "",
+    "style2Desc": "",
+    "style3Title": "",
+    "style3Desc": "",
     "realism": {
       "title": "Realism",
       "description": "Photorealistic designs capturing every detail with precision."
@@ -42,13 +42,13 @@
       "description": "Delicate designs with fine lines and subtle details."
     },
     "newsletterTitle": "Stay Informed",
-  "newsletterDescription": "Subscribe to receive news, special offers, and see the latest works.",
+    "newsletterDescription": "Subscribe to receive news, special offers, and see the latest works.",
     "emailPlaceholder": "Your email",
     "subscribe": "Subscribe",
     "newsletterDisclaimer": "No spam, only quality content. You can unsubscribe at any time.",
     "aboutTitle": "About Me",
-    "aboutText1": "I'm Niki Peppers, a tattoo artist with a passion for creating unique designs that tell stories. Each tattoo is a personalized work of art that reflects your essence.",
-    "aboutText2": "With years of experience and dedication to detail, I work in various styles to bring your most creative ideas to life.",
+    "aboutText1": "I am a visual artist and tattoo artist, and my work moves between drawing, painting, and ceramics. Through my creations, I explore the relationship between the body, nature, and human sensitivity. My work is strongly influenced by ecofeminism, the connection with the environment, and the emotions that permeate us. As a tattoo artist, I specialize in delicate designs with an organic and fluid aesthetic, often inspired by natural elements such as flowers and plants.",
+    "aboutText2": "For many of my clients, getting a tattoo is a symbolic act, a gesture of transformation or personal resignification, and I love being able to accompany them in this process. In my painting and ceramic work, I also explore the connection between the human and the natural, creating images and objects that evoke strength, tenderness, and harmony with the world around us. Each piece I create, whether a tattoo, a painting, or a ceramic piece, is a dialogue between my artistic universe and those who inhabit it.",
     "aboutArtistTitle": "Searching for the best Artist in Buenos Aires?",
     "aboutArtistSubtitle": "I'm Niki Peppers, a multidisciplinary artist passionate about transforming ideas into art. My work spans tattoos, ceramics, murals, and paintings, each piece crafted with dedication and creativity. From intricate body art to handcrafted ceramic pieces and large-scale murals, I bring stories to life through various mediums. Every creation is a unique expression of art that connects with the soul.",
     "aboutArtistButton": "Discover My Work",
@@ -114,10 +114,10 @@
     "loadMore": "Load More",
     "filters": {
       "all": "All Series",
-      "ethereal": "Ethereal Dreams",
-      "urban": "Urban Souls",
-      "nature": "Nature's Whispers",
-      "abstract": "Abstract Emotions"
+      "echoes": "Echoes from the deep",
+      "gestures": "Amidst gestures...",
+      "childhood": "Childhood",
+      "on_demand": "On Demand"
     },
     "techniques": {
       "oil": "Oil on Canvas",
@@ -155,8 +155,9 @@
       "orders": "Commissions & Orders",
       "general": "General"
     },
-    "contactCta": "Didn't find your answer?",
-    "contactButton": "Contact Me"
+    "ctaTitle": "Didn't find your answer?",
+    "ctaSubtitle": "Get in touch to discuss.",
+    "ctaButton": "Contact Me"
   },
   "works": {
     "title": "All Works",

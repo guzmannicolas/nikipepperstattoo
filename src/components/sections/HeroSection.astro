@@ -1,24 +1,38 @@
 ---
-import { Image } from 'astro:assets';
-import logoSrc from '../../assets/home/titulo-header.png';
+import { Image } from "astro:assets";
+import logoSrc from "../../assets/home/titulo-header.png";
 
 const { lang, t } = Astro.props;
 ---
 
-<section class="relative h-screen flex items-center justify-center">
-  <div class="relative z-10 text-center px-4">
-    <div class="mb-6 animate-fade-in-scale">
-      <Image src={logoSrc} alt="Niki Peppers" class="w-full max-w-2xl mx-auto h-auto" />
+<section
+  class="relative min-h-screen flex items-center justify-center md:pt-20 pb-50 md:pb-12 px-4"
+>
+  <div class="relative z-10 text-center w-full max-w-4xl mx-auto">
+    <div class="mb-6 md:mb-8 animate-fade-in-scale">
+      <Image
+        src={logoSrc}
+        alt="Niki Peppers"
+        class="w-3/4 md:w-1/2 mx-auto h-auto"
+      />
     </div>
-    <p class="text-xl md:text-2xl text-neutral-600 mb-8 max-w-2xl mx-auto font-light">
-      {t('home.subtitle')}
+    <p
+      class="text-lg md:text-xl lg:text-2xl text-neutral-600 mb-6 md:mb-8 max-w-2xl mx-auto font-light"
+    >
+      {t("home.subtitle")}
     </p>
     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <a href={`/${lang === 'en' ? '' : lang + '/'}works`} class="px-8 py-3 bg-black hover:bg-neutral-800 text-white rounded-lg font-semibold transition-colors">
-        {t('home.viewWorks')}
+      <a
+        href={`/${lang === "en" ? "" : lang + "/"}works`}
+        class="px-8 py-3 bg-black hover:bg-neutral-800 text-white rounded-lg font-semibold transition-colors"
+      >
+        {t("home.viewWorks")}
       </a>
-      <a href={`/${lang === 'en' ? '' : lang + '/'}contact`} class="px-8 py-3 bg-transparent border-2 border-black hover:bg-neutral-50 text-black rounded-lg font-semibold transition-colors">
-        {t('home.bookConsultation')}
+      <a
+        href={`/${lang === "en" ? "" : lang + "/"}contact`}
+        class="px-8 py-3 bg-transparent border-2 border-black hover:bg-neutral-50 text-black rounded-lg font-semibold transition-colors"
+      >
+        {t("home.bookConsultation")}
       </a>
     </div>
   </div>

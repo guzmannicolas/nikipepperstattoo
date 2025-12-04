@@ -1,0 +1,79 @@
+---
+import { useTranslations } from "../../../i18n/utils";
+
+interface Props {
+    lang: "en" | "es";
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const seriesData = {
+    en: [
+        {
+            title: "Echoes from the deep",
+            description:
+                "This series reflects on the relationship between the delicacy of the female figure and the undulating forms of plants through visual composition. From a philosophical-aesthetic perspective, these women appear in the foreground over a “void” enclosed in a geometric form, representing individual existentialism and expressing different moments of the artist’s intimacy. At the same time, in these works, she explores the universe of plants and their symbolism, inviting the viewer to reflect and intertwine this symbolism with the feminine universe from a contemporary perspective that delves into the ecofeminist movement.",
+        },
+        {
+            title: "Amidst gestures...",
+            description:
+                "This series captures the essence of friendship through spontaneous and authentic moments. Each work reflects a gesture, a glance, a shared emotion that defines the unique bond between these women. From the complicity of dancing to the calm of an embrace, to the reflection of a moment in front of the camera, each piece encapsulates an intimate memory of what it means to be part of a network of support and unconditional love. Through these portraits, we explore the beauty of the invisible ties that bind us together and the value of connection in every expression.",
+        },
+        {
+            title: "Childhood",
+            description:
+                "This series talks about childhood: how we learn to manage our emotions, which are unstable at first; how we become independent of imposed social patterns; how our imagination is eclipsed by the information we absorb from television and other media. This series is a reflection on parenting in our society. How we absorb from our environment from childhood until we become adults who are part of a system.",
+        },
+        {
+            title: "On Demand",
+            description:
+                "Custom pieces created to bring your unique ideas to reality. If you like my style but want a custom piece, tell me your idea.",
+        },
+    ],
+    es: [
+        {
+            title: "Ecos de lo profundo",
+            description:
+                "En esta serie aparece una reflexión acerca de la relación entre la delicadeza de la figura femenina y las formas onduladas de las plantas desde la composición visual. Desde una mirada filosófica-etética, estas mujeres se aparecen en un primer plano sobre un “vacío” encerrado en una forma geometrica, representando el existencialismo individual y expresando diferentes momentos de la intimidad de la artista. A su vez, en estas obras, explora el universo de las plantas y su simbolismo, invitando al espectador a reflexionar y entrelazar este simbolismo con el universo femenino desde una mirada contemporánea en la que profundiza sobre el movimiento ecofeminista.",
+        },
+        {
+            title: "Entre gestos, miradas y recuerdos compartidos",
+            description:
+                "Esta serie captura la esencia de la amistad a través de momentos espontáneos y auténticos. Cada obra refleja un gesto, una mirada, una emoción compartida que define el vínculo único entre estas mujeres. Desde la complicidad en el baile hasta la calma de un abrazo, pasando por la reflexión en un instante frente a la cámara, cada pieza encapsula un recuerdo íntimo de lo que significa ser parte de una red de apoyo y amor incondicional. A través de estos retratos, se explora la belleza de los lazos invisibles que nos unen y el valor de la conexión en cada expresión.",
+        },
+        {
+            title: "La infancia",
+            description:
+                "Esta serie habla sobre las infancias: De como aprendemos a manejar nuestras emociones, inestables al principio; de como nos independizamos de los esquemas sociales impuestos; de como nuestra imaginación se va eclipsando por la información que absorbemos en la televisión y otros medios. Esta serie es una reflexión sobre la crianza en nuestra sociedad. De como vamos absorbiendo de nuestro entorno desde que somos infantes, hasta transformarnos en adultos que son parte de un sistema.",
+        },
+        {
+            title: "A pedido",
+            description:
+                "Obras personalizadas creadas para hacer realidad tus ideas únicas. Si te gusta mi estilo pero quieres una pieza personalizada, cuéntame tu idea.",
+        },
+    ],
+};
+
+const currentSeries = seriesData[lang];
+---
+
+<section class="py-20 px-4 bg-neutral-50 border-y border-neutral-200">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold mb-8 text-center text-black">
+            {t("artworks.seriesTitle")}
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
+            {
+                currentSeries.map((item) => (
+                    <div class="p-6 bg-white rounded-xl border border-neutral-200">
+                        <h3 class="text-xl font-bold mb-3 text-green-600">
+                            {item.title}
+                        </h3>
+                        <p class="text-neutral-600">{item.description}</p>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>

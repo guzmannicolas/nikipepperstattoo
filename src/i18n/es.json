@@ -17,18 +17,18 @@
   },
   "home": {
     "title": "Niki Peppers",
-    "subtitle": "Arte corporal que cuenta tu historia",
+    "subtitle": "Artista multidisciplinaria",
     "viewWorks": "Ver Trabajos",
-    "bookConsultation": "Reservar Consulta",
-  "viewGallery": "Ver Galería",
-  "bookSession": "Reservar Consulta",
+    "bookConsultation": "Agendar Consulta",
+    "viewGallery": "Ver Galería",
+    "bookSession": "Agendar Consulta",
     "stylesTitle": "Estilos de Tatuaje",
-  "style1Title": "",
-  "style1Desc": "",
-  "style2Title": "",
-  "style2Desc": "",
-  "style3Title": "",
-  "style3Desc": "",
+    "style1Title": "",
+    "style1Desc": "",
+    "style2Title": "",
+    "style2Desc": "",
+    "style3Title": "",
+    "style3Desc": "",
     "realism": {
       "title": "Realismo",
       "description": "Diseños fotorrealistas que capturan cada detalle con precisión."
@@ -42,13 +42,13 @@
       "description": "Diseños delicados con líneas finas y detalles sutiles."
     },
     "newsletterTitle": "Mantente Informada",
-  "newsletterDescription": "Suscríbete para recibir novedades, ofertas especiales y ver los últimos trabajos.",
+    "newsletterDescription": "Suscríbete para recibir novedades, ofertas especiales y ver los últimos trabajos.",
     "emailPlaceholder": "Tu email",
     "subscribe": "Suscribirse",
     "newsletterDisclaimer": "No spam, solo contenido de calidad. Puedes darte de baja en cualquier momento.",
     "aboutTitle": "Sobre Mí",
-    "aboutText1": "Soy Niki Peppers, artista del tatuaje con pasión por crear diseños únicos que cuentan historias. Cada tatuaje es una obra de arte personalizada que refleja tu esencia.",
-    "aboutText2": "Con años de experiencia y dedicación al detalle, trabajo en diversos estilos para dar vida a tus ideas más creativas.",
+    "aboutText1": "Soy artista visual y tatuadora, y mi obra se mueve entre el dibujo, la pintura y la cerámica. A través de mis creaciones, exploro la relación entre el cuerpo, la naturaleza y la sensibilidad humana. Mi trabajo está fuertemente influenciado por el ecofeminismo, la conexión con el entorno y las emociones que nos atraviesan. Como tatuadora, me especializo en diseños delicados, con una estética orgánica y fluida, muchas veces inspirados en elementos naturales como flores y plantas.",
+    "aboutText2": "Para muchas de mis clientas, tatuarse es un acto simbólico, un gesto de transformación o resignificación personal, y me encanta poder acompañarlas en ese proceso. En mi obra pictórica y cerámica, también investigo el vínculo entre lo humano y lo natural, creando imágenes y objetos que evocan la fortaleza, la ternura y la armonía con el mundo que nos rodea. Cada pieza que realizo, ya sea un tatuaje, una pintura o una pieza de cerámica, es un diálogo entre mi universo artístico y quienes lo habitan.",
     "aboutArtistTitle": "¿Buscas la mejor Artista en Buenos Aires?",
     "aboutArtistSubtitle": "Soy Niki Peppers, una artista multidisciplinaria apasionada por transformar ideas en arte. Mi trabajo abarca tatuajes, cerámica, murales y pinturas, cada pieza creada con dedicación y creatividad. Desde arte corporal intrincado hasta piezas de cerámica hechas a mano y murales a gran escala, doy vida a historias a través de diversos medios. Cada creación es una expresión única del arte que conecta con el alma.",
     "aboutArtistButton": "Descubre Mi Trabajo",
@@ -114,10 +114,10 @@
     "loadMore": "Cargar Más",
     "filters": {
       "all": "Todas las Series",
-      "ethereal": "Sueños Etéreos",
-      "urban": "Almas Urbanas",
-      "nature": "Susurros de la Naturaleza",
-      "abstract": "Emociones Abstractas"
+      "echoes": "Ecos de lo profundo",
+      "gestures": "Entre gestos...",
+      "childhood": "La Infancia",
+      "on_demand": "A pedido"
     },
     "techniques": {
       "oil": "Óleo sobre Lienzo",
@@ -155,8 +155,9 @@
       "orders": "Comisiones y Pedidos",
       "general": "General"
     },
-    "contactCta": "¿No encontraste tu respuesta?",
-    "contactButton": "Contactame"
+    "ctaTitle": "¿No encontraste tu respuesta?",
+    "ctaSubtitle": "Hablemos para resolverlo.",
+    "ctaButton": "Contactame"
   },
   "works": {
     "title": "Todos los Trabajos",

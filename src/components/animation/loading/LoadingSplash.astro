@@ -1,0 +1,157 @@
+---
+import { Image } from "astro:assets";
+// We don't import the SVG as an Image component because we want to use it as a raw img tag for simple manipulation
+// or we can use it as an Image, but we need to target it with JS.
+---
+<div id="loading-splash" class="fixed inset-0 z-[100] flex items-center justify-center bg-center bg-no-repeat bg-white" transition:persist>
+  <img id="splash-logo" src="/titulo-header.png" alt="Loading" class="w-64 h-auto opacity-0" />
+</div>
+
+<style>
+  /* background image + sensible default */
+  #loading-splash {
+    background-image: url('/preloader-bg.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 160% auto; /* default for small screens */
+  }
+
+  /* small phones: more coverage */
+  @media (max-width: 639px) {
+    #loading-splash { background-size: 160% auto; }
+  }
+
+  /* tablets */
+  @media (min-width: 640px) and (max-width: 1023px) {
+    #loading-splash { background-size: 70% auto; }
+  }
+
+  /* desktop */
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    #loading-splash { background-size: 60% auto; }
+  }
+
+  /* large desktop */
+  @media (min-width: 1280px) {
+    #loading-splash { background-size: 50% auto; }
+  }
+</style>
+
+<script>
+    // Define the global property
+    declare global {
+        interface Window {
+            hasShownSplash: boolean;
+        }
+    }
+
+    function initSplash() {
+        const splash = document.getElementById('loading-splash');
+        const splashLogo = document.getElementById('splash-logo');
+        const navbarLogo = document.getElementById('navbar-logo');
+
+        if (!splash || !splashLogo) return;
+
+        // If we have already shown the splash in this session (window context), hide it immediately.
+        // Since we use transition:persist, the element might already be hidden from previous interaction,
+        // but on a hard refresh, window.hasShownSplash is lost, so we run the animation.
+        if (window.hasShownSplash) {
+            splash.style.display = 'none';
+            return;
+        }
+
+        // Mark as shown
+        window.hasShownSplash = true;
+
+        // Initial setup
+        splashLogo.style.opacity = '1';
+        if (navbarLogo) navbarLogo.style.opacity = '0';
+
+        // Wait for layout
+        setTimeout(() => {
+
+
+            // Start background fade now so it begins disappearing at ~400ms
+            splash.style.transition = 'opacity 0.5s ease';
+            splash.style.opacity = '0';
+
+
+
+            // Re-query navbar logo in case it wasn't ready? 
+            // In Astro, it should be ready if it's in the same Layout.
+            const targetLogo = document.getElementById('navbar-logo');
+            
+            if (!targetLogo) {
+                // Fallback: just fade out
+                splash.style.transition = 'opacity 0.5s ease';
+                splash.style.opacity = '0';
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                }, 500);
+                return;
+            }
+
+            // FLIP Animation
+            const startRect = splashLogo.getBoundingClientRect();
+            const endRect = targetLogo.getBoundingClientRect();
+
+            // Calculate scale
+            // Use height as the primary dimension to match
+            const scale = endRect.height / startRect.height;
+
+            // Calculate translation
+            // Center to Center distance
+            const startX = startRect.left + startRect.width / 2;
+            const startY = startRect.top + startRect.height / 2;
+            const endX = endRect.left + endRect.width / 2;
+            const endY = endRect.top + endRect.height / 2;
+
+            const deltaX = endX - startX;
+            const deltaY = endY - startY;
+
+            const animation = splashLogo.animate([
+                { transform: 'translate(0, 0) scale(1)' },
+                { transform: `translate(${deltaX}px, ${deltaY}px) scale(${scale})` }
+            ], {
+                duration: 800,
+                easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+                fill: 'forwards'
+            });
+
+            animation.onfinish = () => {
+                // Ensure navbar logo is visible
+                targetLogo.style.transition = 'opacity 0.5s ease';
+                targetLogo.style.opacity = '1';
+
+                // Give a short moment to let the background fade complete, then remove splash
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                }, 500);
+            };
+
+        }, 400); // Start sequence at 400ms so background begins to disappear then
+    }
+
+    // Run on load
+    initSplash();
+
+    // Handle View Transitions:
+    // Since we use transition:persist, the component is not destroyed.
+    // However, if we navigate back to the page, we want to ensure it stays hidden.
+    // The script might not re-run if persisted.
+    // But if the user hits Refresh, the script runs.
+    
+    document.addEventListener('astro:after-swap', () => {
+        // Ensure splash is hidden on navigation if it somehow reappears or if we need to reset anything
+        const splash = document.getElementById('loading-splash');
+        if (splash && window.hasShownSplash) {
+            splash.style.display = 'none';
+        }
+        
+        // Ensure navbar logo is visible on navigation
+        const navbarLogo = document.getElementById('navbar-logo');
+        if (navbarLogo) {
+            navbarLogo.style.opacity = '1';
+        }
+    });
+</script>

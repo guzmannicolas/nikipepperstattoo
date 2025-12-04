@@ -8,10 +8,95 @@ export interface Button {
 
 const { buttons = [] as Button[] } = Astro.props;
 ---
-<div class="flex flex-wrap justify-center gap-4 mb-12">
-  {buttons.map((b: Button, i: number) => (
-    <button class="filter-btn px-6 py-2 rounded-full bg-white border-2 border-neutral-200 hover:border-black text-black font-semibold transition-all" data-filter={b.value} data-value={b.value}>
-      {b.label}
-    </button>
-  ))}
+
+<div class="flex flex-wrap justify-center relative mb-12 filter-carousel">
+  <!-- left arrow (mobile only) -->
+  <button
+    type="button"
+    class="filter-prev md:hidden absolute left-1 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white/95 flex items-center justify-center shadow-md text-lg text-neutral-800"
+    aria-label="Anterior filtros"
+  >&lt;</button>
+
+  <div
+    class="filter-scroll js-filter-scroll flex gap-4 px-4 py-2 overflow-x-auto md:overflow-visible md:flex-wrap no-scrollbar scroll-snap-x snap-mandatory"
+    role="tablist"
+    aria-label="Filtros"
+  >
+    {
+      buttons.map((b: Button, i: number) => (
+        <button
+          type="button"
+          role="tab"
+          class="flex-shrink-0 filter-btn series-filter snap-start px-6 py-2 rounded-full font-semibold transition-all border-2 bg-white border-neutral-200 text-black hover:border-green-400 aria-[pressed=true]:bg-green-500 aria-[pressed=true]:text-white aria-[pressed=true]:border-transparent"
+          data-filter={b.value}
+          data-value={b.value}
+          aria-pressed={b.active ? "true" : "false"}
+        >
+          {b.label}
+        </button>
+      ))
+    }
+  </div>
+
+  <!-- right arrow (mobile only) -->
+  <button
+    type="button"
+    class="filter-next md:hidden absolute right-1 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white/95 flex items-center justify-center shadow-md text-lg text-neutral-800"
+    aria-label="Siguiente filtros"
+  >&gt;</button>
 </div>
+
+<style>
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .js-filter-scroll { scroll-snap-type: x mandatory; scroll-behavior: smooth; }
+  @media (min-width: 768px) {
+    .js-filter-scroll { scroll-snap-type: none; }
+    .filter-prev, .filter-next { display: none; }
+  }
+</style>
+
+<script>
+;(function () {
+  // make initialization per-wrapper and idempotent
+  const wrappers = document.querySelectorAll('.filter-carousel');
+  wrappers.forEach((wrap) => {
+    const wrapper = wrap as HTMLElement;
+    if (wrapper.dataset.fbInit) return;
+    wrapper.dataset.fbInit = '1';
+
+    const scroller = wrapper.querySelector<HTMLElement>('.js-filter-scroll');
+    const prev = wrap.querySelector<HTMLElement>('.filter-prev');
+    const next = wrap.querySelector<HTMLElement>('.filter-next');
+    if (!scroller) return;
+
+    const update = () => {
+      if (!prev || !next) return;
+      prev.style.display = scroller.scrollLeft > 2 ? 'flex' : '';
+      next.style.display = scroller.scrollLeft + scroller.clientWidth < scroller.scrollWidth - 2 ? 'flex' : '';
+    };
+
+    const amount = () => Math.min(Math.round(scroller.clientWidth * 0.7), 360);
+
+    prev?.addEventListener('click', (e) => {
+      e.preventDefault();
+      scroller.scrollBy({ left: -amount(), behavior: 'smooth' });
+    });
+    next?.addEventListener('click', (e) => {
+      e.preventDefault();
+      scroller.scrollBy({ left: amount(), behavior: 'smooth' });
+    });
+
+    scroller.addEventListener('scroll', update, { passive: true });
+    // initial
+    update();
+
+    // recompute on resize
+    let t: number | undefined;
+    window.addEventListener('resize', () => {
+      clearTimeout(t);
+      t = window.setTimeout(update, 120);
+    });
+  });
+})();
+</script>

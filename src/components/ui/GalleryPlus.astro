@@ -1,0 +1,251 @@
+---
+import FilterButtons from "../buttons/FilterButtons.astro";
+import LoadMore from "../buttons/LoadMore.astro";
+// Generic, reusable gallery component
+// Props:
+// - items: Array<{ image: string|object, title?: string, alt?: string, categories?: string|string[], technique?: string, dimensions?: string, year?: string|number }>
+// - id: optional string to scope the component (default: 'gallery')
+// - showInitialCount: number of items to show before load-more (default: 6)
+const {
+  items = [],
+  id = "gallery",
+  showInitialCount = 6,
+  loadMoreLabel,
+} = Astro.props as {
+  items?: any[];
+  id?: string;
+  showInitialCount?: number;
+  loadMoreLabel?: string;
+};
+
+// derive default filter buttons from categories
+const categorySet = new Set<string>();
+for (const it of items) {
+  if (!it) continue;
+  let cats: string[] = [];
+  if (Array.isArray(it.categories)) {
+    cats = it.categories.map((c: any) => String(c));
+  } else if (typeof it.categories === "string") {
+    cats = it.categories.split(",").map((c: string) => c.trim());
+  } else if (it.categories) {
+    cats = [String(it.categories)];
+  }
+
+  for (const c of cats) {
+    if (c) categorySet.add(c);
+  }
+}
+const defaultButtons = [
+  { label: "All", value: "all" },
+  ...Array.from(categorySet).map((c) => ({
+    label: String(c).replace(/[-_]/g, " "),
+    value: String(c),
+  })),
+];
+// Import PhotoSwipe CSS from the local package so it's bundled
+import "photoswipe/style.css";
+---
+
+<section id={id} class="gallery-component">
+  <div class="mb-8 text-center">
+    <slot name="filters">
+      <FilterButtons buttons={defaultButtons} />
+    </slot>
+  </div>
+
+  <div
+    id={`${id}-grid`}
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+  >
+    {
+      items.map((item, i) => {
+        const srcVal = item?.image ?? item?.thumb ?? item?.src ?? "";
+        const src =
+          typeof srcVal === "string"
+            ? srcVal
+            : srcVal && srcVal.src
+              ? srcVal.src
+              : "";
+
+        // Try to get original dimensions if available (Astro assets), fallback to defaults
+        const w =
+          typeof srcVal !== "string" && srcVal?.width ? srcVal.width : 1600;
+        const h =
+          typeof srcVal !== "string" && srcVal?.height ? srcVal.height : 1200;
+
+        const alt = item?.alt ?? item?.title ?? "";
+        const cats = Array.isArray(item?.categories)
+          ? item.categories.join(",")
+          : item?.categories || "";
+        return (
+          <figure
+            class:list={[
+              "gallery-item relative overflow-hidden rounded-xl bg-white border-2 border-neutral-200",
+              i >= showInitialCount ? "hidden" : "",
+            ]}
+            data-categories={cats}
+            data-index={i}
+          >
+            <a
+              class="block group"
+              href={src}
+              data-pswp-width={w}
+              data-pswp-height={h}
+              data-action="open-pswp"
+              data-index={i}
+            >
+              <div class="relative overflow-hidden aspect-[3/4] bg-neutral-100">
+                <img
+                    src={src}
+                    alt={alt}
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <!-- Series badge -->
+                {item?.price ? (
+                    <div class="absolute top-4 right-4 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-bold text-green-600">
+                        {Array.isArray(item.price)
+                        ? item.price.join(", ")
+                        : item.price}
+                    </div>
+                ) : null}
+              </div>
+              
+              <div class="p-6">
+                <h3 class="text-xl font-bold mb-3 text-black">{item?.title}</h3>
+                
+                <div class="space-y-2 text-sm text-neutral-600">
+                    {item?.technique && (
+                        <div class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                            </svg>
+                            <span><strong>Technique:</strong> {item.technique}</span>
+                        </div>
+                    )}
+                    
+                    {item?.dimensions && (
+                        <div class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+                            </svg>
+                            <span><strong>Dimensions:</strong> {item.dimensions}</span>
+                        </div>
+                    )}
+                    
+                    {item?.year && (
+                        <div class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            <span><strong>Year:</strong> {item.year}</span>
+                        </div>
+                    )}
+                </div>
+
+
+              </div>
+            </a>
+          </figure>
+        );
+      })
+    }
+  </div>
+
+  <div class="text-center mt-8">
+    <LoadMore buttonId={`${id}-load-more-btn`} label={loadMoreLabel} />
+  </div>
+
+  <script>
+    function initGalleries() {
+      const galleries = document.querySelectorAll("section.gallery-component");
+      galleries.forEach((root) => {
+        if (root.getAttribute("data-initialized")) return;
+        root.setAttribute("data-initialized", "true");
+
+        console.log("[Gallery] Initializing gallery:", root.id);
+
+        // Auto-detect image sizes for PhotoSwipe to prevent distortion
+        // This fixes images that don't have dimensions passed from the server
+        root.querySelectorAll(".gallery-item a").forEach((a) => {
+          const img = a.querySelector("img");
+          if (!img) return;
+
+          const updateSize = () => {
+            // Only update if we have valid natural dimensions
+            if (img.naturalWidth && img.naturalHeight) {
+              a.setAttribute("data-pswp-width", String(img.naturalWidth));
+              a.setAttribute("data-pswp-height", String(img.naturalHeight));
+            }
+          };
+
+          if (img.complete) {
+            updateSize();
+          } else {
+            img.onload = updateSize;
+          }
+        });
+
+        // Filtering
+        root.addEventListener("click", (e) => {
+          const target = e.target;
+          // @ts-ignore
+          const btn = target.closest ? target.closest(".filter-btn") : null;
+
+          if (btn && root.contains(btn)) {
+            e.preventDefault();
+            const raw =
+              btn.getAttribute("data-value") || btn.getAttribute("data-filter");
+            console.log("[Gallery] Clicked filter:", raw);
+
+            if (!raw) return;
+            const value = String(raw).trim().toLowerCase();
+
+            // Update buttons
+            root.querySelectorAll(".filter-btn").forEach((b) => {
+              b.classList.remove("active");
+              b.setAttribute("aria-pressed", "false");
+            });
+            btn.classList.add("active");
+            btn.setAttribute("aria-pressed", "true");
+
+            // Filter items
+            root.querySelectorAll(".gallery-item").forEach((item) => {
+              // @ts-ignore
+              const cats = (item.getAttribute("data-categories") || "")
+                .split(",")
+                .map((s) => s.trim().toLowerCase())
+                .filter(Boolean);
+              const match = value === "all" || cats.includes(value);
+              if (match) {
+                item.classList.remove("hidden");
+              } else {
+                item.classList.add("hidden");
+              }
+            });
+          }
+        });
+
+        // PhotoSwipe
+        const gridId = root.querySelector(".grid")?.id;
+        if (gridId) {
+          import("photoswipe/lightbox")
+            .then(({ default: PhotoSwipeLightbox }) => {
+              const lightbox = new PhotoSwipeLightbox({
+                gallery: `#${gridId}`,
+                children: "a",
+                pswpModule: () => import("photoswipe"),
+              });
+              lightbox.init();
+            })
+            .catch((err) => console.error("[Gallery] PhotoSwipe failed:", err));
+        }
+      });
+    }
+
+    // Run on load
+    initGalleries();
+
+    // Run on Astro page swap (if View Transitions are used)
+    document.addEventListener("astro:page-load", initGalleries);
+  </script>
+</section>
