@@ -8,10 +8,24 @@ import { Image } from "astro:assets";
 </div>
 
 <style>
+
+      /* ensure container has a white background we can animate */
+  #loading-splash {
+    background-color: white; /* inicial */
+    transition: background-color 900ms cubic-bezier(0.65, 0, 0.35, 1), opacity 600ms ease;
+  }
+
+  /* when slide-out is triggered, fade the white background smoothly */
+  #loading-splash.slide-out {
+    background-color: transparent;
+    /* optionally also fade whole container a bit earlier */
+    opacity: 0.98; /* slight fade if desired; full removal handled later */
+  }
+  
   #loading-splash::before {
     content: ""; position: absolute; inset: 0; z-index: -1;
     background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url('/preloader-bg.png') center/cover no-repeat;
-    transition: transform 1s ease, filter 1s ease;
+    transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1), filter 1s cubic-bezier(0.65, 0, 0.35, 1);
   }
   #loading-splash.slide-out::before { transform: translateY(100%); filter: blur(10px); }
 </style>
@@ -96,7 +110,7 @@ import { Image } from "astro:assets";
                 { transform: `translate(${deltaX}px, ${deltaY}px) scale(${scale})` }
             ], {
                 duration: 800,
-                easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+                easing: 'cubic-bezier(0.65, 0, 0.35, 1)',
                 fill: 'forwards'
             });
 
