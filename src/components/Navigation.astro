@@ -1,7 +1,6 @@
 ---
 import { getLangFromUrl, useTranslations, languages } from "../i18n/utils";
 import { Image } from "astro:assets";
-import logoSrc from "../assets/home/titulo-header.png";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -33,7 +32,7 @@ const isActive = (base: string) => {
 				href={`/${lang === "en" ? "" : lang + "/"}`}
 				class="relative z-10"
 			>
-				<Image id="navbar-logo" src={logoSrc} alt="Niki Peppers" class="h-12 w-auto" />
+				<img id="navbar-logo" src="/titulo-header.png" alt="Niki Peppers" class="h-12 w-auto" />
 			</a>
 			<div id="nav-links" class="hidden md:flex space-x-6 items-center font-bold">
 				<a href={hrefFor('tattoos')} class={ `nav-link text-black relative ${isActive('tattoos') ? 'text-green-500' : ''}` }>{t("nav.tattoos")}</a>

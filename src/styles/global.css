@@ -33,3 +33,10 @@ body {
 .drop-shadow-lg {
 	filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
 }
+
+/* Logo color invert filter */
+#navbar-logo,
+#splash-logo,
+footer img[alt="Niki Peppers"] {
+    filter: invert(1);
+}

@@ -8,32 +8,12 @@ import { Image } from "astro:assets";
 </div>
 
 <style>
-  /* background image + sensible default */
   #loading-splash {
-    background-image: url('/preloader-bg.png');
+    background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url('/preloader-bg.png');
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: 160% auto; /* default for small screens */
-  }
-
-  /* small phones: more coverage */
-  @media (max-width: 639px) {
-    #loading-splash { background-size: 160% auto; }
-  }
-
-  /* tablets */
-  @media (min-width: 640px) and (max-width: 1023px) {
-    #loading-splash { background-size: 70% auto; }
-  }
-
-  /* desktop */
-  @media (min-width: 1024px) and (max-width: 1279px) {
-    #loading-splash { background-size: 60% auto; }
-  }
-
-  /* large desktop */
-  @media (min-width: 1280px) {
-    #loading-splash { background-size: 50% auto; }
+    background-size: cover;
+    background-attachment: fixed;
   }
 </style>
 
@@ -64,18 +44,18 @@ import { Image } from "astro:assets";
         window.hasShownSplash = true;
 
         // Initial setup
+        // We need to maintain invert(1) because the logo is white and we want it black
+        splashLogo.style.filter = 'invert(1) blur(10px)';
+        splashLogo.style.transition = 'opacity 0.8s ease, filter 0.8s ease';
+        void splashLogo.offsetWidth; // Force reflow
+
         splashLogo.style.opacity = '1';
+        splashLogo.style.filter = 'invert(1) blur(0px)';
+
         if (navbarLogo) navbarLogo.style.opacity = '0';
 
         // Wait for layout
         setTimeout(() => {
-
-
-            // Start background fade now so it begins disappearing at ~400ms
-            splash.style.transition = 'opacity 0.5s ease';
-            splash.style.opacity = '0';
-
-
 
             // Re-query navbar logo in case it wasn't ready? 
             // In Astro, it should be ready if it's in the same Layout.
