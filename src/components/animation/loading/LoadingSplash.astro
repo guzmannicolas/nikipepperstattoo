@@ -8,13 +8,12 @@ import { Image } from "astro:assets";
 </div>
 
 <style>
-  #loading-splash {
-    background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url('/preloader-bg.png');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    background-attachment: fixed;
+  #loading-splash::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url('/preloader-bg.png') center/cover no-repeat;
+    transition: transform 1s ease, filter 1s ease;
   }
+  #loading-splash.slide-out::before { transform: translateY(100%); filter: blur(10px); }
 </style>
 
 <script>
@@ -56,6 +55,9 @@ import { Image } from "astro:assets";
 
         // Wait for layout
         setTimeout(() => {
+
+            // Slide background out
+            splash.classList.add('slide-out');
 
             // Re-query navbar logo in case it wasn't ready? 
             // In Astro, it should be ready if it's in the same Layout.
