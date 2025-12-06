@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useAnimation, type Variants } from 'framer-motion';
 
 interface HeroProps {
@@ -10,7 +10,9 @@ interface HeroProps {
 }
 
 const HeroSectionLogic: React.FC<HeroProps> = ({ title, subtitle, ctaPrimary, ctaSecondary, lang }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
   const controls = useAnimation();
+
 
   // Animation start logic
   useEffect(() => {
@@ -52,21 +54,7 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, subtitle, ctaPrimary, ct
   };
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
-      {/* Capas de fondo */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src="/images/home/background-bg-hero.jpg"
-          alt="Textured background"
-          className="w-full h-full object-cover"
-        />
-        <img
-          src="/images/home/background-hero.png"
-          alt="Hero overlay"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-        />
-      </div>
-
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-white pt-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
@@ -112,6 +100,7 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, subtitle, ctaPrimary, ct
               </a>
             </motion.div>
           </motion.div>
+
         </div>
       </div>
     </section>
