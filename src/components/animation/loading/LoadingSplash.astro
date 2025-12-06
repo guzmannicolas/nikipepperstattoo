@@ -21,13 +21,13 @@ import { Image } from "astro:assets";
     /* optionally also fade whole container a bit earlier */
     opacity: 0.98; /* slight fade if desired; full removal handled later */
   }
-  
+
   #loading-splash::before {
     content: ""; position: absolute; inset: 0; z-index: -1;
     background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url('/preloader-bg.png') center/cover no-repeat;
     transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1), filter 1s cubic-bezier(0.65, 0, 0.35, 1);
   }
-  #loading-splash.slide-out::before { transform: translateY(100%); filter: blur(10px); }
+  #loading-splash.slide-out::before { transform: translateY(100%); filter: blur(100px); }
 </style>
 
 <script>
@@ -122,10 +122,11 @@ import { Image } from "astro:assets";
                 // Give a short moment to let the background fade complete, then remove splash
                 setTimeout(() => {
                     splash.style.display = 'none';
-                }, 500);
+                    document.dispatchEvent(new CustomEvent('splash:done'));
+                }, );
             };
 
-        }, 400); // Start sequence at 400ms so background begins to disappear then
+        }, 100); // Start sequence at 100ms so background begins to disappear then
     }
 
     // Run on load
