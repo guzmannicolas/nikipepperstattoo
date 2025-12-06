@@ -10,9 +10,13 @@ interface HeroProps {
 }
 
 const HeroSectionLogic: React.FC<HeroProps> = ({ title, subtitle, ctaPrimary, ctaSecondary, lang }) => {
+  // control de animaciones de Framer Motion (comando para iniciar/stop animaciones)
   const controls = useAnimation();
 
-  // Animation start logic
+  // Inicio de la animación: espera un 'splash' inicial si existe, sino inicia de inmediato.
+  // - Busca el elemento con id `loading-splash`.
+  // - Si está visible, se suscribe al evento `splash:done` y arranca las animaciones al dispararse.
+  // - Si no hay splash, arranca las animaciones inmediatamente.
   useEffect(() => {
     const splash = document.getElementById('loading-splash');
     const isSplashVisible = splash && window.getComputedStyle(splash).display !== 'none';
@@ -26,7 +30,9 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, subtitle, ctaPrimary, ct
     }
   }, [controls]);
 
-  // Text animation variants
+  // Variantes de animación (Framer Motion)
+  // - `containerVariants` controla la opacidad del contenedor y define un `staggerChildren`
+  //   para animar los hijos con retraso entre ellos.
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -38,6 +44,7 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, subtitle, ctaPrimary, ct
     },
   };
 
+  // - `itemVariants` es la animación individual de cada elemento (entrada desde abajo con resorte).
   const itemVariants: Variants = {
     hidden: { y: 50, opacity: 0 },
     visible: {
@@ -51,26 +58,28 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, subtitle, ctaPrimary, ct
     },
   };
 
+  // Render del componente
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
-      {/* Capas de fondo */}
+      {/* Capas de fondo: imagen base y overlay encima */}
       <div className="absolute inset-0 z-0">
         <img
           src="/images/home/background-bg-hero.jpg"
           alt="Textured background"
           className="w-full h-full object-cover"
         />
+        {/* Imagen PNG encima para detalles (punta superior de la composición) */}
         <img
           src="/images/home/background-hero.png"
           alt="Hero overlay"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none object-[70%_center] md:object-center opacity-90"
         />
       </div>
 
+      {/* Contenedor centrado con paddings responsivos */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          
-          {/* Left Content */}
+          {/* Left Content: texto principal animado */}
           <motion.div
             className="z-10"
             variants={containerVariants}
@@ -78,23 +87,32 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, subtitle, ctaPrimary, ct
             animate={controls}
           >
 
-            <motion.h1 
-              className="text-5xl md:text-7xl font-bold text-neutral-900 mb-6 tracking-tight leading-tight"
+            {/* Título grande: cada palabra es un span para animar por palabra */}
+            <motion.h1
+              className="text-5xl md:text-7xl font-serif text-neutral-900 mb-6 tracking-tight leading-tight"
               variants={itemVariants}
             >
               {title.split(' ').map((word, i) => (
-                <span key={i} className="inline-block mr-4">{word}</span>
+                <motion.span
+                  key={i}
+                  className="inline-block mr-4"
+                  variants={itemVariants}
+                >
+                  {word}
+                </motion.span>
               ))}
             </motion.h1>
-            
-            <motion.p 
+
+            {/* Subtítulo / descripción corta */}
+            <motion.p
               className="text-lg md:text-xl text-neutral-600 mb-8 max-w-lg font-light leading-relaxed"
               variants={itemVariants}
             >
               {subtitle}
             </motion.p>
-            
-            <motion.div 
+
+            {/* CTAs: botones primario y secundario */}
+            <motion.div
               className="flex flex-col sm:flex-row gap-4"
               variants={itemVariants}
             >
@@ -111,6 +129,25 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, subtitle, ctaPrimary, ct
                 {ctaSecondary}
               </a>
             </motion.div>
+            {/* Marquee full-width debajo de los botones: ocupa toda la pantalla
+                - Aquí rompemos el contenedor centrado usando `w-screen` y
+                  transform para centrar respecto al viewport.
+                - El contenido dentro está duplicado para crear un loop seamless. */}
+            <div className="relative w-screen left-1/2 -translate-x-1/2 mt-12 pointer-events-none">
+                <div className="inline-flex animate-marquee text-6xl md:text-7xl font-black uppercase tracking-widest text-black/80 whitespace-nowrap">
+                  {/* Grupo 1: Contenido duplicado para asegurar que cubra pantallas grandes */}
+                  <div className="flex items-center gap-12 pr-12 font-serif">
+                    <span>Lorem</span><span>*</span><span>Ipsum</span><span>*</span><span>Dorime</span><span>*</span>
+                    <span>Lorem</span><span>*</span><span>Ipsum</span><span>*</span><span>Dorime</span><span>*</span>
+                  </div>
+                  {/* Grupo 2: Idéntico al primero */}
+                  <div className="flex items-center gap-12 pr-12 font-serif">
+                    <span>Lorem</span><span>*</span><span>Ipsum</span><span>*</span><span>Dorime</span><span>*</span>
+                    <span>Lorem</span><span>*</span><span>Ipsum</span><span>*</span><span>Dorime</span><span>*</span>
+                  </div>
+                </div>
+            </div>
+
           </motion.div>
         </div>
       </div>
