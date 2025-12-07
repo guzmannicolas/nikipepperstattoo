@@ -62,24 +62,26 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, wordsliderhero, ctaPrima
 
   const containerRef = useRef(null);
   const { scrollY } = useScroll();
-  const yOffset = useTransform(scrollY, [0, 500], [0, 500]); // parallax: 0-500px scroll = 0-100px movimiento
+  const yBackground = useTransform(scrollY, [0, 1000], [0, 400]); 
+  const yContent = useTransform(scrollY, [0, 1000], [0, 200]);
 
   
   // Render del componente
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
+    <section className="relative min-h-screen flex  overflow-hidden pt-30">
       {/* Capas de fondo: imagen base y overlay encima */}
       <div className="absolute inset-0 z-0">
-        <img
+        <motion.img
           src="/images/home/background-bg-hero.jpg"
           alt="Textured background"
           className="w-full h-full object-cover"
+          style={{ y: yBackground }}
         />
         {/* Imagen PNG encima para detalles (punta superior de la composición) */}
           <motion.img
             src="/images/home/background-hero.png"
             alt="Hero overlay"
-            style={{ y: yOffset }}
+            style={{ y: yBackground }}
             className="absolute inset-0 w-full h-full object-cover pointer-events-none object-[70%_center] md:object-center opacity-90"
           />
       </div>
@@ -89,10 +91,11 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, wordsliderhero, ctaPrima
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Content: texto principal animado */}
           <motion.div
-            className="z-10"
+            className="z-10 lg:col-span-1 lg:w-[85%] lg:ml-auto"
             variants={containerVariants}
             initial="hidden"
             animate={controls}
+            style={{ y: yContent }}
           >
 
             {/* Título grande: cada palabra es un span para animar por palabra */}
@@ -129,26 +132,25 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, wordsliderhero, ctaPrima
                 {ctaSecondary}
               </a>
             </motion.div >
-            {/* Marquee full-width debajo de los botones: ocupa toda la pantalla
-                - Aquí rompemos el contenedor centrado usando `w-screen` y
-                  transform para centrar respecto al viewport.
-                - El contenido dentro está duplicado para crear un loop seamless. */}
-            <div className="relative w-screen left-1/2 -translate-x-1/2 mt-12 pointer-events-none">
-                <div className="inline-flex animate-marquee text-6xl md:text-7xl font-black uppercase tracking-widest text-black/80 whitespace-nowrap">
-                  {/* Grupo 1: Contenido duplicado para asegurar que cubra pantallas grandes */}
-                  <div className="flex items-center gap-12 pr-12 font-serif">
-                    {wordsliderhero}
-                  </div>
-                  {/* Grupo 2: Idéntico al primero */}
-                  <div className="flex items-center gap-12 pr-12 font-serif">
-                    {wordsliderhero}
-                  </div>
-                </div>
-            </div>
 
           </motion.div>
         </div>
       </div>
+
+      {/* Marquee full-width */}
+      <motion.div 
+        className="absolute left-0 w-full bottom-12 pointer-events-none"
+        style={{ y: yContent }}
+      >
+          <div className="inline-flex animate-marquee text-8xl lg:text-9xl xl:text-[10rem] font-black uppercase tracking-widest text-black/80 whitespace-nowrap">
+            <div className="flex items-center gap-12 pr-12 font-serif">
+              {wordsliderhero}
+            </div>
+            <div className="flex items-center gap-12 pr-12 font-serif">
+              {wordsliderhero}
+            </div>
+          </div>
+      </motion.div>
     </section>
   );
 };
