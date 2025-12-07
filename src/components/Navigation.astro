@@ -34,7 +34,7 @@ const isActive = (base: string) => {
 			>
 				<img id="navbar-logo" src="/titulo-header.png" alt="Niki Peppers" class="h-20 w-auto" />
 			</a>
-			<div id="nav-links" class="hidden md:flex space-x-6 items-center font-bold">
+			<div id="nav-links" class="hidden md:flex space-x-6 items-center  font-serif text-xl">
 				<a href={hrefFor('tattoos')} class={ `nav-link text-black relative ${isActive('tattoos') ? 'text-green-500' : ''}` }>{t("nav.tattoos")}</a>
 				<a href={hrefFor('works')} class={ `nav-link text-black relative ${isActive('works') ? 'text-green-500' : ''}` }>{t("nav.works")}</a>
 				<a href={hrefFor('ceramics')} class={ `nav-link text-black relative ${isActive('ceramics') ? 'text-green-500' : ''}` }>{t("nav.ceramics")}</a>

@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
 import { motion, useAnimation, type Variants } from 'framer-motion';
+import { useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 
 interface HeroProps {
   title: string;
-  subtitle: string;
   ctaPrimary: string;
+  wordsliderhero: string;
   ctaSecondary: string;
   lang: string;
 }
 
-const HeroSectionLogic: React.FC<HeroProps> = ({ title, subtitle, ctaPrimary, ctaSecondary, lang }) => {
+const HeroSectionLogic: React.FC<HeroProps> = ({ title, wordsliderhero, ctaPrimary, ctaSecondary, lang }) => {
   // control de animaciones de Framer Motion (comando para iniciar/stop animaciones)
   const controls = useAnimation();
 
@@ -58,6 +60,11 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, subtitle, ctaPrimary, ct
     },
   };
 
+  const containerRef = useRef(null);
+  const { scrollY } = useScroll();
+  const yOffset = useTransform(scrollY, [0, 500], [0, 500]); // parallax: 0-500px scroll = 0-100px movimiento
+
+  
   // Render del componente
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
@@ -69,11 +76,12 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, subtitle, ctaPrimary, ct
           className="w-full h-full object-cover"
         />
         {/* Imagen PNG encima para detalles (punta superior de la composición) */}
-        <img
-          src="/images/home/background-hero.png"
-          alt="Hero overlay"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none object-[70%_center] md:object-center opacity-90"
-        />
+          <motion.img
+            src="/images/home/background-hero.png"
+            alt="Hero overlay"
+            style={{ y: yOffset }}
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none object-[70%_center] md:object-center opacity-90"
+          />
       </div>
 
       {/* Contenedor centrado con paddings responsivos */}
@@ -103,14 +111,6 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, subtitle, ctaPrimary, ct
               ))}
             </motion.h1>
 
-            {/* Subtítulo / descripción corta */}
-            <motion.p
-              className="text-lg md:text-xl text-neutral-600 mb-8 max-w-lg font-light leading-relaxed"
-              variants={itemVariants}
-            >
-              {subtitle}
-            </motion.p>
-
             {/* CTAs: botones primario y secundario */}
             <motion.div
               className="flex flex-col sm:flex-row gap-4"
@@ -128,7 +128,7 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, subtitle, ctaPrimary, ct
               >
                 {ctaSecondary}
               </a>
-            </motion.div>
+            </motion.div >
             {/* Marquee full-width debajo de los botones: ocupa toda la pantalla
                 - Aquí rompemos el contenedor centrado usando `w-screen` y
                   transform para centrar respecto al viewport.
@@ -137,13 +137,11 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, subtitle, ctaPrimary, ct
                 <div className="inline-flex animate-marquee text-6xl md:text-7xl font-black uppercase tracking-widest text-black/80 whitespace-nowrap">
                   {/* Grupo 1: Contenido duplicado para asegurar que cubra pantallas grandes */}
                   <div className="flex items-center gap-12 pr-12 font-serif">
-                    <span>Lorem</span><span>*</span><span>Ipsum</span><span>*</span><span>Dorime</span><span>*</span>
-                    <span>Lorem</span><span>*</span><span>Ipsum</span><span>*</span><span>Dorime</span><span>*</span>
+                    {wordsliderhero}
                   </div>
                   {/* Grupo 2: Idéntico al primero */}
                   <div className="flex items-center gap-12 pr-12 font-serif">
-                    <span>Lorem</span><span>*</span><span>Ipsum</span><span>*</span><span>Dorime</span><span>*</span>
-                    <span>Lorem</span><span>*</span><span>Ipsum</span><span>*</span><span>Dorime</span><span>*</span>
+                    {wordsliderhero}
                   </div>
                 </div>
             </div>
