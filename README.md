@@ -38,6 +38,17 @@ Sitio web profesional para una artista del tatuaje, construido con tecnologías 
 | `npm run build`        | Construye el sitio para producción en `./dist/` |
 | `npm run preview`      | Vista previa del build de producción localmente |
 
+## 🔀 Flujo de ramas y commits (recomendado)
+
+- Ramas cortas sobre `main` (o `dev` si usas staging): `feat/…`, `fix/…`, `chore/…`.
+- Commits con Conventional Commits para changelog automático.
+   - `feat: add gallery filter logic`
+   - `fix: mobile navigation z-index issue`
+   - `chore: update dependencies`
+- Pull Requests siempre desde rama feature → revisión → merge squash/rebase.
+- Antes de commitear: `npm run lint` (si se agrega en el futuro) y `npm test` (no hay tests por ahora).
+- Hooks: se añadió `husky` + `commitlint` (ejecutan en `commit-msg`). Ejecuta `npm install` y luego `npm run prepare` para activar los hooks.
+
 # Niki Peppers Tattoo — Proyecto web
 
 Este repositorio contiene el sitio web profesional de Niki Peppers (artista del tatuaje). A continuación encontrarás el contexto del proyecto, la estructura actualizada, las decisiones técnicas, cómo ejecutar el proyecto y notas detalladas sobre cambios recientes y puntos de atención.

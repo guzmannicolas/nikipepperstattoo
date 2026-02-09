@@ -1,0 +1,2 @@
+# Husky v9+ hook (compatible with upcoming v10) — no husky.sh shim needed
+npx --no -- commitlint --edit "$1"
