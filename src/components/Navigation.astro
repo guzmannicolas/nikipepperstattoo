@@ -1,6 +1,6 @@
 ---
 import { getLangFromUrl, useTranslations, languages } from "../i18n/utils";
-import { Image } from "astro:assets";
+
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -25,8 +25,8 @@ const isActive = (base: string) => {
 };
 ---
 
-<nav id="navbar" class="fixed w-full z-50 transition-all duration-300">
-	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<nav id="navbar" class="fixed top-4 left-4 right-4 z-50 transition-all duration-300 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-50">
 		<div class="flex justify-between items-center h-20">
 			<a
 				href={`/${lang === "en" ? "" : lang + "/"}`}
@@ -87,19 +87,21 @@ const isActive = (base: string) => {
 			</button>
 		</div>
 	</div>
-	<div
-		id="mobile-menu"
-		class="hidden md:hidden bg-white border-t border-neutral-200"
-	>
-		<div class="px-2 pt-2 pb-3 space-y-1 font-bold">
-			<a href={hrefFor('tattoos')} class={ `block px-3 py-2 rounded-md ${isActive('tattoos') ? 'bg-green-500 text-white' : 'text-black hover:bg-neutral-50'}` }>{t("nav.tattoos")}</a>
-			<a href={hrefFor('works')} class={ `block px-3 py-2 rounded-md ${isActive('works') ? 'bg-green-500 text-white' : 'text-black hover:bg-neutral-50'}` }>{t("nav.works")}</a>
-			<a href={hrefFor('ceramics')} class={ `block px-3 py-2 rounded-md ${isActive('ceramics') ? 'bg-green-500 text-white' : 'text-black hover:bg-neutral-50'}` }>{t("nav.ceramics")}</a>
-			<a href={hrefFor('murals')} class={ `block px-3 py-2 rounded-md ${isActive('murals') ? 'bg-green-500 text-white' : 'text-black hover:bg-neutral-50'}` }>{t("nav.murals")}</a>
-			<a href={hrefFor('biography')} class={ `block px-3 py-2 rounded-md ${isActive('biography') ? 'bg-green-500 text-white' : 'text-black hover:bg-neutral-50'}` }>{t("nav.biography")}</a>
-			<a href={hrefFor('faqs')} class={ `block px-3 py-2 rounded-md ${isActive('faqs') ? 'bg-green-500 text-white' : 'text-black hover:bg-neutral-50'}` }>{t("nav.faqs")}</a>
-			<a href={hrefFor('contact')} class={ `block px-3 py-2 rounded-md ${isActive('contact') ? 'bg-green-500 text-white' : 'text-black hover:bg-neutral-50'}` }>{t("nav.contact")}</a>
-			<div class="flex gap-2 px-3 py-2 border-t border-neutral-200 mt-2">
+</nav>
+
+<div
+	id="mobile-menu"
+	class="hidden md:hidden fixed inset-0 bg-white z-40 flex flex-col justify-center items-center space-y-8"
+>
+	<div class="flex flex-col items-center space-y-6 font-serif text-3xl">
+			<a href={hrefFor('tattoos')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('tattoos') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.tattoos")}</a>
+			<a href={hrefFor('works')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('works') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.works")}</a>
+			<a href={hrefFor('ceramics')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('ceramics') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.ceramics")}</a>
+			<a href={hrefFor('murals')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('murals') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.murals")}</a>
+			<a href={hrefFor('biography')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('biography') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.biography")}</a>
+			<a href={hrefFor('faqs')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('faqs') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.faqs")}</a>
+			<a href={hrefFor('contact')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('contact') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.contact")}</a>
+			<div class="flex gap-4 mt-8">
 				{
 					Object.entries(languages).map(([l, label]) => (
 						<a
@@ -107,7 +109,7 @@ const isActive = (base: string) => {
 								l === "en" ? currentPath : `/${l}${currentPath}`
 							}
 							class:list={[
-								"px-3 py-1 rounded text-sm font-medium transition-colors flex-1 text-center",
+								"px-4 py-2 rounded-full text-lg font-medium transition-colors",
 								l === lang
 									? "bg-green-500 text-white"
 									: "bg-neutral-100 text-neutral-700",
@@ -120,8 +122,7 @@ const isActive = (base: string) => {
 				}
 			</div>
 		</div>
-	</div>
-</nav>
+</div>
 
 <style>
 	.nav-link::after {
@@ -141,7 +142,11 @@ const isActive = (base: string) => {
 	}
 
 	.nav-link:hover {
-		color: #22c55e; /* green-500 */
+		color: #16a34a; /* green-600 */
+	}
+
+	.nav-hidden {
+		transform: translateY(-150%);
 	}
 </style>
 
@@ -167,27 +172,57 @@ declare global {
 		const btn = ev.target && (ev.target as HTMLElement).closest && (ev.target as HTMLElement).closest("#mobile-menu-btn");
 		if (btn) {
 			const mobileMenu = document.getElementById("mobile-menu");
+			const iconMenu = document.getElementById("icon-menu");
+			const iconClose = document.getElementById("icon-close");
+			
 			mobileMenu?.classList.toggle("hidden");
+			
+			if (mobileMenu?.classList.contains("hidden")) {
+				// Menu is closed
+				iconMenu?.classList.remove("opacity-0");
+				iconMenu?.classList.add("opacity-100");
+				iconClose?.classList.remove("opacity-100");
+				iconClose?.classList.add("opacity-0");
+			} else {
+				// Menu is open
+				iconMenu?.classList.remove("opacity-100");
+				iconMenu?.classList.add("opacity-0");
+				iconClose?.classList.remove("opacity-0");
+				iconClose?.classList.add("opacity-100");
+			}
 		}
 	});
 
-	// Change navbar background on scroll
-	let scrollThreshold = 50; // Start changing background after scrolling 50px
+	// Hide navbar on scroll
+	let lastScrollY = window.scrollY;
+	const navbar = document.getElementById("navbar");
 
-	const onScroll = () => {
-		const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-		const navbar = document.getElementById("navbar");
-		if (!navbar) return; // nothing to do if navbar isn't present
+	window.addEventListener("scroll", () => {
+		if (!navbar) return;
 
-		if (scrollTop > scrollThreshold) {
-			navbar.classList.add("bg-white/95", "backdrop-blur-sm", "shadow-sm");
-		} else {
-			navbar.classList.remove("bg-white/95", "backdrop-blur-sm", "shadow-sm");
+		const mobileMenu = document.getElementById("mobile-menu");
+		// Don't hide if mobile menu is open
+		if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
+			return;
 		}
-	};
 
-	window.addEventListener("scroll", onScroll, { passive: true });
-	// Run once to set initial state (handles non-top landing)
-	onScroll();
+		const currentScrollY = window.scrollY;
+		
+		// Tolerance check to avoid jitter (Option 2)
+		if (Math.abs(currentScrollY - lastScrollY) < 5) return;
+
+		if (currentScrollY > lastScrollY && currentScrollY > 20) {
+			// Scrolling DOWN and passed threshold
+			navbar.classList.add("nav-hidden");
+		} else if (currentScrollY < lastScrollY) {
+			// Scrolling UP
+			navbar.classList.remove("nav-hidden");
+		}
+
+		lastScrollY = currentScrollY;
+	}, { passive: true });
+
+
+
 })();
 </script>

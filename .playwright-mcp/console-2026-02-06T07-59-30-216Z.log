@@ -1,0 +1,3 @@
+[     440ms] [WARNING] Unrecognized feature: 'ambient-light-sensor'. @ https://motion.dev/:699
+[     441ms] [WARNING] Unrecognized feature: 'pointer-lock'. @ https://motion.dev/:699
+[     441ms] [WARNING] Unrecognized feature: 'vr'. @ https://motion.dev/:699

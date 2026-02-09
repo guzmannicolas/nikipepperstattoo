@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import HeroSection from "../components/sections/HeroSection.astro";
+import FeaturedWork from "../components/sections/FeaturedWork.astro";
 import AboutArtistSection from "../components/sections/AboutArtistSection.astro";
 import StylesSection from "../components/sections/StylesSection.astro";
 import NewsletterSection from "../components/sections/NewsletterSection.astro";
@@ -17,6 +18,9 @@ const t = useTranslations(lang);
 
 		<!-- Hero Section (componentized) -->
 		<HeroSection lang={lang} t={t} />
+
+		<!-- Featured Work Section -->
+		<FeaturedWork lang={lang} t={t} />
 
 		<!-- About Artist Section (componentized) -->
 		<AboutArtistSection lang={lang} t={t} />

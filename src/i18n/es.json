@@ -56,6 +56,10 @@
     "learnMore": "Conoce más sobre mi trabajo",
     "photoPlaceholder": "Foto de la Artista"
   },
+  "featuredWork": {
+    "title": "Trabajos Destacados",
+    "description": "Explora una selección curada de los tatuajes botánicos más cautivadores de Niki, pinturas expresivas y piezas de cerámica únicas."
+  },
   "tattoos": {
     "title": "Galería de Tatuajes",
     "description": "Los tatuajes son una forma de llevar con nosotros la belleza de la naturaleza, no solo como un recuerdo, sino como una parte integral de lo que somos.",

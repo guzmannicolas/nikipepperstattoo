@@ -68,7 +68,7 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, wordsliderhero, ctaPrima
   
   // Render del componente
   return (
-    <section className="relative min-h-[100dvh] flex flex-col justify-center overflow-hidden pt-24 md:pt-20">
+    <section className="relative min-h-[100dvh] flex flex-col justify-center overflow-hidden pt-24 md:pt-24">
       {/* Capas de fondo: imagen base y overlay encima */}
       <div className="absolute inset-0 z-0">
         <motion.img
@@ -121,13 +121,13 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, wordsliderhero, ctaPrima
             >
               <a
                 href={`/${lang === 'en' ? '' : lang + '/'}works`}
-                className="px-8 py-4 bg-neutral-900 text-white rounded-full font-medium hover:bg-neutral-800 transition-all transform hover:scale-105 text-center w-full sm:w-auto"
+                className="px-8 py-4 rounded-full font-semibold transition-all border-2 text-center w-full sm:w-auto transform hover:scale-105 bg-green-500 text-white border-transparent hover:bg-green-600"
               >
                 {ctaPrimary}
               </a>
               <a
                 href={`/${lang === 'en' ? '' : lang + '/'}contact`}
-                className="px-8 py-4 bg-transparent border border-neutral-300 text-neutral-900 rounded-full font-medium hover:border-neutral-900 transition-all transform hover:scale-105 text-center w-full sm:w-auto"
+                className="px-8 py-4 rounded-full font-semibold transition-all border-2 text-center w-full sm:w-auto transform hover:scale-105 bg-white text-black border-neutral-200 hover:border-green-400"
               >
                 {ctaSecondary}
               </a>

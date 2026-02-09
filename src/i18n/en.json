@@ -56,6 +56,10 @@
     "learnMore": "Learn more about my work",
     "photoPlaceholder": "Artist Photo Placeholder"
   },
+  "featuredWork": {
+    "title": "Featured Works",
+    "description": "Explore a curated selection of Niki's most compelling botanical tattoos, expressive paintings, and unique ceramic pieces."
+  },
   "tattoos": {
     "title": "Tattoo Gallery",
     "description": "Tattoos are a way to carry the beauty of nature with us, not just as a memory, but as an integral part of who we are.",

@@ -59,3 +59,12 @@ footer img[alt="Niki Peppers"] {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); } /* mover exactamente la mitad (segunda copia) */
 }
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
