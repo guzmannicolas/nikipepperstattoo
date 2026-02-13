@@ -1,38 +1,53 @@
 ---
-const { t } = Astro.props;
+
+import StylesSectionLogic from "./StylesSectionLogic";
+import koiFish from "../../assets/tattoos/animals/koi-fish-tattoo-lily-pads-water-lilies.jpeg";
+import redPoppies from "../../assets/tattoos/botanical/red-poppies-blue-cornflowers-arm-tattoo.jpeg";
+import blueFlower from "../../assets/tattoos/botanical/blue-flower-tattoo-green-leaves-forearm.jpg";
+
+const { t, lang } = Astro.props;
+
+const basePath = typeof lang === 'string' && lang !== 'en' ? `/${lang}` : '';
+const tattoosHref = `${basePath}/tattoos`;
+
+
+const cards = [
+  {
+    key: 'animals',
+    title: t('tattoos.filterAnimals'),
+    description: t('home.animals.description'),
+    badge: t('tattoos.filterAnimals'),
+    image: koiFish.src,
+    filterLabel: t('tattoos.filterAnimals'),
+    href: tattoosHref,
+  },
+  {
+    key: 'colour',
+    title: t('tattoos.filterColour'),
+    description: t('home.colour.description'),
+    badge: t('tattoos.filterColour'),
+    image: redPoppies.src,
+    filterLabel: t('tattoos.filterColour'),
+    href: tattoosHref,
+  },
+  {
+    key: 'fineline',
+    title: t('home.fineline.title'),
+    description: t('home.fineline.description'),
+    badge: t('home.fineline.title'),
+    image: blueFlower.src,
+    filterLabel: t('tattoos.filterFineline'),
+    href: tattoosHref,
+  },
+];
+
 ---
 
-<section class="py-20 px-4 max-w-7xl mx-auto">
-  <h2 class="text-4xl font-bold text-center mb-12 text-black">{t('home.stylesTitle')}</h2>
-  <div class="grid md:grid-cols-3 gap-8">
-    <div class="bg-white p-8 rounded-xl border-2 border-neutral-200 hover:border-green-400 transition-all hover:shadow-lg">
-      <div class="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center mb-4">
-        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
-        </svg>
-      </div>
-      <h3 class="text-xl font-bold mb-2 text-black">{t('home.realism.title')}</h3>
-      <p class="text-neutral-600">{t('home.realism.description')}</p>
-    </div>
-
-    <div class="bg-white p-8 rounded-xl border-2 border-neutral-200 hover:border-green-400 transition-all hover:shadow-lg">
-      <div class="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center mb-4">
-        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-        </svg>
-      </div>
-      <h3 class="text-xl font-bold mb-2 text-black">{t('home.traditional.title')}</h3>
-      <p class="text-neutral-600">{t('home.traditional.description')}</p>
-    </div>
-
-    <div class="bg-white p-8 rounded-xl border-2 border-neutral-200 hover:border-green-400 transition-all hover:shadow-lg">
-      <div class="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center mb-4">
-        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-        </svg>
-      </div>
-      <h3 class="text-xl font-bold mb-2 text-black">{t('home.fineline.title')}</h3>
-      <p class="text-neutral-600">{t('home.fineline.description')}</p>
-    </div>
-  </div>
-</section>
+<StylesSectionLogic
+  client:visible
+  heading={t('home.stylesTitle')}
+  intro={t('home.stylesIntro')}
+  cards={cards}
+  ctaAllLabel={t('tattoos.filterAll')}
+  ctaAllHref={tattoosHref}
+/>

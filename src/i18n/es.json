@@ -42,6 +42,14 @@
       "title": "Fineline",
       "description": "Diseños delicados con líneas finas y detalles sutiles."
     },
+    "animals": {
+      "title": "Animales",
+      "description": "Tatuajes inspirados en la fauna, llenos de simbolismo y detalle."
+    },
+    "colour": {
+      "title": "Color",
+      "description": "Diseños vibrantes que exploran la expresividad del color."
+    },
     "newsletterTitle": "Mantente Informada",
     "newsletterDescription": "Suscríbete para recibir novedades, ofertas especiales y ver los últimos trabajos.",
     "emailPlaceholder": "Tu email",
@@ -50,7 +58,7 @@
     "aboutTitle": "Sobre Mí",
     "aboutText1": "Soy artista visual y tatuadora, y mi obra se mueve entre el dibujo, la pintura y la cerámica. A través de mis creaciones, exploro la relación entre el cuerpo, la naturaleza y la sensibilidad humana. Mi trabajo está fuertemente influenciado por el ecofeminismo, la conexión con el entorno y las emociones que nos atraviesan. Como tatuadora, me especializo en diseños delicados, con una estética orgánica y fluida, muchas veces inspirados en elementos naturales como flores y plantas.",
     "aboutText2": "Para muchas de mis clientas, tatuarse es un acto simbólico, un gesto de transformación o resignificación personal, y me encanta poder acompañarlas en ese proceso. En mi obra pictórica y cerámica, también investigo el vínculo entre lo humano y lo natural, creando imágenes y objetos que evocan la fortaleza, la ternura y la armonía con el mundo que nos rodea. Cada pieza que realizo, ya sea un tatuaje, una pintura o una pieza de cerámica, es un diálogo entre mi universo artístico y quienes lo habitan.",
-    "aboutArtistTitle": "¿Buscas la mejor Artista en Buenos Aires?",
+    "aboutArtistTitle": "¿Buscas algo parecido a mi estilo?",
     "aboutArtistSubtitle": "Soy Niki Peppers, una artista multidisciplinaria apasionada por transformar ideas en arte. Mi trabajo abarca tatuajes, cerámica, murales y pinturas, cada pieza creada con dedicación y creatividad. Desde arte corporal intrincado hasta piezas de cerámica hechas a mano y murales a gran escala, doy vida a historias a través de diversos medios. Cada creación es una expresión única del arte que conecta con el alma.",
     "aboutArtistButton": "Descubre Mi Trabajo",
     "learnMore": "Conoce más sobre mi trabajo",

@@ -14,18 +14,14 @@ const t = useTranslations(lang);
 
 <Layout title={`Niki Peppers - ${t('home.title')}`}>
 
-	<!-- Hero + About Artist Section with Video Background -->
-	<div class="relative bg-white">
+	<!-- Hero Section (componentized) -->
+	<HeroSection lang={lang} t={t} />
 
-		<!-- Hero Section (componentized) -->
-		<HeroSection lang={lang} t={t} />
+	<!-- Featured Work Section -->
+	<FeaturedWork lang={lang} t={t} />
 
-		<!-- Featured Work Section -->
-		<FeaturedWork lang={lang} t={t} />
-
-		<!-- About Artist Section (componentized) -->
-		<AboutArtistSection lang={lang} t={t} />
-	</div>
+	<!-- About Artist Section (componentized) -->
+	<AboutArtistSection lang={lang} t={t} />
 
 	<!-- Styles Section (componentized) -->
 	<StylesSection t={t} />

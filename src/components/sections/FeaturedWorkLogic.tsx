@@ -79,7 +79,7 @@ const MobileLayout: React.FC<{
           className="h-[40vh] z-20 bg-white/95 backdrop-blur-sm pb-5 flex flex-col items-center justify-center text-center"
         >
           <h2 className="text-4xl font-serif text-neutral-900 mb-4 leading-tight tracking-tight">
-            {title || 'Featured Works'}
+            {title}
           </h2>
           <p className="text-2xl text-neutral-600 font-serif leading-relaxed max-w-xl">
             {description}

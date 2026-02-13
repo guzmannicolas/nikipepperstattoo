@@ -42,6 +42,14 @@
       "title": "Fineline",
       "description": "Delicate designs with fine lines and subtle details."
     },
+    "animals": {
+      "title": "Animals",
+      "description": "Tattoos inspired by fauna, full of symbolism and detail."
+    },
+    "colour": {
+      "title": "Colour",
+      "description": "Vibrant designs that explore the expressiveness of color."
+    },
     "newsletterTitle": "Stay Informed",
     "newsletterDescription": "Subscribe to receive news, special offers, and see the latest works.",
     "emailPlaceholder": "Your email",
@@ -50,7 +58,7 @@
     "aboutTitle": "About Me",
     "aboutText1": "I am a visual artist and tattoo artist, and my work moves between drawing, painting, and ceramics. Through my creations, I explore the relationship between the body, nature, and human sensitivity. My work is strongly influenced by ecofeminism, the connection with the environment, and the emotions that permeate us. As a tattoo artist, I specialize in delicate designs with an organic and fluid aesthetic, often inspired by natural elements such as flowers and plants.",
     "aboutText2": "For many of my clients, getting a tattoo is a symbolic act, a gesture of transformation or personal resignification, and I love being able to accompany them in this process. In my painting and ceramic work, I also explore the connection between the human and the natural, creating images and objects that evoke strength, tenderness, and harmony with the world around us. Each piece I create, whether a tattoo, a painting, or a ceramic piece, is a dialogue between my artistic universe and those who inhabit it.",
-    "aboutArtistTitle": "Searching for the best Artist in Buenos Aires?",
+    "aboutArtistTitle": "Searching for something of my style?",
     "aboutArtistSubtitle": "I'm Niki Peppers, a multidisciplinary artist passionate about transforming ideas into art. My work spans tattoos, ceramics, murals, and paintings, each piece crafted with dedication and creativity. From intricate body art to handcrafted ceramic pieces and large-scale murals, I bring stories to life through various mediums. Every creation is a unique expression of art that connects with the soul.",
     "aboutArtistButton": "Discover My Work",
     "learnMore": "Learn more about my work",
@@ -62,7 +70,7 @@
   },
   "tattoos": {
     "title": "Tattoo Gallery",
-    "description": "Tattoos are a way to carry the beauty of nature with us, not just as a memory, but as an integral part of who we are.",
+    "description": "Tattoos are a way to carry the beauty of nature with us, not just as a memory.",
     "filters": {
       "all": "All",
       "botanical": "Botanical",

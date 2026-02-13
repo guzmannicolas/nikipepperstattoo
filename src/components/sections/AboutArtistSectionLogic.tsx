@@ -57,14 +57,14 @@ const AboutArtistSectionLogic: React.FC<AboutArtistProps> = ({
           viewport={{ once: true, amount: 0.3 }}
         >
           <motion.h2
-            className="text-4xl md:text-6xl font-bold mb-6 text-black leading-tight"
+            className="text-4xl md:text-6xl font-serif mb-6 text-black leading-tight"
             variants={itemVariants}
           >
             {title}
           </motion.h2>
 
           <motion.p
-            className="text-2xl md:text-3xl text-neutral-600 mb-10 leading-relaxed"
+            className="text-2xl md:text-3xl text-neutral-600 mb-10 leading-relaxed font-serif"
             variants={itemVariants}
           >
             {subtitle}
