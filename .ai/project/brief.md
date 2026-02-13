@@ -209,6 +209,7 @@ Ver detalles completos en `.ai/global/ui-design.md`
 - [x] Galerías de tatuajes y cerámicas
 - [x] Sección About
 - [x] Optimización de imágenes
+ - [x] `AboutArtistSectionLogic` refactor: componente React + Framer Motion (entrance animations y fondo rotado)
 
 ### 🚧 En Progreso
 - [ ] Formulario de contacto (integración con servicio externo)
