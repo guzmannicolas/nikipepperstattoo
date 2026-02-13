@@ -1,15 +1,7 @@
-import React, { useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
+import { useBreakpoint } from '../../hooks/useBreakpoint';
 
-/**
- * FeaturedWork Component Props
- * @interface FeaturedWorkProps
- * @property {string} title - Section title
- * @property {string} description - Section description
- * @property {string[]} col1Images - Images for first column (tattoos)
- * @property {string[]} col2Images - Images for second column (artworks)
- * @property {string[]} col3Images - Images for third column (ceramics)
- */
 interface FeaturedWorkProps {
   title: string;
   description: string;
@@ -18,197 +10,369 @@ interface FeaturedWorkProps {
   col3Images: string[];
 }
 
-/**
- * FeaturedWork Component
- * Displays a parallax gallery with text on left and images on right
- * Uses Framer Motion for smooth scroll-based animations
- */
+/* ─── Helpers ─── */
+
+/** Interleave images from all 3 categories: tattoo1, work1, ceramic1, tattoo2, ... */
+function interleaveImages(
+  col1: string[],
+  col2: string[],
+  col3: string[]
+): { src: string; alt: string }[] {
+  const maxLen = Math.max(col1.length, col2.length, col3.length);
+  const result: { src: string; alt: string }[] = [];
+  for (let i = 0; i < maxLen; i++) {
+    if (col1[i]) result.push({ src: col1[i], alt: 'Tattoo work' });
+    if (col2[i]) result.push({ src: col2[i], alt: 'Art work' });
+    if (col3[i]) result.push({ src: col3[i], alt: 'Ceramic work' });
+  }
+  return result;
+}
+
+/* ─── Mobile Layout: Sticky text + scroll-snap gallery ─── */
+
+const MobileLayout: React.FC<{
+  title: string;
+  description: string;
+  images: { src: string; alt: string }[];
+}> = ({ title, description, images }) => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [progress, setProgress] = useState(0);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end end'],
+  });
+
+  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
+    setProgress(latest);
+  });
+
+  const totalTransitions = Math.max(images.length - 1, 1);
+  const sectionHeightVh = Math.max(180, 120 + totalTransitions * 22);
+
+  const getTranslateY = (index: number): number => {
+    if (index === 0) return 0;
+
+    const transitionStart = (index - 1) / totalTransitions;
+    const transitionEnd = index / totalTransitions;
+
+    if (progress <= transitionStart) return 100;
+    if (progress >= transitionEnd) return 0;
+
+    const localProgress =
+      (progress - transitionStart) / (transitionEnd - transitionStart);
+
+    return (1 - localProgress) * 100;
+  };
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative bg-white"
+      style={{ height: `${sectionHeightVh}vh` }}
+    >
+      <div className="sticky top-0 h-screen px-5 pt-6 pb-6 flex flex-col">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="h-[40vh] z-20 bg-white/95 backdrop-blur-sm pb-5 flex flex-col items-center justify-center text-center"
+        >
+          <h2 className="text-4xl font-serif text-neutral-900 mb-4 leading-tight tracking-tight">
+            {title || 'Featured Works'}
+          </h2>
+          <p className="text-2xl text-neutral-600 font-serif leading-relaxed max-w-xl">
+            {description}
+          </p>
+        </motion.div>
+
+        <div className="relative h-[60vh] rounded-2xl overflow-hidden shadow-sm">
+          {images.map((img, i) => (
+            <motion.div
+              key={`mobile-stack-${i}`}
+              className="absolute inset-0"
+              style={{
+                y: `${getTranslateY(i)}%`,
+                zIndex: i + 1,
+              }}
+            >
+              <img
+                src={img.src}
+                alt={img.alt}
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ─── Tablet Layout: 2-column parallax ─── */
+
+const TabletLayout: React.FC<{
+  title: string;
+  description: string;
+  col1Images: string[];
+  col2Images: string[];
+  col3Images: string[];
+}> = ({ title, description, col1Images, col2Images, col3Images }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [vh, setVh] = useState(800);
+
+  useEffect(() => {
+    setVh(window.innerHeight);
+    const onResize = () => setVh(window.innerHeight);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  });
+
+  // Proportional parallax values based on viewport height
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, -(vh * 0.4)]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [-(vh * 0.4), 0]);
+
+  // Combine columns: col1 + first half of col3 → left; col2 + second half of col3 → right
+  const leftCol = [...col1Images, ...col3Images.slice(0, 1), ...col1Images];
+  const rightCol = [...col2Images, ...col3Images.slice(1), ...col2Images];
+
+  return (
+    <section ref={containerRef} className="relative h-[200vh] bg-white">
+      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+        <div className="container mx-auto px-6">
+          {/* Text block */}
+          <div className="mb-8 max-w-lg">
+            <h2 className="text-4xl font-serif text-neutral-900 mb-3 leading-tight">
+              {title || 'Featured Works'}
+            </h2>
+            <p className="text-xl text-neutral-600 font-serif leading-relaxed">
+              {description}
+            </p>
+          </div>
+
+          {/* 2-column parallax grid */}
+          <div className="relative h-[60vh] overflow-hidden">
+            {/* Gradient masks */}
+            <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-white to-transparent z-10 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white to-transparent z-10 pointer-events-none" />
+
+            <div className="grid grid-cols-2 gap-4">
+              <motion.div
+                style={{ y: y1 }}
+                className="flex flex-col gap-4 transform-gpu will-change-transform"
+              >
+                {leftCol.map((src, i) => (
+                  <div
+                    key={`tab-l-${i}`}
+                    className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-sm"
+                  >
+                    <img
+                      src={src}
+                      alt="Featured work"
+                      loading="lazy"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </motion.div>
+
+              <motion.div
+                style={{ y: y2 }}
+                className="flex flex-col gap-4 -mt-24 transform-gpu will-change-transform"
+              >
+                {rightCol.map((src, i) => (
+                  <div
+                    key={`tab-r-${i}`}
+                    className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-sm"
+                  >
+                    <img
+                      src={src}
+                      alt="Featured work"
+                      loading="lazy"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ─── Desktop Layout: 3-column parallax (improved) ─── */
+
+const DesktopLayout: React.FC<{
+  title: string;
+  description: string;
+  col1Images: string[];
+  col2Images: string[];
+  col3Images: string[];
+}> = ({ title, description, col1Images, col2Images, col3Images }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [vh, setVh] = useState(900);
+
+  useEffect(() => {
+    setVh(window.innerHeight);
+    const onResize = () => setVh(window.innerHeight);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  });
+
+  // Proportional parallax values based on actual viewport height
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, -(vh * 0.75)]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [-(vh * 0.75), 0]);
+  const y3 = useTransform(scrollYProgress, [0, 1], [0, -(vh * 0.6)]);
+
+  // Triplicate images for continuous scroll content
+  const col1 = [...col1Images, ...col1Images, ...col1Images];
+  const col2 = [...col2Images, ...col2Images, ...col2Images];
+  const col3 = [...col3Images, ...col3Images, ...col3Images];
+
+  return (
+    <section ref={containerRef} className="relative h-[300vh] bg-white">
+      <div className="sticky top-0 h-screen flex items-center overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-row gap-20 items-center h-full">
+            {/* Left Content – Static */}
+            <div className="w-1/3 z-20">
+              <h2 className="text-5xl xl:text-6xl font-serif text-neutral-900 mb-6 leading-tight">
+                {title || 'Featured Works'}
+              </h2>
+              <p className="text-2xl xl:text-3xl text-neutral-600 font-serif leading-relaxed max-w-md">
+                {description}
+              </p>
+            </div>
+
+            {/* Right Content – 3-column parallax grid */}
+            <div className="w-2/3 h-[80vh] overflow-hidden relative">
+              {/* Gradient masks */}
+              <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-white to-transparent z-10 pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white to-transparent z-10 pointer-events-none" />
+
+              <div className="grid grid-cols-3 gap-6">
+                {/* Column 1 – Moves up */}
+                <motion.div
+                  style={{ y: y1 }}
+                  className="flex flex-col gap-6 transform-gpu will-change-transform"
+                >
+                  {col1.map((src, i) => (
+                    <div
+                      key={`col1-${i}`}
+                      className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-sm"
+                    >
+                      <img
+                        src={src}
+                        alt="Tattoo work"
+                        loading="lazy"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </motion.div>
+
+                {/* Column 2 – Moves down */}
+                <motion.div
+                  style={{ y: y2 }}
+                  className="flex flex-col gap-6 -mt-40 transform-gpu will-change-transform"
+                >
+                  {col2.map((src, i) => (
+                    <div
+                      key={`col2-${i}`}
+                      className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-sm"
+                    >
+                      <img
+                        src={src}
+                        alt="Art work"
+                        loading="lazy"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </motion.div>
+
+                {/* Column 3 – Moves up */}
+                <motion.div
+                  style={{ y: y3 }}
+                  className="flex flex-col gap-6 transform-gpu will-change-transform"
+                >
+                  {col3.map((src, i) => (
+                    <div
+                      key={`col3-${i}`}
+                      className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-sm"
+                    >
+                      <img
+                        src={src}
+                        alt="Ceramic work"
+                        loading="lazy"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ─── Main Component: renders the correct layout per breakpoint ─── */
+
 const FeaturedWorkLogic: React.FC<FeaturedWorkProps> = ({
   title,
   description,
   col1Images,
   col2Images,
-  col3Images
+  col3Images,
 }) => {
-  // Refs for the containers
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const galleryRef = useRef<HTMLDivElement>(null);
+  const breakpoint = useBreakpoint();
 
-  /**
-   * Custom wheel event handler
-   * Allows scrolling the gallery when mouse is anywhere in the section
-   */
-  useEffect(() => {
-    const section = sectionRef.current;
+  if (breakpoint === 'mobile') {
+    return (
+      <MobileLayout
+        title={title}
+        description={description}
+        images={interleaveImages(col1Images, col2Images, col3Images)}
+      />
+    );
+  }
 
-    if (!section) return;
-
-    const handleWheel = (e: WheelEvent) => {
-      // Access gallery ref dynamically inside the handler
-      const gallery = galleryRef.current;
-      if (!gallery) return;
-
-      // Determine scroll amount, handling different delta modes (pixels vs lines)
-      // Windows browsers often send deltaMode=1 (lines), which results in very slow scrolling if treated as pixels
-      let delta = e.deltaY;
-      if (e.deltaMode === 1) {
-        delta *= 40; // Default line height estimate
-      } else if (e.deltaMode === 2) {
-        delta *= gallery.clientHeight; // Page scroll
-      }
-
-      // Check if gallery can scroll
-      // We use a small epsilon (1px) for float precision safety
-      const isAtTop = gallery.scrollTop <= 0;
-      const isAtBottom = Math.abs(gallery.scrollHeight - gallery.clientHeight - gallery.scrollTop) <= 1;
-
-      const tryingToScrollDown = delta > 0;
-      const tryingToScrollUp = delta < 0;
-
-      // Determine if we should capture the scroll
-      // Capture if:
-      // 1. Scrolling down AND not at bottom
-      // 2. Scrolling up AND not at top
-      const shouldCapture = (tryingToScrollDown && !isAtBottom) || (tryingToScrollUp && !isAtTop);
-
-      if (shouldCapture) {
-        e.preventDefault();
-        e.stopPropagation(); // Stop event from bubbling to parent
-        gallery.scrollTop += delta;
-      }
-    };
-
-    // Add event listener with passive: false to allow preventDefault
-    section.addEventListener('wheel', handleWheel, { passive: false });
-
-    return () => {
-      section.removeEventListener('wheel', handleWheel);
-    };
-  }, []);
-
-  /**
-   * Track scroll progress within the gallery container
-   * Range: 0 (top) to 1 (bottom)
-   */
-  const { scrollYProgress } = useScroll({
-    container: galleryRef,
-  });
-
-  /**
-   * Parallax transformations for each column
-   * Column 1 & 3: Move down as user scrolls
-   * Column 2: Move up as user scrolls (opposite direction for visual interest)
-   */
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, -400]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, 400]);
-  const y3 = useTransform(scrollYProgress, [0, 1], [0, -350]);
-
-  /**
-   * Duplicate images to create seamless scrolling effect
-   * Each column gets 2x the original images
-   */
-  const col1 = [...col1Images, ...col1Images];
-  const col2 = [...col2Images, ...col2Images];
-  const col3 = [...col3Images, ...col3Images];
+  if (breakpoint === 'tablet') {
+    return (
+      <TabletLayout
+        title={title}
+        description={description}
+        col1Images={col1Images}
+        col2Images={col2Images}
+        col3Images={col3Images}
+      />
+    );
+  }
 
   return (
-    <section ref={sectionRef} className="relative bg-white py-20 md:py-32">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-20 items-start">
-
-          {/* Left: Text Content - Static */}
-          <div className="lg:w-1/3 lg:sticky lg:top-32 flex-shrink-0">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-neutral-900 mb-6 leading-tight">
-              {title}
-            </h2>
-            <p className="text-lg md:text-xl text-neutral-600 font-light leading-relaxed">
-              {description}
-            </p>
-          </div>
-
-          {/* Right: Parallax Gallery - Scrollable */}
-          <div className="lg:w-2/3 flex-grow">
-            <div
-              ref={galleryRef}
-              className="relative h-[600px] md:h-[700px] lg:h-[800px] overflow-y-auto overflow-x-hidden scrollbar-hide"
-            >
-              {/* Top gradient mask for smooth fade effect */}
-              <div className="sticky top-0 left-0 w-full h-24 bg-gradient-to-b from-white via-white/80 to-transparent z-10 pointer-events-none" />
-
-              <div className="grid grid-cols-3 gap-3 md:gap-6 px-1">
-
-                {/* Column 1: Tattoos - Downward parallax */}
-                <motion.div
-                  style={{ y: y1 }}
-                  className="flex flex-col gap-3 md:gap-6"
-                >
-                  {col1.map((src, i) => (
-                    <div
-                      key={`tattoo-${i}`}
-                      className="relative aspect-[3/4] rounded-xl md:rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
-                    >
-                      <img
-                        src={src}
-                        alt={`Tattoo work ${i + 1}`}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    </div>
-                  ))}
-                </motion.div>
-
-                {/* Column 2: Artworks - Upward parallax (opposite direction) */}
-                <motion.div
-                  style={{ y: y2 }}
-                  className="flex flex-col gap-3 md:gap-6 -mt-32"
-                >
-                  {col2.map((src, i) => (
-                    <div
-                      key={`artwork-${i}`}
-                      className="relative aspect-[3/4] rounded-xl md:rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
-                    >
-                      <img
-                        src={src}
-                        alt={`Artwork ${i + 1}`}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    </div>
-                  ))}
-                </motion.div>
-
-                {/* Column 3: Ceramics - Downward parallax */}
-                <motion.div
-                  style={{ y: y3 }}
-                  className="flex flex-col gap-3 md:gap-6"
-                >
-                  {col3.map((src, i) => (
-                    <div
-                      key={`ceramic-${i}`}
-                      className="relative aspect-[3/4] rounded-xl md:rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
-                    >
-                      <img
-                        src={src}
-                        alt={`Ceramic work ${i + 1}`}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    </div>
-                  ))}
-                </motion.div>
-
-              </div>
-
-              {/* Bottom gradient mask */}
-              <div className="sticky bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
+    <DesktopLayout
+      title={title}
+      description={description}
+      col1Images={col1Images}
+      col2Images={col2Images}
+      col3Images={col3Images}
+    />
   );
 };
 
