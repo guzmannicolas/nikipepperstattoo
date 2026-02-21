@@ -1,0 +1,20 @@
+---
+import AboutPreviewSectionLogic from "./AboutPreviewSectionLogic";
+import aboutImage from "../../../assets/home/Niki-about-me.avif";
+
+const { lang, t } = Astro.props;
+
+const basePath = typeof lang === 'string' && lang !== 'en' ? `/${lang}` : '';
+const biographyHref = `${basePath}/biography`;
+---
+
+<AboutPreviewSectionLogic
+  client:visible
+  heading={t("home.aboutTitle")}
+  text1={t("home.aboutText1")}
+  text2={t("home.aboutText2")}
+  ctaLabel={t("home.learnMore")}
+  ctaHref={biographyHref}
+  imageSrc={aboutImage.src}
+  imageAlt={t("home.photoPlaceholder")}
+/>

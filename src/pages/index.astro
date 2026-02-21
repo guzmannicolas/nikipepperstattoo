@@ -1,12 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
-import HeroSection from "../components/sections/HeroSection.astro";
-import FeaturedWork from "../components/sections/FeaturedWork.astro";
-import AboutArtistSection from "../components/sections/AboutArtistSection.astro";
-import StylesSection from "../components/sections/StylesSection.astro";
-import NewsletterSection from "../components/sections/NewsletterSection.astro";
-import AboutPreviewSection from "../components/sections/AboutPreviewSection.astro";
+import HeroSection from "../components/sections/index/HeroSection.astro";
+import FeaturedWork from "../components/sections/index/FeaturedWork.astro";
+import AboutArtistSection from "../components/sections/index/AboutArtistSection.astro";
+import StylesSection from "../components/sections/index/StylesSection.astro";
+import NewsletterSection from "../components/sections/index/NewsletterSection.astro";
+import AboutPreviewSection from "../components/sections/index/AboutPreviewSection.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);

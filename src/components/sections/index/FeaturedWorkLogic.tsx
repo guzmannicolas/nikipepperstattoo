@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
-import { useBreakpoint } from '../../hooks/useBreakpoint';
+import { useBreakpoint } from '../../../hooks/useBreakpoint';
 
 interface FeaturedWorkProps {
   title: string;
