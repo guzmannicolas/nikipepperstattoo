@@ -87,23 +87,35 @@ const MobileLayout: React.FC<{
         </motion.div>
 
         <div className="relative h-[60vh] rounded-2xl overflow-hidden shadow-sm">
-          {images.map((img, i) => (
-            <motion.div
-              key={`mobile-stack-${i}`}
-              className="absolute inset-0"
-              style={{
-                y: `${getTranslateY(i)}%`,
-                zIndex: i + 1,
-              }}
-            >
-              <img
-                src={img.src}
-                alt={img.alt}
-                loading="lazy"
-                className="w-full h-full object-cover"
-              />
-            </motion.div>
-          ))}
+          {images.map((img, i) => {
+            const hasNext = i < images.length - 1;
+            const nextTranslate = hasNext ? getTranslateY(i + 1) : 0;
+            const overlayOpacity = hasNext
+              ? Math.max(0, Math.min(0.75, ((100 - nextTranslate) / 100) * 0.75))
+              : 0;
+
+            return (
+              <motion.div
+                key={`mobile-stack-${i}`}
+                className="absolute inset-0"
+                style={{
+                  y: `${getTranslateY(i)}%`,
+                  zIndex: i + 1,
+                }}
+              >
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                />
+                <div
+                  className="absolute inset-0 bg-black pointer-events-none"
+                  style={{ opacity: overlayOpacity }}
+                />
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -144,17 +156,22 @@ const TabletLayout: React.FC<{
 
   return (
     <section ref={containerRef} className="relative h-[200vh] bg-white">
-      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+      <div className="sticky top-0 h-screen px-5 pt-6 pb-6 flex flex-col overflow-hidden">
         <div className="container mx-auto px-6">
           {/* Text block */}
-          <div className="mb-8 max-w-lg">
-            <h2 className="text-4xl font-serif text-neutral-900 mb-3 leading-tight">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            className="h-[40vh] z-20 bg-white/95 backdrop-blur-sm pb-5 flex flex-col items-center justify-center text-center mb-8"
+          >
+            <h2 className="text-4xl font-serif text-neutral-900 mb-4 leading-tight tracking-tight">
               {title || 'Featured Works'}
             </h2>
-            <p className="text-xl text-neutral-600 font-serif leading-relaxed">
+            <p className="text-2xl text-neutral-600 font-serif leading-relaxed max-w-xl">
               {description}
             </p>
-          </div>
+          </motion.div>
 
           {/* 2-column parallax grid */}
           <div className="relative h-[60vh] overflow-hidden">

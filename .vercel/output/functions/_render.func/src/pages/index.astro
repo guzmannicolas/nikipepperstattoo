@@ -1,0 +1,34 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import HeroSection from "../components/sections/index/HeroSection.astro";
+import FeaturedWork from "../components/sections/index/FeaturedWork.astro";
+import AboutArtistSection from "../components/sections/index/AboutArtistSection.astro";
+import StylesSection from "../components/sections/index/StylesSection.astro";
+import NewsletterSection from "../components/sections/index/NewsletterSection.astro";
+import AboutPreviewSection from "../components/sections/index/AboutPreviewSection.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={`Niki Peppers - ${t('home.title')}`}>
+
+	<!-- Hero Section (componentized) -->
+	<HeroSection lang={lang} t={t} />
+
+	<!-- Featured Work Section -->
+	<FeaturedWork lang={lang} t={t} />
+
+	<!-- About Artist Section (componentized) -->
+	<AboutArtistSection lang={lang} t={t} />
+
+	<!-- Styles Section (componentized) -->
+	<StylesSection t={t} />
+
+	<!-- Newsletter Section (componentized) -->
+	<NewsletterSection t={t} />
+
+	<!-- About Preview (componentized) -->
+	<AboutPreviewSection lang={lang} t={t} />
+</Layout>

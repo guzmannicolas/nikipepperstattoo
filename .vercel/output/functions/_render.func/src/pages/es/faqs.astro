@@ -1,0 +1,135 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import FilterButtons from "../../components/buttons/FilterButtons.astro";
+import FAQList from "../../components/sections/faqs/FAQList.astro";
+import CTASection from "../../components/calltoaction/CTASection.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+type Faq = {
+  category: "tattoos" | "ceramics" | "artworks" | "orders" | "general";
+  question: string;
+  answer: string;
+};
+
+const faqs: Faq[] = [
+  // Tatuajes
+  {
+    category: "tattoos",
+    question: "¿Cómo reservo un tatuaje?",
+    answer:
+      "Enviá tu idea a través del formulario de contacto con referencias y tamaño/ubicación. Te responderé con disponibilidad, un presupuesto y los próximos pasos. Puede requerirse un depósito para asegurar la fecha.",
+  },
+  {
+    category: "tattoos",
+    question: "¿Duele?",
+    answer:
+      "El dolor varía según la persona y la zona del cuerpo. Trabajo con cuidado, tomo descansos cuando es necesario y proporciono instrucciones de cuidado posterior para asegurar un proceso de curación suave.",
+  },
+  {
+    category: "tattoos",
+    question: "¿Cómo debo prepararme?",
+    answer:
+      "Dormí bien, mantente hidratada y comé antes de tu sesión. Evitá el alcohol y anticoagulantes 24 horas antes. Usá ropa cómoda que permita fácil acceso a la zona.",
+  },
+  // Cerámica
+  {
+    category: "ceramics",
+    question: "¿Aceptás pedidos de cerámica personalizados?",
+    answer:
+      "Sí. Compartí tu idea, función, medidas y acabado preferido. Confirmaré la viabilidad y un cronograma estimado antes de comenzar.",
+  },
+  {
+    category: "ceramics",
+    question: "¿Cuánto tiempo lleva una comisión de cerámica?",
+    answer:
+      "Típicamente 3–6 semanas dependiendo de la complejidad, tiempos de secado, esmaltado y disponibilidad del horno.",
+  },
+  {
+    category: "ceramics",
+    question: "¿Tus piezas de cerámica son aptas para lavavajillas/microondas?",
+    answer:
+      "La mayoría de las piezas funcionales son aptas para lavavajillas y microondas a menos que se indique lo contrario. Las piezas escultóricas son solo para exhibición.",
+  },
+  // Obras
+  {
+    category: "artworks",
+    question: "¿Las pinturas originales están disponibles para compra?",
+    answer:
+      "Sí, obras seleccionadas están disponibles. Si te interesa una pieza específica o una comisión, por favor contactame para discutir disponibilidad y precios.",
+  },
+  {
+    category: "artworks",
+    question: "¿Ofrecés impresiones?",
+    answer:
+      "Pueden estar disponibles impresiones de edición limitada para ciertas piezas. Preguntá sobre ediciones y tamaños actuales.",
+  },
+  {
+    category: "artworks",
+    question: "¿Qué medios usás?",
+    answer:
+      "Principalmente óleo y acrílico sobre lienzo, acuarela sobre papel y técnica mixta dependiendo de la serie.",
+  },
+  // Pedidos / Comisiones
+  {
+    category: "orders",
+    question: "¿Cómo funcionan las comisiones?",
+    answer:
+      "Discutimos tu idea, cronograma, presupuesto y referencias. Propondré un concepto y presupuesto. Un depósito inicia el proyecto; el saldo se paga al entregar.",
+  },
+  {
+    category: "orders",
+    question: "¿Qué métodos de pago aceptás?",
+    answer:
+      "Se aceptan métodos digitales comunes y transferencias bancarias. Los detalles se proporcionarán durante la reserva.",
+  },
+  // General
+  {
+    category: "general",
+    question: "¿Dónde estás ubicada?",
+    answer:
+      "Con base en Buenos Aires, Argentina. Algunos proyectos pueden organizarse de forma remota—no dudes en preguntar.",
+  },
+  {
+    category: "general",
+    question: "¿Cuánto tiempo para recibir una respuesta?",
+    answer:
+      "Típicamente respondo dentro de 1–3 días hábiles. Si es urgente, mencionalo en tu mensaje.",
+  },
+];
+
+// Prepare filter buttons
+const filterButtons = [
+  { label: "Todos", value: "all", active: true },
+  { label: t("faqs.categories.tattoos"), value: "tattoos" },
+  { label: t("faqs.categories.ceramics"), value: "ceramics" },
+  { label: t("faqs.categories.artworks"), value: "artworks" },
+  { label: t("faqs.categories.orders"), value: "orders" },
+  { label: t("faqs.categories.general"), value: "general" },
+];
+---
+
+<Layout
+  title={`${t("faqs.title")} - Niki Peppers`}
+  description={t("faqs.description")}
+>
+  <section class="py-20 px-4 max-w-5xl mx-auto">
+    <div class="text-center mb-10">
+      <h1 class="text-5xl font-bold mb-4 text-black">{t("faqs.title")}</h1>
+      <p class="text-neutral-600 text-lg max-w-2xl mx-auto">
+        {t("faqs.description")}
+      </p>
+    </div>
+
+    <!-- Category Filters -->
+    <FilterButtons buttons={filterButtons} />
+
+    <!-- FAQ List -->
+    <FAQList faqs={faqs} />
+  </section>
+
+  <!-- CTA Section -->
+  <CTASection lang={lang} t={t} ns="faqs" />
+</Layout>

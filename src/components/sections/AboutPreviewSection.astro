@@ -1,45 +1,20 @@
 ---
-import { Image } from "astro:assets";
+import AboutPreviewSectionLogic from "./AboutPreviewSectionLogic";
 import aboutImage from "../../assets/home/Niki-about-me.avif";
 
 const { lang, t } = Astro.props;
+
+const basePath = typeof lang === 'string' && lang !== 'en' ? `/${lang}` : '';
+const biographyHref = `${basePath}/biography`;
 ---
 
-<section class="py-20 px-4 max-w-7xl mx-auto">
-  <div class="grid md:grid-cols-2 gap-12 items-center">
-    <div>
-      <h2 class="text-4xl font-bold mb-6 text-black">{t("home.aboutTitle")}</h2>
-      <p class="text-neutral-600 text-lg mb-6">{t("home.aboutText1")}</p>
-      <p class="text-neutral-600 text-lg mb-8">{t("home.aboutText2")}</p>
-      <a
-        href={`/${lang === "en" ? "" : lang + "/"}biography`}
-        class="inline-flex items-center text-green-600 hover:text-green-500 font-semibold"
-      >
-        {t("home.learnMore")}
-        <svg
-          class="w-5 h-5 ml-2"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-        </svg>
-      </a>
-    </div>
-    <div class="group relative rounded-xl overflow-hidden bg-neutral-100">
-      <Image
-        src={aboutImage}
-        alt="Niki Peppers"
-        class="w-full h-96 object-contain rounded-xl transition-all duration-300"
-      />
-      <div
-        class="absolute inset-0 border-4 border-transparent group-hover:border-green-600 rounded-xl transition-all duration-300 pointer-events-none"
-      >
-      </div>
-    </div>
-  </div>
-</section>
+<AboutPreviewSectionLogic
+  client:visible
+  heading={t("home.aboutTitle")}
+  text1={t("home.aboutText1")}
+  text2={t("home.aboutText2")}
+  ctaLabel={t("home.learnMore")}
+  ctaHref={biographyHref}
+  imageSrc={aboutImage.src}
+  imageAlt={t("home.photoPlaceholder")}
+/>

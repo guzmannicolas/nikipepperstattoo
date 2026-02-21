@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { motion, type Variants } from 'framer-motion';
 
 interface StyleCard {
@@ -47,6 +47,33 @@ const StylesSectionLogic: React.FC<StylesSectionProps> = ({
   ctaAllLabel,
   ctaAllHref,
 }) => {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const tripledCards = useMemo(() => [...cards, ...cards, ...cards], [cards]);
+  const baseCount = cards.length;
+
+  useEffect(() => {
+    const el = carouselRef.current;
+    if (!el || baseCount === 0) return;
+
+    const gapPx = 16; // gap-4
+    const firstCard = el.querySelector<HTMLElement>('[data-card-item]');
+    const cardWidth = firstCard ? firstCard.offsetWidth : 0;
+    const offset = baseCount * (cardWidth + gapPx);
+    el.scrollLeft = offset;
+
+    const handleLoop = () => {
+      const maxOffset = offset * 2;
+      if (el.scrollLeft <= gapPx) {
+        el.scrollLeft += offset;
+      } else if (el.scrollLeft >= maxOffset + gapPx) {
+        el.scrollLeft -= offset;
+      }
+    };
+
+    el.addEventListener('scroll', handleLoop, { passive: true });
+    return () => el.removeEventListener('scroll', handleLoop);
+  }, [baseCount]);
+
   return (
     <section className="py-20 px-4 max-w-7xl mx-auto">
       <div className="text-center mb-12 space-y-3">
@@ -59,22 +86,66 @@ const StylesSectionLogic: React.FC<StylesSectionProps> = ({
         ) : null}
       </div>
 
+      {/* Mobile & Tablet: swipeable infinite carousel (native scroll, snap) */}
+      <div className="lg:hidden relative overflow-hidden rounded-2xl shadow-lg">
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-white to-transparent z-10" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-white to-transparent z-10" />
+
+        <div
+          ref={carouselRef}
+          className="styles-carousel flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth px-2 pb-4 [-ms-overflow-style:none] [scrollbar-width:none]"
+          style={{ scrollbarWidth: 'none' }}
+        >
+          <style>{`.styles-carousel::-webkit-scrollbar{display:none;}`}</style>
+          {tripledCards.map((style, idx) => {
+            const filterParam = style.key === 'animals' ? 'animals' : style.key === 'colour' ? 'colour' : 'fineline';
+            const cardHref = `${style.href}?filter=${encodeURIComponent(filterParam)}`;
+            return (
+              <article
+                key={`${style.key}-${idx}`}
+                data-card-item
+                className="styles-carousel relative flex-none snap-center w-[78vw] sm:w-[70vw] md:w-[60vw] h-[420px] md:h-[480px] overflow-hidden rounded-2xl bg-neutral-900 text-white shadow-md cursor-pointer"
+                onClick={() => { window.location.href = cardHref; }}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') window.location.href = cardHref; }}
+                tabIndex={0}
+                role="link"
+              >
+                <img
+                  src={style.image}
+                  alt={style.title}
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent" />
+                <div className="absolute inset-0 bg-black/20" />
+                <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col gap-3 p-8 text-white">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-base uppercase tracking-[0.14em]">
+                    {style.badge}
+                  </span>
+                  <p className="text-lg md:text-xl text-white/85 leading-relaxed">{style.description}</p>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Desktop: static grid */}
       <motion.div
-        className="grid gap-6 md:grid-cols-3"
+        className="hidden lg:grid gap-6 lg:grid-cols-3"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
       >
         {cards.map((style, idx) => {
-          // Construir la URL con filtro para cada estilo
           const filterParam = style.key === 'animals' ? 'animals' : style.key === 'colour' ? 'colour' : 'fineline';
           const cardHref = `${style.href}?filter=${encodeURIComponent(filterParam)}`;
           return (
             <motion.article
               key={style.key}
               variants={cardVariants}
-              className={`group relative overflow-hidden rounded-2xl bg-neutral-900 text-white shadow-lg transition duration-500 will-change-transform min-h-[420px] md:min-h-[480px] cursor-pointer ${idx === 1 ? 'md:translate-y-6' : ''}`}
+              className={`group relative overflow-hidden rounded-2xl bg-neutral-900 text-white shadow-lg transition duration-500 will-change-transform min-h-[420px] lg:min-h-[480px] cursor-pointer ${idx === 1 ? 'lg:translate-y-6' : ''}`}
               tabIndex={0}
               role="link"
               onClick={() => window.location.href = cardHref}
