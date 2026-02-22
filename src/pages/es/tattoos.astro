@@ -3,11 +3,9 @@ import Layout from "../../layouts/Layout.astro";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import CrossPromo from "../../components/CrossPromo.astro";
 import FilterButtons from "../../components/buttons/FilterButtons.astro";
-import LoadMore from "../../components/buttons/LoadMore.astro";
+import HeroTitlePages from "../../components/sections/HeroTitlePages.astro";
 import Gallery from "../../components/ui/Gallery.astro";
 import CTASection from "../../components/calltoaction/CTASection.astro";
-import { Image } from "astro:assets";
-// Import tattoo assets so Astro can process them
 import tattoosData from "../../data/tattoos.json";
 import koiFish from "../../assets/tattoos/animals/koi-fish-tattoo-lily-pads-water-lilies.jpeg";
 import lotusForearm from "../../assets/tattoos/botanical/forearm-pink-lotus-tattoo-leaves.jpg";
@@ -23,6 +21,10 @@ import blueFlower from "../../assets/tattoos/botanical/blue-flower-tattoo-green-
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+// Leer filtro de la query
+const url = new URL(Astro.url);
+const filterParam = url.searchParams.get('filter') || 'all';
 // Resolve JSON metadata to actual imported assets so Astro can process them
 const assetMap = {
 	"koi-fish-tattoo-lily-pads-water-lilies.jpeg": koiFish,
@@ -37,7 +39,7 @@ const assetMap = {
 	"purple-white-flower-forearm-tattoo-green-leaves.jpg": purpleWhite,
 	"blue-flower-tattoo-green-leaves-forearm.jpg": blueFlower,
 };
-const galleryItems = tattoosData.items.map((item) => {
+let galleryItems = tattoosData.items.map((item) => {
 	const srcPath = item.images && item.images[0] ? item.images[0].path : "";
 	const filename = srcPath ? srcPath.split("/").pop() : "";
 	const has =
@@ -45,27 +47,29 @@ const galleryItems = tattoosData.items.map((item) => {
 	const image = has ? (assetMap as any)[filename] : srcPath;
 	return {
 		image,
-		title: item.title.es || item.title.en,
+		title: item.title.en,
 		alt: item.images && item.images[0] ? item.images[0].alt || "" : "",
 		categories: item.category,
-		displayCategories: item.category_es,
 	};
 });
+if (filterParam && filterParam !== 'all') {
+	galleryItems = galleryItems.filter(item => {
+		if (!item.categories) return false;
+		if (Array.isArray(item.categories)) {
+			return item.categories.includes(filterParam);
+		}
+		return String(item.categories).split(',').map(s => s.trim()).includes(filterParam);
+	});
+}
 ---
 
 <Layout
 	title={`${t("tattoos.title")} - Niki Peppers`}
 	description={t("tattoos.description")}
 >
-	<section class="py-20 px-4 max-w-7xl mx-auto">
-		<div class="text-center mb-16">
-			<h1 class="text-5xl font-bold mb-4 text-black">
-				{t("tattoos.title")}
-			</h1>
-			<p class="text-neutral-600 text-lg max-w-2xl mx-auto">
-				{t("tattoos.description")}
-			</p>
-		</div>
+	<section class="py-29 px-4 max-w-7xl mx-auto">
+		<!-- Hero Title Pages Section (componentized) -->
+		<HeroTitlePages lang={lang} t={t} ns="tattoos" />
 
 		<Gallery
 			items={galleryItems}
@@ -79,27 +83,31 @@ const galleryItems = tattoosData.items.map((item) => {
 							{
 								label: t("tattoos.filterAll"),
 								value: "all",
-								active: true,
+								active: filterParam === 'all',
 							},
 							{
 								label: t("tattoos.filterBotanical"),
 								value: "botanical",
+								active: filterParam === 'botanical',
 							},
 							{
 								label: t("tattoos.filterColour"),
 								value: "colour",
+								active: filterParam === 'colour',
 							},
 							{
 								label: t("tattoos.filterFineline"),
 								value: "fineline",
+								active: filterParam === 'fineline',
 							},
 							{
 								label: t("tattoos.filterAnimals"),
 								value: "animals",
+								active: filterParam === 'animals',
 							},
-							{ label: t("tattoos.filterOtros"), value: "otros" },
+							{ label: t("tattoos.filterOtros"), value: "otros", active: filterParam === 'otros' },
 						];
-						return <FilterButtons buttons={buttons} />;
+												return <FilterButtons buttons={buttons} />;
 					})()
 				}
 			</div>

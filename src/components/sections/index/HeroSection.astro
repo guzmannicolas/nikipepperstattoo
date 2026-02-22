@@ -7,7 +7,7 @@ const { lang, t } = Astro.props;
 
 <HeroSectionLogic
   client:load
-  title="Transform your space into a botanical beauty."
+  title={t("home.heroTitle")}
   wordsliderhero={t("home.wordsliderhero")}
   ctaPrimary={t("home.viewWorks")}
   ctaSecondary={t("home.bookConsultation")}

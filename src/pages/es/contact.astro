@@ -1,20 +1,16 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import HeroTitlePages from "../../components/sections/HeroTitlePages.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
 <Layout title={`${t('contact.title')} - Niki Peppers`} description={t('contact.description')}>
-	<section class="py-20 px-4 max-w-7xl mx-auto">
-		<!-- Header -->
-		<div class="text-center mb-16">
-			<h1 class="text-5xl font-bold mb-4 text-black">{t('contact.title')}</h1>
-			<p class="text-neutral-600 text-lg max-w-2xl mx-auto">
-				{t('contact.subtitle')}
-			</p>
-		</div>
+	<section class="py-29 px-4 max-w-7xl mx-auto">
+		<!-- Hero Title Pages Section (componentized) -->
+		<HeroTitlePages lang={lang} t={t} ns="contact" />
 
 		<div class="grid md:grid-cols-2 gap-12">
 			<!-- Contact Form -->

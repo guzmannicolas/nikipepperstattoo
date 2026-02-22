@@ -4,6 +4,7 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import FilterButtons from "../../components/buttons/FilterButtons.astro";
 import FAQList from "../../components/sections/faqs/FAQList.astro";
 import CTASection from "../../components/calltoaction/CTASection.astro";
+import HeroTitlePages from "../../components/sections/HeroTitlePages.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -15,94 +16,94 @@ type Faq = {
 };
 
 const faqs: Faq[] = [
-  // Tatuajes
+  // Tattoos
   {
     category: "tattoos",
-    question: "¿Cómo reservo un tatuaje?",
+    question: "How do I book a tattoo?",
     answer:
-      "Enviá tu idea a través del formulario de contacto con referencias y tamaño/ubicación. Te responderé con disponibilidad, un presupuesto y los próximos pasos. Puede requerirse un depósito para asegurar la fecha.",
-  },
-  {
-    category: "tattoos",
-    question: "¿Duele?",
-    answer:
-      "El dolor varía según la persona y la zona del cuerpo. Trabajo con cuidado, tomo descansos cuando es necesario y proporciono instrucciones de cuidado posterior para asegurar un proceso de curación suave.",
+      "Send your idea via the contact form with references and size/placement. I'll reply with availability, an estimate, and the next steps. A deposit may be required to secure a date.",
   },
   {
     category: "tattoos",
-    question: "¿Cómo debo prepararme?",
+    question: "Does it hurt?",
     answer:
-      "Dormí bien, mantente hidratada y comé antes de tu sesión. Evitá el alcohol y anticoagulantes 24 horas antes. Usá ropa cómoda que permita fácil acceso a la zona.",
+      "Pain varies by person and body area. I work gently, take breaks when needed, and provide aftercare instructions to ensure a smooth healing process.",
   },
-  // Cerámica
+  {
+    category: "tattoos",
+    question: "How should I prepare?",
+    answer:
+      "Sleep well, stay hydrated, and eat before your session. Avoid alcohol and blood thinners 24 hours prior. Wear comfortable clothing that provides easy access to the area.",
+  },
+  // Ceramics
   {
     category: "ceramics",
-    question: "¿Aceptás pedidos de cerámica personalizados?",
+    question: "Do you accept custom ceramic orders?",
     answer:
-      "Sí. Compartí tu idea, función, medidas y acabado preferido. Confirmaré la viabilidad y un cronograma estimado antes de comenzar.",
+      "Yes. Share your idea, function, measurements, and preferred finish. I'll confirm feasibility and an estimated timeline before starting.",
   },
   {
     category: "ceramics",
-    question: "¿Cuánto tiempo lleva una comisión de cerámica?",
+    question: "How long does a ceramic commission take?",
     answer:
-      "Típicamente 3–6 semanas dependiendo de la complejidad, tiempos de secado, esmaltado y disponibilidad del horno.",
+      "Typically 3–6 weeks depending on complexity, drying times, glazing, and kiln availability.",
   },
   {
     category: "ceramics",
-    question: "¿Tus piezas de cerámica son aptas para lavavajillas/microondas?",
+    question: "Are your ceramic pieces dishwasher/microwave safe?",
     answer:
-      "La mayoría de las piezas funcionales son aptas para lavavajillas y microondas a menos que se indique lo contrario. Las piezas escultóricas son solo para exhibición.",
+      "Most functional pieces are dishwasher safe and microwave friendly unless stated otherwise. Sculptural pieces are for display only.",
   },
-  // Obras
+  // Artworks
   {
     category: "artworks",
-    question: "¿Las pinturas originales están disponibles para compra?",
+    question: "Are original paintings available for purchase?",
     answer:
-      "Sí, obras seleccionadas están disponibles. Si te interesa una pieza específica o una comisión, por favor contactame para discutir disponibilidad y precios.",
-  },
-  {
-    category: "artworks",
-    question: "¿Ofrecés impresiones?",
-    answer:
-      "Pueden estar disponibles impresiones de edición limitada para ciertas piezas. Preguntá sobre ediciones y tamaños actuales.",
+      "Yes, selected works are available. If you're interested in a specific piece or commission, please reach out to discuss availability and pricing.",
   },
   {
     category: "artworks",
-    question: "¿Qué medios usás?",
+    question: "Do you offer prints?",
     answer:
-      "Principalmente óleo y acrílico sobre lienzo, acuarela sobre papel y técnica mixta dependiendo de la serie.",
+      "Limited edition prints may be available for certain pieces. Ask about current editions and sizes.",
   },
-  // Pedidos / Comisiones
+  {
+    category: "artworks",
+    question: "What mediums do you use?",
+    answer:
+      "Primarily oil and acrylic on canvas, watercolor on paper, and mixed media depending on the series.",
+  },
+  // Orders / Commissions
   {
     category: "orders",
-    question: "¿Cómo funcionan las comisiones?",
+    question: "How do commissions work?",
     answer:
-      "Discutimos tu idea, cronograma, presupuesto y referencias. Propondré un concepto y presupuesto. Un depósito inicia el proyecto; el saldo se paga al entregar.",
+      "We discuss your idea, timeline, budget, and references. I'll propose a concept and quote. A deposit starts the project; the balance is due upon delivery.",
   },
   {
     category: "orders",
-    question: "¿Qué métodos de pago aceptás?",
+    question: "What payment methods do you accept?",
     answer:
-      "Se aceptan métodos digitales comunes y transferencias bancarias. Los detalles se proporcionarán durante la reserva.",
+      "Common digital methods and bank transfers are accepted. Details will be provided during booking.",
   },
   // General
   {
     category: "general",
-    question: "¿Dónde estás ubicada?",
+    question: "Where are you located?",
     answer:
-      "Con base en Buenos Aires, Argentina. Algunos proyectos pueden organizarse de forma remota—no dudes en preguntar.",
+      "Based in Buenos Aires, Argentina. Some projects can be arranged remotely—feel free to ask.",
   },
   {
     category: "general",
-    question: "¿Cuánto tiempo para recibir una respuesta?",
+    question: "How long to receive a reply?",
     answer:
-      "Típicamente respondo dentro de 1–3 días hábiles. Si es urgente, mencionalo en tu mensaje.",
+      "I typically respond within 1–3 business days. If it's urgent, mention it in your message.",
   },
 ];
 
 // Prepare filter buttons
 const filterButtons = [
-  { label: "Todos", value: "all", active: true },
+  { label: "All", value: "all", active: true },
   { label: t("faqs.categories.tattoos"), value: "tattoos" },
   { label: t("faqs.categories.ceramics"), value: "ceramics" },
   { label: t("faqs.categories.artworks"), value: "artworks" },
@@ -115,13 +116,9 @@ const filterButtons = [
   title={`${t("faqs.title")} - Niki Peppers`}
   description={t("faqs.description")}
 >
-  <section class="py-20 px-4 max-w-5xl mx-auto">
-    <div class="text-center mb-10">
-      <h1 class="text-5xl font-bold mb-4 text-black">{t("faqs.title")}</h1>
-      <p class="text-neutral-600 text-lg max-w-2xl mx-auto">
-        {t("faqs.description")}
-      </p>
-    </div>
+  <section class="py-29 px-4 max-w-5xl mx-auto">
+		<!-- Hero Title Pages Section (componentized) -->
+		<HeroTitlePages lang={lang} t={t} ns="faqs" />
 
     <!-- Category Filters -->
     <FilterButtons buttons={filterButtons} />
