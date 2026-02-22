@@ -19,6 +19,7 @@
     "title": "Niki Peppers",
     "subtitle": "Artista multidisciplinaria",
     "heroTitle": "Transforma tu espacio en una belleza botánica.",
+    "viewMore": "Ver más",
     "wordsliderhero": " Arte * Pintura * Tatuajes * Cerámica * Murales * Diseños *",
     "viewWorks": "Ver Trabajos",
     "bookConsultation": "Agendar Consulta",
@@ -168,6 +169,56 @@
       "artworks": "Obras",
       "orders": "Comisiones y Pedidos",
       "general": "General"
+    },
+    "questions": {
+      "tattoos": {
+        "book": "¿Cómo reservo un tatuaje?",
+        "pain": "¿Duele?",
+        "prepare": "¿Cómo debo prepararme?"
+      },
+      "ceramics": {
+        "custom": "¿Aceptas pedidos personalizados de cerámica?",
+        "timeline": "¿Cuánto tarda una comisión de cerámica?",
+        "safe": "¿Las piezas de cerámica son aptas para lavavajillas/microondas?"
+      },
+      "artworks": {
+        "purchase": "¿Las obras originales están a la venta?",
+        "prints": "¿Ofreces prints?",
+        "mediums": "¿Qué técnicas utilizas?"
+      },
+      "orders": {
+        "process": "¿Cómo funcionan las comisiones?",
+        "payments": "¿Qué métodos de pago aceptas?"
+      },
+      "general": {
+        "location": "¿Dónde estás ubicada?",
+        "reply": "¿Cuánto tardas en responder?"
+      }
+    },
+    "answers": {
+      "tattoos": {
+        "book": "Enviá tu idea por el formulario de contacto con referencias y tamaño/ubicación. Te responderé con disponibilidad, presupuesto y siguientes pasos. Puede requerirse una seña para reservar.",
+        "pain": "El dolor varía según la persona y la zona. Trabajo con suavidad, hacemos pausas si es necesario y te doy instrucciones de cuidado para una buena cicatrización.",
+        "prepare": "Dormí bien, hidratate y comé antes de la sesión. Evitá alcohol y anticoagulantes 24 horas antes. Usá ropa cómoda que deje acceder a la zona."
+      },
+      "ceramics": {
+        "custom": "Sí. Contame tu idea, función, medidas y acabado preferido. Confirmo viabilidad y plazo estimado antes de comenzar.",
+        "timeline": "Usualmente 3–6 semanas según complejidad, tiempos de secado, esmaltado y disponibilidad de horno.",
+        "safe": "La mayoría de las piezas funcionales son aptas para lavavajillas y microondas salvo que se indique lo contrario. Las piezas escultóricas son solo decorativas."
+      },
+      "artworks": {
+        "purchase": "Sí, algunas obras están disponibles. Si te interesa una pieza o una comisión, escribime para ver disponibilidad y precio.",
+        "prints": "Puede haber ediciones limitadas de ciertos trabajos. Consultá por ediciones y tamaños vigentes.",
+        "mediums": "Principalmente óleo y acrílico sobre lienzo, acuarela sobre papel y técnica mixta según la serie."
+      },
+      "orders": {
+        "process": "Conversamos tu idea, plazos, presupuesto y referencias. Propongo un concepto y presupuesto. Una seña inicia el proyecto; el resto se abona al entregar.",
+        "payments": "Acepto medios digitales comunes y transferencias. Los detalles se comparten al agendar."
+      },
+      "general": {
+        "location": "Estoy en Buenos Aires, Argentina. Algunos proyectos se pueden coordinar a distancia—preguntame sin problema.",
+        "reply": "Suelo responder en 1–3 días hábiles. Si es urgente, aclaralo en el mensaje."
+      }
     },
     "ctaTitle": "¿No encontraste tu respuesta?",
     "ctaSubtitle": "Hablemos para resolverlo.",

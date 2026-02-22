@@ -19,6 +19,7 @@
     "title": "Niki Peppers",
     "subtitle": "Multidisciplinary artist",
     "heroTitle": "Transform your space into a botanical beauty.",
+    "viewMore": "View more",
     "wordsliderhero": " Art * Painting * Tattoos * Ceramics * Murals * Designs *",
     "viewWorks": "View Works",
     "bookConsultation": "Book a Consultation",
@@ -168,6 +169,56 @@
       "artworks": "Artworks",
       "orders": "Commissions & Orders",
       "general": "General"
+    },
+    "questions": {
+      "tattoos": {
+        "book": "How do I book a tattoo?",
+        "pain": "Does it hurt?",
+        "prepare": "How should I prepare?"
+      },
+      "ceramics": {
+        "custom": "Do you accept custom ceramic orders?",
+        "timeline": "How long does a ceramic commission take?",
+        "safe": "Are your ceramic pieces dishwasher/microwave safe?"
+      },
+      "artworks": {
+        "purchase": "Are original paintings available for purchase?",
+        "prints": "Do you offer prints?",
+        "mediums": "What mediums do you use?"
+      },
+      "orders": {
+        "process": "How do commissions work?",
+        "payments": "What payment methods do you accept?"
+      },
+      "general": {
+        "location": "Where are you located?",
+        "reply": "How long to receive a reply?"
+      }
+    },
+    "answers": {
+      "tattoos": {
+        "book": "Send your idea via the contact form with references and size/placement. I'll reply with availability, an estimate, and the next steps. A deposit may be required to secure a date.",
+        "pain": "Pain varies by person and body area. I work gently, take breaks when needed, and provide aftercare instructions to ensure a smooth healing process.",
+        "prepare": "Sleep well, stay hydrated, and eat before your session. Avoid alcohol and blood thinners 24 hours prior. Wear comfortable clothing that provides easy access to the area."
+      },
+      "ceramics": {
+        "custom": "Yes. Share your idea, function, measurements, and preferred finish. I'll confirm feasibility and an estimated timeline before starting.",
+        "timeline": "Typically 3–6 weeks depending on complexity, drying times, glazing, and kiln availability.",
+        "safe": "Most functional pieces are dishwasher safe and microwave friendly unless stated otherwise. Sculptural pieces are for display only."
+      },
+      "artworks": {
+        "purchase": "Yes, selected works are available. If you're interested in a specific piece or commission, please reach out to discuss availability and pricing.",
+        "prints": "Limited edition prints may be available for certain pieces. Ask about current editions and sizes.",
+        "mediums": "Primarily oil and acrylic on canvas, watercolor on paper, and mixed media depending on the series."
+      },
+      "orders": {
+        "process": "We discuss your idea, timeline, budget, and references. I'll propose a concept and quote. A deposit starts the project; the balance is due upon delivery.",
+        "payments": "Common digital methods and bank transfers are accepted. Details will be provided during booking."
+      },
+      "general": {
+        "location": "Based in Buenos Aires, Argentina. Some projects can be arranged remotely—feel free to ask.",
+        "reply": "I typically respond within 1–3 business days. If it's urgent, mention it in your message."
+      }
     },
     "ctaTitle": "Didn't find your answer?",
     "ctaSubtitle": "Get in touch to discuss.",
