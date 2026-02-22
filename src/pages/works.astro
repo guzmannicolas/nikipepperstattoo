@@ -22,11 +22,15 @@ const images = import.meta.glob(
 const galleryItems = paintings.map((p) => {
 	const imagePath = p.image;
 	const imageModule = images[imagePath];
+	const localizedTitle = p.title?.[lang] || p.title?.en || "";
+	const localizedTechnique = lang === "es" ? p.technique_es || p.technique : p.technique;
+	const displayCategories = t(`artworks.filters.${p.series}`) || p.series;
 	return {
 		...p,
-		title: p.title.en,
-		technique: p.technique,
+		title: localizedTitle,
+		technique: localizedTechnique,
 		categories: p.series,
+		displayCategories,
 		image: imageModule ? (imageModule as any).default : "",
 	};
 });

@@ -30,9 +30,9 @@ const assetMap = {
 import FilterButtons from "../../components/buttons/FilterButtons.astro";
 import Gallery from "../../components/ui/Gallery.astro";
 import CrossPromo from "../../components/CrossPromo.astro";
-import LoadMore from "../../components/buttons/LoadMore.astro";
 import AboutCeramicsSection from "../../components/sections/ceramics/AboutCeramicsSection.astro";
 import CTASection from "../../components/calltoaction/CTASection.astro";
+import HeroTitlePages from "../../components/sections/HeroTitlePages.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -45,10 +45,9 @@ const galleryItems = ceramicsData.items.map((item) => {
 	const image = has ? (assetMap as any)[filename] : srcPath;
 	return {
 		image,
-		title: item.title.es || item.title.en,
+		title: item.title.en,
 		alt: item.images && item.images[0] ? item.images[0].alt || "" : "",
 		categories: item.category,
-		displayCategories: item.category_es,
 	};
 });
 ---
@@ -57,15 +56,9 @@ const galleryItems = ceramicsData.items.map((item) => {
 	title={`${t("ceramics.title")} - Niki Peppers`}
 	description={t("ceramics.description")}
 >
-	<section class="py-20 px-4 max-w-7xl mx-auto">
-		<div class="text-center mb-16">
-			<h1 class="text-5xl font-bold mb-4 text-black">
-				{t("ceramics.title")}
-			</h1>
-			<p class="text-neutral-600 text-lg max-w-2xl mx-auto">
-				{t("ceramics.description")}
-			</p>
-		</div>
+	<section class="py-29 px-4 max-w-7xl mx-auto">
+		<!-- Hero Title Pages Section (componentized) -->
+		<HeroTitlePages lang={lang} t={t} ns="ceramics" />
 
 		<!-- Unified Gallery component (replaces manual grid + lightbox) -->
 		<Gallery

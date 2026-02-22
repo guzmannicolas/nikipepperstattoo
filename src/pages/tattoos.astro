@@ -45,11 +45,17 @@ let galleryItems = tattoosData.items.map((item) => {
 	const has =
 		filename && Object.prototype.hasOwnProperty.call(assetMap, filename);
 	const image = has ? (assetMap as any)[filename] : srcPath;
+	const localizedTitle = item.title?.[lang] || item.title?.en || "";
+	const localizedCategories =
+		lang === "es"
+			? item.category_es || item.category || ""
+			: item.category || "";
 	return {
 		image,
-		title: item.title.en,
+		title: localizedTitle,
 		alt: item.images && item.images[0] ? item.images[0].alt || "" : "",
 		categories: item.category,
+		displayCategories: localizedCategories,
 	};
 });
 if (filterParam && filterParam !== 'all') {
