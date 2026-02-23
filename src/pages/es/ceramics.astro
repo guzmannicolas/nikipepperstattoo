@@ -29,7 +29,7 @@ const assetMap = {
 };
 import FilterButtons from "../../components/buttons/FilterButtons.astro";
 import Gallery from "../../components/ui/Gallery.astro";
-import CrossPromo from "../../components/CrossPromo.astro";
+import CrossPromo from "../../components/calltoaction/CrossPromo.astro";
 import AboutCeramicsSection from "../../components/sections/ceramics/AboutCeramicsSection.astro";
 import CTASection from "../../components/calltoaction/CTASection.astro";
 import HeroTitlePages from "../../components/sections/HeroTitlePages.astro";
@@ -43,11 +43,17 @@ const galleryItems = ceramicsData.items.map((item) => {
 	const has =
 		filename && Object.prototype.hasOwnProperty.call(assetMap, filename);
 	const image = has ? (assetMap as any)[filename] : srcPath;
+	const localizedTitle = item.title?.[lang] || item.title?.en || "";
+	const localizedCategories =
+		lang === "es"
+			? item.category_es || item.category || ""
+			: item.category || "";
 	return {
 		image,
-		title: item.title.en,
+		title: localizedTitle,
 		alt: item.images && item.images[0] ? item.images[0].alt || "" : "",
 		categories: item.category,
+		displayCategories: localizedCategories,
 	};
 });
 ---
