@@ -210,6 +210,7 @@ Ver detalles completos en `.ai/global/ui-design.md`
 - [x] Sección About
 - [x] Optimización de imágenes
  - [x] `AboutArtistSectionLogic` refactor: componente React + Framer Motion (entrance animations y fondo rotado)
+ - [x] CrossPromo component: improved cross-promo with random selection of 3 cards (tattoos, ceramics, biography, works, murals), excludes current page; murals show a gradient fallback with title when no image; added related i18n keys (e.g. `home.viewMore`, `artworks.*`).
 
 ### 🚧 En Progreso
 - [ ] Formulario de contacto (integración con servicio externo)
