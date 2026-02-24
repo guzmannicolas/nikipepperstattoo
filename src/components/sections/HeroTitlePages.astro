@@ -1,9 +1,18 @@
 ---
 const { lang, t, ns = 'tattoos' } = Astro.props as { lang?: string; t: any; ns?: string };
+const backgroundImage = '/images/home/background-bg-hero.jpg';
 ---
 
+<section class="relative overflow-hidden bg-white mb-16 w-screen max-w-none left-1/2 right-1/2 ml-[-50vw] mr-[-50vw]">
+	<!-- Background image + subtle bottom fade -->
+	<div
+		class="absolute inset-0 opacity-80"
+		style={`background-image: url(${backgroundImage}); background-size: cover; background-position: center;`}
+	></div>
+	<div class="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent"></div>
+
 	<!-- Content -->
-	<div class="relative z-10 text-center mb-16">
+	<div class="relative z-10 text-center px-6 py-16 max-w-7xl mx-auto">
 		<h1 class="text-5xl font-serif mb-4 text-black">
 			{t(`${ns}.title`)}
 		</h1>
@@ -11,3 +20,4 @@ const { lang, t, ns = 'tattoos' } = Astro.props as { lang?: string; t: any; ns?:
 			{t(`${ns}.description`)}
 		</p>
 	</div>
+</section>
