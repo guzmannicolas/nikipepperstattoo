@@ -37,3 +37,6 @@ Thumbs.db
 !.github/
 !.husky/
 !.gitignore
+
+.vercel
+.env*.local

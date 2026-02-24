@@ -1,0 +1,102 @@
+---
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import tattooHero from "../../assets/tattoos/botanical/forearm-pink-lotus-tattoo-leaves.jpg";
+import ceramicHero from "../../assets/ceramics/Mateta Pisces - Front.avif";
+import bioHero from "../../assets/home/Niki-about-me.avif";
+import worksHero from "../../assets/works/on_demand/pet-portrait.avif";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const basePath = lang === "en" ? "" : `${lang}/`;
+
+const pathSegments = Astro.url.pathname.replace(/\/+$/, "").split("/").filter(Boolean);
+const currentSlug = pathSegments[0] === "es" ? pathSegments[1] ?? "index" : pathSegments[0] ?? "index";
+
+const cards = [
+  {
+    slug: "tattoos",
+    href: `/${basePath}tattoos`,
+    title: t("artworks.exploreTattoos"),
+    img: tattooHero,
+    alt: t("tattoos.title"),
+  },
+  {
+    slug: "ceramics",
+    href: `/${basePath}ceramics`,
+    title: t("artworks.exploreCeramics"),
+    img: ceramicHero,
+    alt: t("ceramics.title"),
+  },
+  {
+    slug: "biography",
+    href: `/${basePath}biography`,
+    title: t("artworks.exploreAbout"),
+    img: bioHero,
+    alt: t("biography.title"),
+  },
+  {
+    slug: "works",
+    href: `/${basePath}works`,
+    title: t("artworks.title"),
+    img: worksHero,
+    alt: t("artworks.title"),
+  },
+  {
+    slug: "murals",
+    href: `/${basePath}murals`,
+    title: t("murals.title"),
+    img: null,
+    alt: t("murals.title"),
+  },
+];
+
+const displayCards = cards
+  .filter((card) => card.slug !== currentSlug)
+  .sort(() => Math.random() - 0.5)
+  .slice(0, 3);
+---
+
+<!-- Explore More / Cross-linking Section -->
+<section class="py-20 px-4 max-w-7xl mx-auto">
+  <div class="text-center mb-12 space-y-3">
+    <p class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 text-green-700 text-sm font-serif tracking-wide">
+      {t("artworks.exploreSubtitle")}
+    </p>
+    <h2 class="text-3xl font-serif text-black">{t("artworks.exploreTitle")}</h2>
+  </div>
+
+  <div class="grid gap-6 md:grid-cols-3">
+    {displayCards.map((card) => (
+      <a
+        href={card.href}
+        class="group block overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+      >
+        <div class="relative aspect-[4/3] overflow-hidden bg-neutral-100">
+          {card.img ? (
+            <img
+              src={card.img.src}
+              alt={card.alt}
+              class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+          ) : (
+            <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-green-200 via-emerald-300 to-green-700 text-white font-semibold tracking-wide">
+              {card.title}
+            </div>
+          )}
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent opacity-70 transition-opacity group-hover:opacity-80"></div>
+
+          <div class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 px-5 pb-5">
+            <h3 class="text-xl font-bold text-white drop-shadow group-hover:text-green-50">
+              {card.title}
+            </h3>
+            <span class="inline-flex items-center gap-2 rounded-full bg-green-500 px-4 py-2 text-sm font-semibold text-white shadow-lg transition hover:bg-green-600">
+              {t("home.viewMore")}
+              <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/15 text-white">→</span>
+            </span>
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>

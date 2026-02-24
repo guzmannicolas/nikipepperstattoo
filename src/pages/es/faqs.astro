@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import CrossPromo from "../../components/calltoaction/CrossPromo.astro";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import FilterButtons from "../../components/buttons/FilterButtons.astro";
 import FAQList from "../../components/sections/faqs/FAQList.astro";
@@ -113,6 +114,8 @@ const filterButtons = [
     <!-- FAQ List -->
     <FAQList faqs={faqs} />
   </section>
+
+  <CrossPromo />
 
   <!-- CTA Section -->
   <CTASection lang={lang} t={t} ns="faqs" />

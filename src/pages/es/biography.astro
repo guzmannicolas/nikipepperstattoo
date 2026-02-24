@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import CrossPromo from "../../components/calltoaction/CrossPromo.astro";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import HeroTitlePages from "../../components/sections/HeroTitlePages.astro";
 
@@ -102,6 +103,8 @@ const t = useTranslations(lang);
 			</div>
 		</div>
 	</section>
+
+	<CrossPromo />
 
 	<!-- CTA Section -->
 	<section class="py-20 px-4 bg-white">
