@@ -4,6 +4,7 @@ import tattooHero from "../../assets/tattoos/forearm-pink-lotus-tattoo-leaves.jp
 import ceramicHero from "../../assets/ceramics/Mateta Pisces - Front.avif";
 import bioHero from "../../assets/home/Niki-about-me.avif";
 import worksHero from "../../assets/works/on_demand/pet-portrait.avif";
+import muralsHero from "../../assets/murals/abrazo-2018.jpeg";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -45,7 +46,7 @@ const cards = [
     slug: "murals",
     href: `/${basePath}murals`,
     title: t("murals.title"),
-    img: null,
+    img: muralsHero,
     alt: t("murals.title"),
   },
 ];
