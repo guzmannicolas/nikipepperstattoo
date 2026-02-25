@@ -211,6 +211,7 @@ Ver detalles completos en `.ai/global/ui-design.md`
 - [x] Optimización de imágenes
  - [x] `AboutArtistSectionLogic` refactor: componente React + Framer Motion (entrance animations y fondo rotado)
  - [x] CrossPromo component: improved cross-promo with random selection of 3 cards (tattoos, ceramics, biography, works, murals), excludes current page; murals show a gradient fallback with title when no image; added related i18n keys (e.g. `home.viewMore`, `artworks.*`).
+ - [x] PhotoSwipe lightbox galleries: fixed Gallery.astro and GalleryPlus.astro with static module imports, moved CSS to global.css after Tailwind preflight, added data-pswp-src attributes for proper image URL handling. Lightbox now works across all galleries (tattoos, ceramics, works, murals) with all UI controls visible.
 
 ### 🚧 En Progreso
 - [ ] Formulario de contacto (integración con servicio externo)
@@ -272,5 +273,5 @@ Ver detalles completos en `.ai/global/ui-design.md`
 
 ---
 
-**Última actualización:** 2026-02-13  
-**Versión del brief:** 1.0
+**Última actualización:** 2026-02-25  
+**Versión del brief:** 1.1
