@@ -63,7 +63,7 @@ const isActive = (base: string) => {
 										? "bg-green-500 text-white"
 										: "lang-btn text-neutral-600 hover:bg-neutral-100",
 								]}
-								onclick={`document.cookie = 'preferred-language=${l}; path=/; max-age=31536000'`}
+								onclick={`localStorage.setItem('preferred-language','${l}'); document.cookie = 'preferred-language=${l}; path=/; max-age=31536000'`}
 							>
 								{l.toUpperCase()}
 							</a>
@@ -114,7 +114,7 @@ const isActive = (base: string) => {
 									? "bg-green-500 text-white"
 									: "bg-neutral-100 text-neutral-700",
 							]}
-							onclick={`document.cookie = 'preferred-language=${l}; path=/; max-age=31536000'`}
+							onclick={`localStorage.setItem('preferred-language','${l}'); document.cookie = 'preferred-language=${l}; path=/; max-age=31536000'`}
 						>
 							{label}
 						</a>

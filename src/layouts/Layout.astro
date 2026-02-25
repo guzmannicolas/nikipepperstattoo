@@ -28,6 +28,37 @@ const { title, description = 'Tattoo artist, ceramist, and visual artist' } = As
 		<ViewTransitions />
 	</head>
 	<body class="min-h-screen bg-white text-neutral-900">
+		<script is:inline>
+			(function() {
+				// Only redirect on exact root path
+				if (window.location.pathname !== '/') return;
+
+				// 1. Check localStorage (set by language selector)
+				var saved = localStorage.getItem('preferred-language');
+
+				// 2. Check cookie (set by nav language links)
+				if (!saved) {
+					var match = document.cookie.match(/preferred-language=([^;]+)/);
+					if (match) saved = match[1];
+				}
+
+				// 3. Detect browser language
+				if (!saved) {
+					var browserLang = (navigator.language || '').toLowerCase();
+					saved = browserLang.startsWith('es') ? 'es' : 'en';
+				}
+
+				// Save preference in both stores
+				localStorage.setItem('preferred-language', saved);
+				document.cookie = 'preferred-language=' + saved + '; path=/; max-age=31536000';
+
+				// Redirect
+				if (saved === 'es') {
+					window.location.replace('/es/');
+				}
+				// If 'en', stay on / (already the English home)
+			})();
+		</script>
 		<LoadingSplash />
 		<Navigation />
 		<main>
