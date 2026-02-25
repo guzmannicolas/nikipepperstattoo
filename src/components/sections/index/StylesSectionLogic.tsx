@@ -63,10 +63,16 @@ const StylesSectionLogic: React.FC<StylesSectionProps> = ({
 
     const handleLoop = () => {
       const maxOffset = offset * 2;
-      if (el.scrollLeft <= gapPx) {
-        el.scrollLeft += offset;
-      } else if (el.scrollLeft >= maxOffset + gapPx) {
-        el.scrollLeft -= offset;
+      if (el.scrollLeft <= gapPx || el.scrollLeft >= maxOffset + gapPx) {
+        el.style.scrollBehavior = 'auto';
+        if (el.scrollLeft <= gapPx) {
+          el.scrollLeft += offset;
+        } else {
+          el.scrollLeft -= offset;
+        }
+        requestAnimationFrame(() => {
+          el.style.scrollBehavior = '';
+        });
       }
     };
 

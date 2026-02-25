@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "photoswipe/style.css";
 
 :root {
 	--color-bg: 255, 255, 255;
@@ -36,8 +37,7 @@ body {
 
 /* Logo color invert filter */
 #navbar-logo,
-#splash-logo,
-footer img[alt="Niki Peppers"] {
+#splash-logo {
     filter: invert(1);
 }
 

@@ -12,8 +12,18 @@
   "footer": {
     "tagline": "Artista del tatuaje, ceramista y artista visual.",
     "links": "Enlaces",
-    "followMe": "Sígueme",
-    "rights": "Todos los derechos reservados."
+    "explore": "Explorar",
+    "followMe": "Seguime",
+    "connect": "Conectemos",
+    "ctaTitle": "¿Lista para tu próximo tatuaje?",
+    "ctaDescription": "Hagamos realidad tu idea. Agendá una consulta gratuita y creemos algo único juntas.",
+    "ctaButton": "Agendar Consulta",
+    "aboutFooter": "Artista multidisciplinaria especializada en tatuajes botánicos, cerámica artesanal y arte visual. Cada pieza cuenta una historia.",
+    "email": "Email",
+    "location": "Buenos Aires, Argentina",
+    "rights": "Todos los derechos reservados.",
+    "madeWith": "Hecho con",
+    "by": "por Niki Peppers"
   },
   "home": {
     "title": "Niki Peppers",

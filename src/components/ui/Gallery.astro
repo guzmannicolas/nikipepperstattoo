@@ -42,8 +42,6 @@ const defaultButtons = [
     value: String(c),
   })),
 ];
-// Import PhotoSwipe CSS from the local package so it's bundled
-import "photoswipe/style.css";
 ---
 
 <section id={id} class="gallery-component">
@@ -89,9 +87,9 @@ import "photoswipe/style.css";
             <a
               class="block"
               href={src}
+              data-pswp-src={src}
               data-pswp-width={w}
               data-pswp-height={h}
-              data-action="open-pswp"
               data-index={i}
             >
               <img
@@ -125,33 +123,27 @@ import "photoswipe/style.css";
   </div>
 
   <script>
+    import PhotoSwipeLightbox from 'photoswipe/lightbox';
+    import PhotoSwipe from 'photoswipe';
+
     function initGalleries() {
       const galleries = document.querySelectorAll("section.gallery-component");
       galleries.forEach((root) => {
         if (root.getAttribute("data-initialized")) return;
         root.setAttribute("data-initialized", "true");
 
-        console.log("[Gallery] Initializing gallery:", root.id);
-
         // Auto-detect image sizes for PhotoSwipe to prevent distortion
-        // This fixes images that don't have dimensions passed from the server
         root.querySelectorAll(".gallery-item a").forEach((a) => {
           const img = a.querySelector("img");
           if (!img) return;
-
           const updateSize = () => {
-            // Only update if we have valid natural dimensions
             if (img.naturalWidth && img.naturalHeight) {
               a.setAttribute("data-pswp-width", String(img.naturalWidth));
               a.setAttribute("data-pswp-height", String(img.naturalHeight));
             }
           };
-
-          if (img.complete) {
-            updateSize();
-          } else {
-            img.onload = updateSize;
-          }
+          if (img.complete) updateSize();
+          else img.onload = updateSize;
         });
 
         // Filtering
@@ -159,62 +151,41 @@ import "photoswipe/style.css";
           const target = e.target;
           // @ts-ignore
           const btn = target.closest ? target.closest(".filter-btn") : null;
-
           if (btn && root.contains(btn)) {
             e.preventDefault();
-            const raw =
-              btn.getAttribute("data-value") || btn.getAttribute("data-filter");
-            console.log("[Gallery] Clicked filter:", raw);
-
+            const raw = btn.getAttribute("data-value") || btn.getAttribute("data-filter");
             if (!raw) return;
             const value = String(raw).trim().toLowerCase();
-
-            // Update buttons
             root.querySelectorAll(".filter-btn").forEach((b) => {
               b.classList.remove("active");
               b.setAttribute("aria-pressed", "false");
             });
             btn.classList.add("active");
             btn.setAttribute("aria-pressed", "true");
-
-            // Filter items
             root.querySelectorAll(".gallery-item").forEach((item) => {
               // @ts-ignore
               const cats = (item.getAttribute("data-categories") || "")
-                .split(",")
-                .map((s) => s.trim().toLowerCase())
-                .filter(Boolean);
+                .split(",").map((s) => s.trim().toLowerCase()).filter(Boolean);
               const match = value === "all" || cats.includes(value);
-              if (match) {
-                item.classList.remove("hidden");
-              } else {
-                item.classList.add("hidden");
-              }
+              item.classList.toggle("hidden", !match);
             });
           }
         });
 
-        // PhotoSwipe
-        const gridId = root.querySelector(".grid")?.id;
-        if (gridId) {
-          import("photoswipe/lightbox")
-            .then(({ default: PhotoSwipeLightbox }) => {
-              const lightbox = new PhotoSwipeLightbox({
-                gallery: `#${gridId}`,
-                children: "a",
-                pswpModule: () => import("photoswipe"),
-              });
-              lightbox.init();
-            })
-            .catch((err) => console.error("[Gallery] PhotoSwipe failed:", err));
+        // PhotoSwipe — use section id to derive grid id, never rely on .grid querySelector
+        const gridId = root.id ? `${root.id}-grid` : null;
+        if (gridId && document.getElementById(gridId)) {
+          const lightbox = new PhotoSwipeLightbox({
+            gallery: `#${gridId}`,
+            children: "a[data-pswp-src]",
+            pswpModule: PhotoSwipe,
+          });
+          lightbox.init();
         }
       });
     }
 
-    // Run on load
     initGalleries();
-
-    // Run on Astro page swap (if View Transitions are used)
     document.addEventListener("astro:page-load", initGalleries);
   </script>
 </section>

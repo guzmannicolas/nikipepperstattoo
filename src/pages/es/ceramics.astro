@@ -2,31 +2,6 @@
 import Layout from "../../layouts/Layout.astro";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import ceramicsData from "../../data/ceramics.json";
-// Import actual assets so Astro/Vite can process them
-import cer1 from "../../assets/ceramics/Mateta Pisces - Back.avif";
-import cer2 from "../../assets/ceramics/Mateta Pisces - Front.avif";
-import cer3 from "../../assets/ceramics/Kisses pot.avif";
-import cer4 from "../../assets/ceramics/Leaf mask.avif";
-import cer5 from "../../assets/ceramics/Pop pot - Back.avif";
-import cer6 from "../../assets/ceramics/Pop pot - Front.avif";
-import cer7 from "../../assets/ceramics/Chrysanthemum bowl - Side view.avif";
-import cer8 from "../../assets/ceramics/Chrysanthemum bowl - Inside view.avif";
-import cer9 from "../../assets/ceramics/Pisces bowl - Inside view.avif";
-import cer10 from "../../assets/ceramics/Pisces bowl - Side view.avif";
-import cer11 from "../../assets/ceramics/Coral candle holder.avif";
-const assetMap = {
-	"Mateta Pisces - Back.avif": cer1,
-	"Mateta Pisces - Front.avif": cer2,
-	"Kisses pot.avif": cer3,
-	"Leaf mask.avif": cer4,
-	"Pop pot - Back.avif": cer5,
-	"Pop pot - Front.avif": cer6,
-	"Chrysanthemum bowl - Side view.avif": cer7,
-	"Chrysanthemum bowl - Inside view.avif": cer8,
-	"Pisces bowl - Inside view.avif": cer9,
-	"Pisces bowl - Side view.avif": cer10,
-	"Coral candle holder.avif": cer11,
-};
 import FilterButtons from "../../components/buttons/FilterButtons.astro";
 import Gallery from "../../components/ui/Gallery.astro";
 import CrossPromo from "../../components/calltoaction/CrossPromo.astro";
@@ -34,15 +9,18 @@ import AboutCeramicsSection from "../../components/sections/ceramics/AboutCerami
 import CTASection from "../../components/calltoaction/CTASection.astro";
 import HeroTitlePages from "../../components/sections/HeroTitlePages.astro";
 
+const ceramicImages = import.meta.glob(
+	"/src/assets/ceramics/*.avif",
+	{ eager: true }
+);
+
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 // Resolve ceramic JSON image paths to imported assets so Astro can process them
 const galleryItems = ceramicsData.items.map((item) => {
 	const srcPath = item.images && item.images[0] ? item.images[0].path : "";
-	const filename = srcPath ? srcPath.split("/").pop() : "";
-	const has =
-		filename && Object.prototype.hasOwnProperty.call(assetMap, filename);
-	const image = has ? (assetMap as any)[filename] : srcPath;
+	const imageModule = (ceramicImages as any)[srcPath];
+	const image = imageModule ? imageModule.default : srcPath;
 	const localizedTitle = item.title?.[lang] || item.title?.en || "";
 	const localizedCategories =
 		lang === "es"

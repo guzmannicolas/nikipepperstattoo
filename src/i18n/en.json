@@ -12,8 +12,18 @@
   "footer": {
     "tagline": "Tattoo artist, ceramist, and visual artist.",
     "links": "Links",
+    "explore": "Explore",
     "followMe": "Follow Me",
-    "rights": "All rights reserved."
+    "connect": "Let's Connect",
+    "ctaTitle": "Ready for your next tattoo?",
+    "ctaDescription": "Let's bring your vision to life. Book a free consultation and let's create something unique together.",
+    "ctaButton": "Book a Session",
+    "aboutFooter": "Multidisciplinary artist specializing in botanical tattoos, handmade ceramics, and visual art. Every piece tells a story.",
+    "email": "Email",
+    "location": "Buenos Aires, Argentina",
+    "rights": "All rights reserved.",
+    "madeWith": "Made with",
+    "by": "by Niki Peppers"
   },
   "home": {
     "title": "Niki Peppers",
