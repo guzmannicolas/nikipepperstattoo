@@ -207,11 +207,18 @@ const defaultButtons = [
                 item.classList.toggle("hidden", idx >= limit);
               });
             } else {
+              const limit = parseInt(root.getAttribute("data-show-initial") || "6", 10);
+              let matchCount = 0;
               root.querySelectorAll(".gallery-item").forEach((item) => {
                 // @ts-ignore
                 const cats = (item.getAttribute("data-categories") || "")
                   .split(",").map((s) => s.trim().toLowerCase()).filter(Boolean);
-                item.classList.toggle("hidden", !cats.includes(value));
+                if (cats.includes(value)) {
+                  item.classList.toggle("hidden", matchCount >= limit);
+                  matchCount++;
+                } else {
+                  item.classList.add("hidden");
+                }
               });
             }
 
