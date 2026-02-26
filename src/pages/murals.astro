@@ -1,59 +1,32 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import CrossPromo from "../components/calltoaction/CrossPromo.astro";
-import HeroTitlePages from "../components/sections/HeroTitlePages.astro";
-import Gallery from "../components/ui/Gallery.astro";
-import FilterButtons from "../components/buttons/FilterButtons.astro";
-import CTASection from "../components/calltoaction/CTASection.astro";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import CTASection from "../components/calltoaction/CTASection.astro";
+import CrossPromo from "../components/calltoaction/CrossPromo.astro";
+import GalleryPlus from "../components/ui/GalleryPlus.astro";
+import muralsData from "../data/murals.json";
+import HeroTitlePages from "../components/sections/HeroTitlePages.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const muralItems = [
-  {
-    image: "/images/home/carousel-1.jpg",
-    title: t("murals.residentialTitle"),
-    alt: t("murals.residentialTitle"),
-    categories: ["residential"],
-    displayCategories: t("murals.filters.residential"),
-  },
-  {
-    image: "/images/home/carousel-2.jpg",
-    title: t("murals.commercialTitle"),
-    alt: t("murals.commercialTitle"),
-    categories: ["commercial"],
-    displayCategories: t("murals.filters.commercial"),
-  },
-  {
-    image: "/images/home/carousel-3.jpg",
-    title: t("murals.publicTitle"),
-    alt: t("murals.publicTitle"),
-    categories: ["public"],
-    displayCategories: t("murals.filters.public"),
-  },
-  {
-    image: "/images/home/carousel-4.jpg",
-    title: t("murals.residentialTitle"),
-    alt: t("murals.residentialTitle"),
-    categories: ["residential"],
-    displayCategories: t("murals.filters.residential"),
-  },
-  {
-    image: "/images/home/carousel-5.jpg",
-    title: t("murals.commercialTitle"),
-    alt: t("murals.commercialTitle"),
-    categories: ["commercial"],
-    displayCategories: t("murals.filters.commercial"),
-  },
-  {
-    image: "/images/home/carousel-6.jpg",
-    title: t("murals.publicTitle"),
-    alt: t("murals.publicTitle"),
-    categories: ["public"],
-    displayCategories: t("murals.filters.public"),
-  },
-];
+const muralImages = import.meta.glob("/src/assets/murals/*.{jpeg,jpg,png,avif}", { eager: true });
+
+const galleryItems = muralsData.map((item) => {
+  const srcPath = item.image;
+  const imageModule = (muralImages as any)[srcPath];
+  const image = imageModule ? imageModule.default : srcPath;
+  const localizedTitle =
+    typeof item.title === "object"
+      ? item.title[lang as keyof typeof item.title] || item.title.en
+      : item.title;
+  return {
+    image,
+    title: localizedTitle,
+    alt: localizedTitle,
+    year: item.year,
+  };
+});
 ---
 
 <Layout title={`${t('murals.title')} - Niki Peppers`} description={t('murals.description')}>
@@ -62,65 +35,12 @@ const muralItems = [
     <HeroTitlePages lang={lang} t={t} ns="murals" />
 
     <!-- Gallery component with reusable filters + load more -->
-    <Gallery
-      items={muralItems}
+    <GalleryPlus
+      items={galleryItems}
       id="murals-gallery"
-      showInitialCount={6}
-      loadMoreLabel={t('murals.loadMore')}
-    >
-      <div slot="filters">
-        {
-          (() => {
-            const buttons = [
-              { label: t('murals.filters.all'), value: 'all', active: true },
-              { label: t('murals.filters.residential'), value: 'residential' },
-              { label: t('murals.filters.commercial'), value: 'commercial' },
-              { label: t('murals.filters.public'), value: 'public' },
-            ];
-            return <FilterButtons buttons={buttons} />;
-          })()
-        }
-      </div>
-    </Gallery>
-
-    <!-- Services Section -->
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="bg-white p-8 rounded-xl border-2 border-neutral-200">
-        <div class="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center mb-4">
-          <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold mb-3 text-black">{t('murals.residentialTitle')}</h3>
-        <p class="text-neutral-600">
-          {t('murals.residentialDesc')}
-        </p>
-      </div>
-
-      <div class="bg-white p-8 rounded-xl border-2 border-neutral-200">
-        <div class="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center mb-4">
-          <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold mb-3 text-black">{t('murals.commercialTitle')}</h3>
-        <p class="text-neutral-600">
-          {t('murals.commercialDesc')}
-        </p>
-      </div>
-
-      <div class="bg-white p-8 rounded-xl border-2 border-neutral-200">
-        <div class="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center mb-4">
-          <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold mb-3 text-black">{t('murals.publicTitle')}</h3>
-        <p class="text-neutral-600">
-          {t('murals.publicDesc')}
-        </p>
-      </div>
-    </div>
+      showInitialCount={999}
+      loadMoreLabel={t("murals.loadMore")}
+    />
 
     <!-- Process -->
     <div class="bg-neutral-50 rounded-2xl p-8 md:p-12">
