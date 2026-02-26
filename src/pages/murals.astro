@@ -40,7 +40,9 @@ const galleryItems = muralsData.map((item) => {
       id="murals-gallery"
       showInitialCount={999}
       loadMoreLabel={t("murals.loadMore")}
-    />
+    >
+      <div slot="filters"></div>
+    </GalleryPlus>
 
     <!-- Process -->
     <div class="bg-neutral-50 rounded-2xl p-8 md:p-12">
@@ -89,3 +91,10 @@ const galleryItems = muralsData.map((item) => {
 
   <CrossPromo lang={lang} />
 </Layout>
+
+<style>
+  /* Hide LoadMore button since we only have 2 murals */
+  #load-more-container {
+    display: none;
+  }
+</style>
