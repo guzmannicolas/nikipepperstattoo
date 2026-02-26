@@ -118,9 +118,11 @@ const defaultButtons = [
     }
   </div>
 
-  <div class="text-center mt-8">
-    <LoadMore buttonId={`${id}-load-more-btn`} label={loadMoreLabel} />
-  </div>
+  {items.length > showInitialCount && (
+    <div class="text-center mt-8">
+      <LoadMore buttonId={`${id}-load-more-btn`} label={loadMoreLabel} />
+    </div>
+  )}
 
   <script>
     import PhotoSwipeLightbox from 'photoswipe/lightbox';
