@@ -208,12 +208,46 @@ function checkWorks() {
   return { type: 'works', newEntries, data, jsonPath };
 }
 
+// ─── Murals ───────────────────────────────────────────────────────────────────
+
+function checkMurals() {
+  const jsonPath = join(ROOT, 'src/data/murals.json');
+  const data = readJSON(jsonPath);
+  const existing = new Set(
+    data.items.map(item => basename(item.image))
+  );
+
+  const assetDir = join(ROOT, 'src/assets/murals');
+  const files = scanDir(assetDir).filter(f => f !== '.gitkeep');
+  const newFiles = files.filter(f => !existing.has(f));
+
+  if (newFiles.length === 0) return { type: 'murals', newEntries: [], data, jsonPath };
+
+  const maxId = Math.max(...data.items.map(i => Number(i.id) || 0), 0);
+  const currentYear = new Date().getFullYear();
+
+  const newEntries = newFiles.map((file, idx) => {
+    const slug = toSlug(file);
+    const title = toTitleCase(slug);
+    return {
+      id: maxId + idx + 1,
+      slug,
+      title: { en: title, es: title },
+      year: currentYear,
+      image: `/src/assets/murals/${file}`,
+      category: '',
+    };
+  });
+
+  return { type: 'murals', newEntries, data, jsonPath };
+}
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 async function main() {
   console.log('\n' + c.bold('🖼  add-images — detector de imágenes nuevas') + '\n');
 
-  const results = [checkTattoos(), checkCeramics(), checkWorks()];
+  const results = [checkTattoos(), checkCeramics(), checkWorks(), checkMurals()];
   const withNew = results.filter(r => r.newEntries.length > 0);
 
   if (withNew.length === 0) {
@@ -232,12 +266,16 @@ async function main() {
       console.log(`       slug:       ${entry.slug || entry.id}`);
       console.log(`       title (en): ${entry.title.en}`);
       console.log(`       title (es): ${entry.title.es}`);
-      if (entry.category !== undefined) {
-        console.log(c.yellow(`       category:   [vacío — completar a mano en el JSON]`));
-      }
       if (entry.series !== undefined) {
         console.log(`       series:     ${entry.series}`);
         console.log(`       year:       ${entry.year}`);
+      } else if (entry.year !== undefined) {
+        // murals: tiene year pero no series
+        console.log(`       year:       ${entry.year}`);
+        console.log(c.yellow(`       category:   [vacío — completar: residential | commercial | public]`));
+      } else if (entry.category !== undefined) {
+        // tattoos / ceramics
+        console.log(c.yellow(`       category:   [vacío — completar a mano en el JSON]`));
       }
       console.log('');
     }
@@ -265,6 +303,10 @@ async function main() {
       data.push(...newEntries);
     } else {
       data.items.push(...newEntries);
+    }
+
+    if (type === 'murals') {
+      console.log(c.yellow(`  Recordá completar 'category' de cada mural: residential | commercial | public`));
     }
 
     writeJSON(jsonPath, data);

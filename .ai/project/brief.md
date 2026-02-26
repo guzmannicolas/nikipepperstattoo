@@ -1,4 +1,4 @@
-# Project Brief — Niki Peppers Portfolio
+﻿# Project Brief — Niki Peppers Portfolio
 
 ## Información General
 
@@ -6,10 +6,8 @@
 **Cliente/Artista:** Niki Peppers  
 **Tipo de Proyecto:** Portfolio Visual / Sitio Web Personal  
 **Estado:** En desarrollo activo  
-**URL Producción:** [Pendiente]  
-**Repositorio:** [Path actual]
-
-
+**URL Producción:** nikipeppers.com (Vercel)  
+**Repositorio:** c:\xampp\htdocs\nikipepperstattoo
 
 ---
 
@@ -55,7 +53,7 @@ Crear una **galería visual de alto impacto** con **carga ultra-rápida** que mu
 /biography          Sobre la artista
 /faqs               Preguntas frecuentes
 /contact            Formulario de contacto + redes sociales
-/murals             [Futura] Murales y arte urbano
+/murals             Murales y arte urbano
 
 /es/*               Versiones en español (duplicadas)
 ```
@@ -67,16 +65,16 @@ Crear una **galería visual de alto impacto** con **carga ultra-rápida** que mu
 Ver detalles completos en `.ai/global/tech-stack.md`
 
 **Core:**
-- Astro 5 (SSG)
+- Astro 5 (SSG, output: static)
 - Tailwind CSS 4
 - TypeScript
-- React 19 (solo componentes interactivos)
+- React 19 (solo componentes interactivos — islands)
 
 **Optimizaciones:**
-- Imágenes en formato AVIF
+- Imágenes procesadas por Astro en build (WebP/AVIF)
+- Assets en `src/assets/` → optimizados; `public/` → sin optimización
 - Lazy loading agresivo
 - Code splitting por ruta
-- Zero JavaScript en páginas estáticas
 
 ---
 
@@ -86,51 +84,74 @@ Ver detalles completos en `.ai/global/tech-stack.md`
 
 #### `src/data/tattoos.json`
 ```json
-[
-  {
-    "id": "botanical-rose-01",
-    "title": "Rosa Botánica",
-    "category": "botanical",
-    "image": "/images/tattoos/botanical/rose-01.avif",
-    "date": "2025-01-15",
-    "featured": true
-  }
-]
+{
+  "items": [
+    {
+      "id": 1,
+      "slug": "koi-fish-with-water-lilies",
+      "title": { "en": "Koi Fish with Water Lilies", "es": "Pez Koi con Nenúfares" },
+      "description": "",
+      "price": "",
+      "images": [
+        {
+          "filename": "Koi Fish with Water Lilies",
+          "path": "/src/assets/tattoos/koi-fish-tattoo-lily-pads-water-lilies.jpeg",
+          "alt": "Koi Fish with Water Lilies"
+        }
+      ],
+      "category": "animals, colour",
+      "category_es": "animales, color"
+    }
+  ]
+}
 ```
-
-**Categorías:** `botanical`, `animals`, `fineline`, `colour`, `otros`
+**Categorías disponibles:** `botanical`, `animals`, `fineline`, `colour`, `otros`  
+**Nota:** una imagen puede tener múltiples categorías (comma-separated). Las imágenes viven en `src/assets/tattoos/` (estructura flat, sin subcarpetas).
 
 #### `src/data/ceramics.json`
 ```json
-[
-  {
-    "id": "chrysanthemum-bowl",
-    "title": "Chrysanthemum Bowl",
-    "images": {
-      "inside": "/assets/ceramics/Chrysanthemum bowl - Inside view.avif",
-      "side": "/assets/ceramics/Chrysanthemum bowl - Side view.avif"
-    },
-    "description": "Pieza única inspirada en patrones florales japoneses",
-    "year": 2024
-  }
-]
+{
+  "items": [
+    {
+      "id": 1,
+      "slug": "mateta-pisces",
+      "title": { "en": "\"Mateta\" Pisces", "es": "\"Mateta\" Piscis" },
+      "description": "Gray clay. 10 cm.",
+      "price": "USD40",
+      "images": [
+        {
+          "filename": "Mateta Pisces - Back",
+          "path": "/src/assets/ceramics/Mateta Pisces - Back.avif",
+          "alt": "Mateta Pisces - Back"
+        }
+      ],
+      "category": "decorative",
+      "category_es": "decorativo"
+    }
+  ]
+}
 ```
+**Categorías:** `functional`, `decorative`, `sculptural`  
+**Imágenes en:** `src/assets/ceramics/` — acepta `.avif`, `.jpg`, `.jpeg`, `.png`
 
 #### `src/data/works.json`
 ```json
 [
   {
-    "id": "echoes-from-the-deep",
-    "title": "Echoes from the Deep",
-    "description": "Serie fotográfica sobre memoria y trauma",
-    "images": [
-      "/assets/works/echoes_from_the_deep/the-origin.avif",
-      "/assets/works/echoes_from_the_deep/mind-and-body.avif"
-    ],
-    "year": 2023
+    "id": "river-rose-or-lily",
+    "title": { "en": "River Rose or Lily", "es": "Rosa de Río o Lirio" },
+    "series": "echoes",
+    "technique": "Mixed technique",
+    "technique_es": "Técnica mixta",
+    "dimensions": "21x29,7cm",
+    "year": 2024,
+    "image": "/src/assets/works/echoes_from_the_deep/river-rose-or-lily.avif",
+    "price": "USD 150"
   }
 ]
 ```
+**Nota:** array raíz (sin wrapper `items`). Series: `echoes`, `childhood`, `amid_gestures`, `on_demand`.  
+**Imágenes en:** `src/assets/works/{serie}/`
 
 ---
 
@@ -148,25 +169,26 @@ Ver detalles completos en `.ai/global/tech-stack.md`
 - Mantener keys consistentes entre ambos archivos
 - Usar `t()` helper para todas las cadenas de texto
 - URLs deben reflejar el idioma (`/tattoos` vs `/es/tattoos`)
+- La detección de idioma es **client-side** en `Layout.astro` (localStorage → cookie → navigator.language)
 
 ---
 
 ## Componentes Clave
 
 ### `src/components/Navigation.astro`
-Header global con menú responsive
+Header global con menú responsive + language switcher. Guarda preferencia en localStorage y cookie.
 
-### `src/components/sections/HeroSection.astro`
-Hero de la home con título animado y CTA
+### `src/components/Footer.astro`
+Footer global con CTA banner, links, redes sociales reales (IG: nikipepperstattoo, FB: niki.teper), email, ubicación.
 
-### `src/components/sections/FeaturedWork.astro`
-Muestra trabajos destacados (marcados con `featured: true` en JSON)
+### `src/components/sections/index/`
+Secciones del Home: Hero, FeaturedWork, AboutArtist, AboutPreview, StylesSection (carousel mobile).
 
-### `src/components/Gallery.astro`
-Grid de imágenes con lazy loading
+### `src/components/ui/Gallery.astro`
+Grid de imágenes con PhotoSwipe lightbox, filtros por categoría, load more.
 
 ### `src/components/ui/GalleryPlus.astro`
-Galería con filtros por categoría
+Variante de Gallery con campos extra (technique, dimensions, year) — usada en Works.
 
 ---
 
@@ -176,8 +198,8 @@ Ver detalles completos en `.ai/global/ui-design.md`
 
 ### Características
 - **Minimalismo**: Espacios en blanco generosos, tipografía clara
-- **Geek Culture**: Detalles sutiles (monospace fonts, grid patterns)
-- **Paleta**: Neutros (`neutral-50` a `neutral-900`) + azul de acento (`blue-500`)
+- **Paleta**: Neutros (`neutral-50` a `neutral-950`) + **verde de acento** (`green-500` / `--color-accent`)
+- **Tipografía**: Serif para títulos y marca, sans-serif para cuerpo
 - **Geometría**: `rounded-2xl` en tarjetas, `overflow-hidden` obligatorio
 
 ### Animaciones
@@ -197,7 +219,6 @@ Ver detalles completos en `.ai/global/ui-design.md`
 ### Compatibilidad
 - Navegadores modernos (últimas 2 versiones)
 - No soporte para IE11
-- Progressive enhancement para navegadores sin JavaScript
 
 ---
 
@@ -205,61 +226,56 @@ Ver detalles completos en `.ai/global/ui-design.md`
 
 ### ✅ Implementado
 - [x] Estructura base del proyecto
-- [x] Sistema de navegación bilingüe
-- [x] Galerías de tatuajes y cerámicas
-- [x] Sección About
-- [x] Optimización de imágenes
- - [x] `AboutArtistSectionLogic` refactor: componente React + Framer Motion (entrance animations y fondo rotado)
- - [x] CrossPromo component: improved cross-promo with random selection of 3 cards (tattoos, ceramics, biography, works, murals), excludes current page; murals show a gradient fallback with title when no image; added related i18n keys (e.g. `home.viewMore`, `artworks.*`).
- - [x] PhotoSwipe lightbox galleries: fixed Gallery.astro and GalleryPlus.astro with static module imports, moved CSS to global.css after Tailwind preflight, added data-pswp-src attributes for proper image URL handling. Lightbox now works across all galleries (tattoos, ceramics, works, murals) with all UI controls visible.
-
-### 🚧 En Progreso
-- [ ] Formulario de contacto (integración con servicio externo)
-- [ ] Filtros interactivos en galería de tatuajes
-- [ ] Sistema de newsletter
+- [x] Sistema de navegación bilingüe con detección client-side
+- [x] Galerías de tatuajes, cerámicas y obras con filtros interactivos
+- [x] Galería de murales
+- [x] PhotoSwipe lightbox en todas las galerías
+- [x] Sección About (artista + preview)
+- [x] Footer premium con redes sociales reales y CTA
+- [x] Imágenes optimizadas via `import.meta.glob` + Astro assets
+- [x] Script `tools/add-images.mjs` para agregar imágenes nuevas sin tocar código
+- [x] CrossPromo component con selección aleatoria de secciones
+- [x] Carousel infinito mobile en StylesSection
 
 ### 📋 Futuro
+- [ ] Formulario de contacto (integración con servicio externo)
+- [ ] Sistema de newsletter
 - [ ] Blog/Diary de procesos creativos
 - [ ] Tienda online (cerámicas)
-- [ ] Galería de murales
 - [ ] Login para clientes (ver diseños privados)
 
 ---
 
-## Flujo de Trabajo Típico
+## Flujo de Trabajo — Agregar Imágenes Nuevas
 
-### Agregar un Nuevo Tatuaje
-1. Subir imagen a `public/images/tattoos/[categoria]/`
-2. Optimizar a formato AVIF (Squoosh, Sharp, etc.)
-3. Agregar entrada en `src/data/tattoos.json`
-4. Commit: `feat(gallery): add new botanical tattoo`
+```
+1. Copiar fotos a la carpeta correcta:
+     src/assets/tattoos/          ← tattoos (jpg/jpeg/png/avif)
+     src/assets/ceramics/         ← cerámicas (jpg/jpeg/png/avif)
+     src/assets/works/{serie}/    ← obras
 
-### Actualizar Diseño de un Componente
-1. Editar componente en `src/components/`
-2. Verificar responsive design (`md:`, `lg:`)
-3. Probar en `npm run dev`
-4. Commit: `style(ui): improve card hover effect`
+2. Correr: node tools/add-images.mjs
+   → Detecta archivos nuevos, genera entradas JSON, pide confirmación
 
-### Cambiar Textos (i18n)
-1. Editar `src/i18n/en.json` y `src/i18n/es.json`
-2. Verificar que keys coincidan
-3. Commit: `docs(i18n): update hero section copy`
+3. Editar el JSON para completar:
+     tattoos  → category, category_es, title.es
+     ceramics → description, price, title.es, category
+     works    → title.es, technique_es, dimensions, year, price
+
+4. npm run build  →  verificar
+
+5. git add . && git commit -m "feat(content): agregar nuevas fotos"
+   git push origin dev
+```
 
 ---
 
 ## Contacto y Recursos
 
 ### Redes Sociales de Niki Peppers
-- Instagram: [@nikipepperstattoo]
-- Email: [nikipepperstattoo@gmail.com]
-
-### Referencias de Diseño (Inspiración)
-- **Tattoo Artists:** 
-  - Dr. Woo (minimalismo)
-  - Pony Reinhardt (botanical)
-- **Portfolios:**
-  - Awwwards — Photography category
-  - Sitios de estudios de tatuajes premium
+- Instagram: [@nikipepperstattoo](https://instagram.com/nikipepperstattoo)
+- Facebook: [niki.teper](https://facebook.com/niki.teper)
+- Email: nikipepperstattoo@gmail.com
 
 ---
 
@@ -270,8 +286,9 @@ Ver detalles completos en `.ai/global/ui-design.md`
 3. **Mantener consistencia** con `.ai/global/ui-design.md`
 4. **Commits semánticos** según `.ai/global/git-workflow.md`
 5. **Mobile-first** en todos los diseños
+6. El color de acento es **green-500**, no blue
 
 ---
 
 **Última actualización:** 2026-02-25  
-**Versión del brief:** 1.1
+**Versión del brief:** 2.0
