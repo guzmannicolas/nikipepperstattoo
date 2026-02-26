@@ -3,7 +3,7 @@ const { lang, t, ns = 'tattoos' } = Astro.props as { lang?: string; t: any; ns?:
 const backgroundImage = '/images/home/background-bg-hero.jpg';
 ---
 
-<section class="relative overflow-hidden bg-white mb-16 w-screen max-w-none left-1/2 right-1/2 ml-[-50vw] mr-[-50vw]">
+<section class="relative overflow-hidden bg-white mb-2 w-screen max-w-none left-1/2 right-1/2 ml-[-50vw] mr-[-50vw]">
 	<!-- Background image + subtle bottom fade -->
 	<div
 		class="absolute inset-0 opacity-80"
@@ -12,11 +12,11 @@ const backgroundImage = '/images/home/background-bg-hero.jpg';
 	<div class="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent"></div>
 
 	<!-- Content -->
-	<div class="relative z-10 text-center px-6 py-16 max-w-7xl mx-auto">
-		<h1 class="text-5xl font-serif mb-4 text-black">
+	<div class="relative z-10 text-center px-6 py-8 max-w-7xl mx-auto">
+		<h1 class="text-5xl font-serif mb-2 text-black">
 			{t(`${ns}.title`)}
 		</h1>
-		<p class="text-neutral-600 text-lg max-w-2xl mx-auto pt-10">
+		<p class="text-neutral-600 text-lg max-w-2xl mx-auto pt-4">
 			{t(`${ns}.description`)}
 		</p>
 	</div>

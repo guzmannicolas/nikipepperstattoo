@@ -1,0 +1,15 @@
+[
+  {
+    "id": "abrazo",
+    "title": { "en": "Abrazo", "es": "Abrazo" },
+    "year": 2018,
+    "image": "/src/assets/murals/abrazo-2018.jpeg"
+  },
+  {
+    "id": "la-tempestad",
+    "title": { "en": "La Tempestad", "es": "La Tempestad" },
+    "year": 2020,
+    "image": "/src/assets/murals/la-tempestad-2020.jpeg"
+  }
+]
+

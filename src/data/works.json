@@ -1,226 +1,226 @@
 [
-    {
-        "id": "river-rose-or-lily",
-        "title": {
-            "en": "River Rose or Lily",
-            "es": "Rosa de Río o Lirio"
-        },
-        "series": "echoes",
-        "technique": "Mixed technique",
-        "technique_es": "Técnica mixta",
-        "dimensions": "21x29,7cm",
-        "year": 2024,
-        "image": "/src/assets/works/echoes_from_the_deep/river-rose-or-lily.avif",
-        "price": "USD 150"
+  {
+    "id": "river-rose-or-lily",
+    "title": {
+      "en": "River Rose or Lily",
+      "es": "Rosa de Río o Lirio"
     },
-    {
-        "id": "the-lotus-as-a-symbol-of-resilience",
-        "title": {
-            "en": "The lotus as a symbol of resilience",
-            "es": "El loto como símbolo de resiliencia"
-        },
-        "series": "echoes",
-        "technique": "Mixed technique",
-        "technique_es": "Técnica mixta",
-        "dimensions": "21x29,7cm",
-        "year": 2024,
-        "image": "/src/assets/works/echoes_from_the_deep/the-lotus-as-a-symbol-of-resilience.avif",
-        "price": "USD 150"
+    "series": "echoes",
+    "technique": "Mixed technique",
+    "technique_es": "Técnica mixta",
+    "dimensions": "21x29,7cm",
+    "year": 2024,
+    "image": "/src/assets/works/echoes_from_the_deep/river-rose-or-lily.avif",
+    "price": "USD 150"
+  },
+  {
+    "id": "the-lotus-as-a-symbol-of-resilience",
+    "title": {
+      "en": "The lotus as a symbol of resilience",
+      "es": "El loto como símbolo de resiliencia"
     },
-    {
-        "id": "calis",
-        "title": {
-            "en": "Cális",
-            "es": "Cális"
-        },
-        "series": "echoes",
-        "technique": "Mixed technique",
-        "technique_es": "Técnica mixta",
-        "dimensions": "21x29,7cm",
-        "year": 2024,
-        "image": "/src/assets/works/echoes_from_the_deep/calis.avif",
-        "price": "USD 150"
+    "series": "echoes",
+    "technique": "Mixed technique",
+    "technique_es": "Técnica mixta",
+    "dimensions": "21x29,7cm",
+    "year": 2024,
+    "image": "/src/assets/works/echoes_from_the_deep/the-lotus-as-a-symbol-of-resilience.avif",
+    "price": "USD 150"
+  },
+  {
+    "id": "calis",
+    "title": {
+      "en": "Cális",
+      "es": "Cális"
     },
-    {
-        "id": "orange-rose",
-        "title": {
-            "en": "Orange rose",
-            "es": "Rosa naranja"
-        },
-        "series": "echoes",
-        "technique": "Mixed technique",
-        "technique_es": "Técnica mixta",
-        "dimensions": "21x29,7cm",
-        "year": 2024,
-        "image": "/src/assets/works/echoes_from_the_deep/orange-rose.avif",
-        "price": "USD 150"
+    "series": "echoes",
+    "technique": "Mixed technique",
+    "technique_es": "Técnica mixta",
+    "dimensions": "21x29,7cm",
+    "year": 2024,
+    "image": "/src/assets/works/echoes_from_the_deep/calis.avif",
+    "price": "USD 150"
+  },
+  {
+    "id": "orange-rose",
+    "title": {
+      "en": "Orange rose",
+      "es": "Rosa naranja"
     },
-    {
-        "id": "mind-and-body",
-        "title": {
-            "en": "Mind and body",
-            "es": "Mente y cuerpo"
-        },
-        "series": "echoes",
-        "technique": "Mixed technique",
-        "technique_es": "Técnica mixta",
-        "dimensions": "21x29,7cm",
-        "year": 2017,
-        "image": "/src/assets/works/echoes_from_the_deep/mind-and-body.avif",
-        "price": "USD 150"
+    "series": "echoes",
+    "technique": "Mixed technique",
+    "technique_es": "Técnica mixta",
+    "dimensions": "21x29,7cm",
+    "year": 2024,
+    "image": "/src/assets/works/echoes_from_the_deep/orange-rose.avif",
+    "price": "USD 150"
+  },
+  {
+    "id": "mind-and-body",
+    "title": {
+      "en": "Mind and body",
+      "es": "Mente y cuerpo"
     },
-    {
-        "id": "the-origin",
-        "title": {
-            "en": "The origin",
-            "es": "El origen"
-        },
-        "series": "echoes",
-        "technique": "Mixed technique",
-        "technique_es": "Técnica mixta",
-        "dimensions": "21x29,7cm",
-        "year": 2017,
-        "image": "/src/assets/works/echoes_from_the_deep/the-origin.avif",
-        "price": "USD 150"
+    "series": "echoes",
+    "technique": "Mixed technique",
+    "technique_es": "Técnica mixta",
+    "dimensions": "21x29,7cm",
+    "year": 2017,
+    "image": "/src/assets/works/echoes_from_the_deep/mind-and-body.avif",
+    "price": "USD 150"
+  },
+  {
+    "id": "the-origin",
+    "title": {
+      "en": "The origin",
+      "es": "El origen"
     },
-    {
-        "id": "movement-as-a-creative-engine",
-        "title": {
-            "en": "Movement as a creative engine. Fatima and Milena",
-            "es": "El movimiento como motor creativo. Fátima y Milena"
-        },
-        "series": "gestures",
-        "technique": "Acrylic and latex",
-        "technique_es": "Acrílico y látex",
-        "dimensions": "60x80cm",
-        "year": 2024,
-        "image": "/src/assets/works/amid_gestures,_gazes_and_shared_memories/movement-as-a-creative-engine-fatima-and-milena.avif",
-        "price": "USD 500"
+    "series": "echoes",
+    "technique": "Mixed technique",
+    "technique_es": "Técnica mixta",
+    "dimensions": "21x29,7cm",
+    "year": 2017,
+    "image": "/src/assets/works/echoes_from_the_deep/the-origin.avif",
+    "price": "USD 150"
+  },
+  {
+    "id": "movement-as-a-creative-engine",
+    "title": {
+      "en": "Movement as a creative engine. Fatima and Milena",
+      "es": "El movimiento como motor creativo. Fátima y Milena"
     },
-    {
-        "id": "camila-and-milena",
-        "title": {
-            "en": "Camila and Milena",
-            "es": "Camila y Milena"
-        },
-        "series": "gestures",
-        "technique": "Acrylic and latex",
-        "technique_es": "Acrílico y látex",
-        "dimensions": "80x100cm",
-        "year": 2024,
-        "image": "/src/assets/works/amid_gestures,_gazes_and_shared_memories/camila-and-milena.avif",
-        "price": "USD 750"
+    "series": "gestures",
+    "technique": "Acrylic and latex",
+    "technique_es": "Acrílico y látex",
+    "dimensions": "60x80cm",
+    "year": 2024,
+    "image": "/src/assets/works/amid_gestures,_gazes_and_shared_memories/movement-as-a-creative-engine-fatima-and-milena.avif",
+    "price": "USD 500"
+  },
+  {
+    "id": "camila-and-milena",
+    "title": {
+      "en": "Camila and Milena",
+      "es": "Camila y Milena"
     },
-    {
-        "id": "the-photographer",
-        "title": {
-            "en": "The photographer",
-            "es": "La fotógrafa"
-        },
-        "series": "gestures",
-        "technique": "Acrylic and latex",
-        "technique_es": "Acrílico y látex",
-        "dimensions": "60x80cm",
-        "year": 2024,
-        "image": "/src/assets/works/amid_gestures,_gazes_and_shared_memories/the-photographer.avif",
-        "price": "USD 600"
+    "series": "gestures",
+    "technique": "Acrylic and latex",
+    "technique_es": "Acrílico y látex",
+    "dimensions": "80x100cm",
+    "year": 2024,
+    "image": "/src/assets/works/amid_gestures,_gazes_and_shared_memories/camila-and-milena.avif",
+    "price": "USD 750"
+  },
+  {
+    "id": "the-photographer",
+    "title": {
+      "en": "The photographer",
+      "es": "La fotógrafa"
     },
-    {
-        "id": "imagination",
-        "title": {
-            "en": "Imagination",
-            "es": "Imaginación"
-        },
-        "series": "childhood",
-        "technique": "Mixed technique",
-        "technique_es": "Técnica mixta",
-        "dimensions": "80x100 cm",
-        "year": 2019,
-        "image": "/src/assets/works/childhood/imagination.avif",
-        "price": "USD 1000"
+    "series": "gestures",
+    "technique": "Acrylic and latex",
+    "technique_es": "Acrílico y látex",
+    "dimensions": "60x80cm",
+    "year": 2024,
+    "image": "/src/assets/works/amid_gestures,_gazes_and_shared_memories/the-photographer.avif",
+    "price": "USD 600"
+  },
+  {
+    "id": "imagination",
+    "title": {
+      "en": "Imagination",
+      "es": "Imaginación"
     },
-    {
-        "id": "cinderella-of-ballester",
-        "title": {
-            "en": "Cinderella of Ballester",
-            "es": "Cenicienta de Ballester"
-        },
-        "series": "childhood",
-        "technique": "Oil",
-        "technique_es": "Óleo",
-        "dimensions": "60x80cm",
-        "year": 2020,
-        "image": "/src/assets/works/childhood/cinderella-of-ballester.avif",
-        "price": "USD 1000"
+    "series": "childhood",
+    "technique": "Mixed technique",
+    "technique_es": "Técnica mixta",
+    "dimensions": "80x100 cm",
+    "year": 2019,
+    "image": "/src/assets/works/childhood/imagination.avif",
+    "price": "USD 1000"
+  },
+  {
+    "id": "cinderella-of-ballester",
+    "title": {
+      "en": "Cinderella of Ballester",
+      "es": "Cenicienta de Ballester"
     },
-    {
-        "id": "it-goes-up-and-down",
-        "title": {
-            "en": "It goes up and down",
-            "es": "Sube y baja"
-        },
-        "series": "childhood",
-        "technique": "Mixed technique",
-        "technique_es": "Técnica mixta",
-        "dimensions": "50x70cm",
-        "year": 2019,
-        "image": "/src/assets/works/childhood/it-goes-up-and-down.avif",
-        "price": "USD 750"
+    "series": "childhood",
+    "technique": "Oil",
+    "technique_es": "Óleo",
+    "dimensions": "60x80cm",
+    "year": 2020,
+    "image": "/src/assets/works/childhood/cinderella-of-ballester.avif",
+    "price": "USD 1000"
+  },
+  {
+    "id": "it-goes-up-and-down",
+    "title": {
+      "en": "It goes up and down",
+      "es": "Sube y baja"
     },
-    {
-        "id": "float",
-        "title": {
-            "en": "Float",
-            "es": "Flotar"
-        },
-        "series": "on_demand",
-        "technique": "Acrylic on canvas",
-        "technique_es": "Acrílico sobre lienzo",
-        "dimensions": "70x120 cm",
-        "year": 2024,
-        "image": "/src/assets/works/on_demand/float.avif",
-        "price": ""
+    "series": "childhood",
+    "technique": "Mixed technique",
+    "technique_es": "Técnica mixta",
+    "dimensions": "50x70cm",
+    "year": 2019,
+    "image": "/src/assets/works/childhood/it-goes-up-and-down.avif",
+    "price": "USD 750"
+  },
+  {
+    "id": "float",
+    "title": {
+      "en": "Float",
+      "es": "Flotar"
     },
-    {
-        "id": "patagonia-triptych",
-        "title": {
-            "en": "Patagonia Triptych",
-            "es": "Tríptico Patagonia"
-        },
-        "series": "on_demand",
-        "technique": "Oil on canvas",
-        "technique_es": "Óleo sobre lienzo",
-        "dimensions": "50x70 cm (each)",
-        "year": 2024,
-        "image": "/src/assets/works/on_demand/patagonia-triptych.avif",
-        "price": ""
+    "series": "on_demand",
+    "technique": "Acrylic on canvas",
+    "technique_es": "Acrílico sobre lienzo",
+    "dimensions": "70x120 cm",
+    "year": 2024,
+    "image": "/src/assets/works/on_demand/float.avif",
+    "price": ""
+  },
+  {
+    "id": "patagonia-triptych",
+    "title": {
+      "en": "Patagonia Triptych",
+      "es": "Tríptico Patagonia"
     },
-    {
-        "id": "remembrance-of-family",
-        "title": {
-            "en": "Remembrance of family and loved ones who are no longer with us",
-            "es": "Recuerdo de familiares y seres queridos que ya no están"
-        },
-        "series": "on_demand",
-        "technique": "Acrylic on canvas",
-        "technique_es": "Acrílico sobre lienzo",
-        "dimensions": "60x90 cm",
-        "year": 2024,
-        "image": "/src/assets/works/on_demand/remembrance-of-family.avif",
-        "price": ""
+    "series": "on_demand",
+    "technique": "Oil on canvas",
+    "technique_es": "Óleo sobre lienzo",
+    "dimensions": "50x70 cm (each)",
+    "year": 2024,
+    "image": "/src/assets/works/on_demand/patagonia-triptych.avif",
+    "price": ""
+  },
+  {
+    "id": "remembrance-of-family",
+    "title": {
+      "en": "Remembrance of family and loved ones who are no longer with us",
+      "es": "Recuerdo de familiares y seres queridos que ya no están"
     },
-    {
-        "id": "pet-portrait",
-        "title": {
-            "en": "Pet portrait",
-            "es": "Retrato de mascota"
-        },
-        "series": "on_demand",
-        "technique": "Acrylic on canvas",
-        "technique_es": "Acrílico sobre lienzo",
-        "dimensions": "40x50 cm",
-        "year": 2024,
-        "image": "/src/assets/works/on_demand/pet-portrait.avif",
-        "price": ""
-    }
+    "series": "on_demand",
+    "technique": "Acrylic on canvas",
+    "technique_es": "Acrílico sobre lienzo",
+    "dimensions": "60x90 cm",
+    "year": 2024,
+    "image": "/src/assets/works/on_demand/remembrance-of-family.avif",
+    "price": ""
+  },
+  {
+    "id": "pet-portrait",
+    "title": {
+      "en": "Pet portrait",
+      "es": "Retrato de mascota"
+    },
+    "series": "on_demand",
+    "technique": "Acrylic on canvas",
+    "technique_es": "Acrílico sobre lienzo",
+    "dimensions": "40x50 cm",
+    "year": 2024,
+    "image": "/src/assets/works/on_demand/pet-portrait.avif",
+    "price": ""
+  }
 ]

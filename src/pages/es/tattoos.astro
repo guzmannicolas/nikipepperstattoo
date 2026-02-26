@@ -7,44 +7,23 @@ import HeroTitlePages from "../../components/sections/HeroTitlePages.astro";
 import Gallery from "../../components/ui/Gallery.astro";
 import CTASection from "../../components/calltoaction/CTASection.astro";
 import tattoosData from "../../data/tattoos.json";
-import koiFish from "../../assets/tattoos/animals/koi-fish-tattoo-lily-pads-water-lilies.jpeg";
-import lotusForearm from "../../assets/tattoos/botanical/forearm-pink-lotus-tattoo-leaves.jpg";
-import pinkPetals from "../../assets/tattoos/botanical/pink-flower-tattoo-green-leaves-petals.jpg";
-import redPoppies from "../../assets/tattoos/botanical/red-poppies-blue-cornflowers-arm-tattoo.jpeg";
-import birdFlowers from "../../assets/tattoos/animals/bird-tattoo-orange-grey-feathers-flowers.jpg";
-import pinkForearm from "../../assets/tattoos/botanical/pink-flower-forearm-tattoo-wrist-design.jpg";
-import redPoppyClose from "../../assets/tattoos/botanical/red-poppy-tattoo-chest-closeup.jpeg";
-import birdForearm from "../../assets/tattoos/animals/bird-tattoo-forearm-orange-grey-feathers.jpg";
-import succulent from "../../assets/tattoos/botanical/blue-green-succulent-pink-yellow-flowers-tattoo.jpeg";
-import purpleWhite from "../../assets/tattoos/botanical/purple-white-flower-forearm-tattoo-green-leaves.jpg";
-import blueFlower from "../../assets/tattoos/botanical/blue-flower-tattoo-green-leaves-forearm.jpg";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
+const tattooImages = import.meta.glob(
+	"/src/assets/tattoos/*.{jpeg,jpg,png,avif}",
+	{ eager: true }
+);
+
 // Leer filtro de la query
 const url = new URL(Astro.url);
 const filterParam = url.searchParams.get('filter') || 'all';
-// Resolve JSON metadata to actual imported assets so Astro can process them
-const assetMap = {
-	"koi-fish-tattoo-lily-pads-water-lilies.jpeg": koiFish,
-	"forearm-pink-lotus-tattoo-leaves.jpg": lotusForearm,
-	"pink-flower-tattoo-green-leaves-petals.jpg": pinkPetals,
-	"red-poppies-blue-cornflowers-arm-tattoo.jpeg": redPoppies,
-	"bird-tattoo-orange-grey-feathers-flowers.jpg": birdFlowers,
-	"pink-flower-forearm-tattoo-wrist-design.jpg": pinkForearm,
-	"red-poppy-tattoo-chest-closeup.jpeg": redPoppyClose,
-	"bird-tattoo-forearm-orange-grey-feathers.jpg": birdForearm,
-	"blue-green-succulent-pink-yellow-flowers-tattoo.jpeg": succulent,
-	"purple-white-flower-forearm-tattoo-green-leaves.jpg": purpleWhite,
-	"blue-flower-tattoo-green-leaves-forearm.jpg": blueFlower,
-};
+
 let galleryItems = tattoosData.items.map((item) => {
 	const srcPath = item.images && item.images[0] ? item.images[0].path : "";
-	const filename = srcPath ? srcPath.split("/").pop() : "";
-	const has =
-		filename && Object.prototype.hasOwnProperty.call(assetMap, filename);
-	const image = has ? (assetMap as any)[filename] : srcPath;
+	const imageModule = (tattooImages as any)[srcPath];
+	const image = imageModule ? imageModule.default : srcPath;
 	const localizedTitle = item.title?.[lang] || item.title?.en || "";
 	const localizedCategories =
 		lang === "es"

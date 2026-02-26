@@ -1,6 +1,10 @@
 ---
 import FilterButtons from "../buttons/FilterButtons.astro";
 import LoadMore from "../buttons/LoadMore.astro";
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 // Generic, reusable gallery component
 // Props:
 // - items: Array<{ image: string|object, title?: string, alt?: string, categories?: string|string[], technique?: string, dimensions?: string, year?: string|number }>
@@ -42,17 +46,14 @@ const defaultButtons = [
     value: String(c),
   })),
 ];
-// Import PhotoSwipe CSS from the local package so it's bundled
-import "photoswipe/style.css";
 ---
 
-<section id={id} class="gallery-component">
+<section id={id} class="gallery-component" data-show-initial={showInitialCount}>
   <div class="mb-8 text-center">
     <slot name="filters">
       <FilterButtons buttons={defaultButtons} />
     </slot>
   </div>
-
   <div
     id={`${id}-grid`}
     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
@@ -89,9 +90,9 @@ import "photoswipe/style.css";
             <a
               class="block group"
               href={src}
+              data-pswp-src={src}
               data-pswp-width={w}
               data-pswp-height={h}
-              data-action="open-pswp"
               data-index={i}
             >
               <div class="relative overflow-hidden aspect-[3/4] bg-neutral-100">
@@ -119,7 +120,7 @@ import "photoswipe/style.css";
                             <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
                             </svg>
-                            <span><strong>Technique:</strong> {item.technique}</span>
+                            <span><strong>{t('artworks.technique')}:</strong> {item.technique}</span>
                         </div>
                     )}
                     
@@ -128,7 +129,7 @@ import "photoswipe/style.css";
                             <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
                             </svg>
-                            <span><strong>Dimensions:</strong> {item.dimensions}</span>
+                            <span><strong>{t('artworks.dimensions')}:</strong> {item.dimensions}</span>
                         </div>
                     )}
                     
@@ -137,7 +138,7 @@ import "photoswipe/style.css";
                             <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                             </svg>
-                            <span><strong>Year:</strong> {item.year}</span>
+                            <span><strong>{t('artworks.year')}:</strong> {item.year}</span>
                         </div>
                     )}
                 </div>
@@ -151,38 +152,34 @@ import "photoswipe/style.css";
     }
   </div>
 
-  <div class="text-center mt-8">
-    <LoadMore buttonId={`${id}-load-more-btn`} label={loadMoreLabel} />
-  </div>
+  {items.length > showInitialCount && (
+    <div class="text-center mt-8">
+      <LoadMore buttonId={`${id}-load-more-btn`} label={loadMoreLabel} />
+    </div>
+  )}
 
   <script>
+    import PhotoSwipeLightbox from 'photoswipe/lightbox';
+    import PhotoSwipe from 'photoswipe';
+
     function initGalleries() {
       const galleries = document.querySelectorAll("section.gallery-component");
       galleries.forEach((root) => {
         if (root.getAttribute("data-initialized")) return;
         root.setAttribute("data-initialized", "true");
 
-        console.log("[Gallery] Initializing gallery:", root.id);
-
         // Auto-detect image sizes for PhotoSwipe to prevent distortion
-        // This fixes images that don't have dimensions passed from the server
         root.querySelectorAll(".gallery-item a").forEach((a) => {
           const img = a.querySelector("img");
           if (!img) return;
-
           const updateSize = () => {
-            // Only update if we have valid natural dimensions
             if (img.naturalWidth && img.naturalHeight) {
               a.setAttribute("data-pswp-width", String(img.naturalWidth));
               a.setAttribute("data-pswp-height", String(img.naturalHeight));
             }
           };
-
-          if (img.complete) {
-            updateSize();
-          } else {
-            img.onload = updateSize;
-          }
+          if (img.complete) updateSize();
+          else img.onload = updateSize;
         });
 
         // Filtering
@@ -190,17 +187,11 @@ import "photoswipe/style.css";
           const target = e.target;
           // @ts-ignore
           const btn = target.closest ? target.closest(".filter-btn") : null;
-
           if (btn && root.contains(btn)) {
             e.preventDefault();
-            const raw =
-              btn.getAttribute("data-value") || btn.getAttribute("data-filter");
-            console.log("[Gallery] Clicked filter:", raw);
-
+            const raw = btn.getAttribute("data-value") || btn.getAttribute("data-filter");
             if (!raw) return;
             const value = String(raw).trim().toLowerCase();
-
-            // Update buttons
             root.querySelectorAll(".filter-btn").forEach((b) => {
               b.classList.remove("active");
               b.setAttribute("aria-pressed", "false");
@@ -208,44 +199,57 @@ import "photoswipe/style.css";
             btn.classList.add("active");
             btn.setAttribute("aria-pressed", "true");
 
-            // Filter items
-            root.querySelectorAll(".gallery-item").forEach((item) => {
-              // @ts-ignore
-              const cats = (item.getAttribute("data-categories") || "")
-                .split(",")
-                .map((s) => s.trim().toLowerCase())
-                .filter(Boolean);
-              const match = value === "all" || cats.includes(value);
-              if (match) {
-                item.classList.remove("hidden");
-              } else {
-                item.classList.add("hidden");
-              }
-            });
+            if (value === "all") {
+              const limit = parseInt(root.getAttribute("data-show-initial") || "6", 10);
+              root.querySelectorAll(".gallery-item").forEach((item) => {
+                const idx = parseInt(item.getAttribute("data-index") || "0", 10);
+                item.classList.toggle("hidden", idx >= limit);
+              });
+            } else {
+              const limit = parseInt(root.getAttribute("data-show-initial") || "6", 10);
+              let matchCount = 0;
+              root.querySelectorAll(".gallery-item").forEach((item) => {
+                // @ts-ignore
+                const cats = (item.getAttribute("data-categories") || "")
+                  .split(",").map((s) => s.trim().toLowerCase()).filter(Boolean);
+                if (cats.includes(value)) {
+                  item.classList.toggle("hidden", matchCount >= limit);
+                  matchCount++;
+                } else {
+                  item.classList.add("hidden");
+                }
+              });
+            }
+
+            // Update Load More button visibility based on active filter
+            const loadMoreContainer = root.querySelector("#load-more-container") as HTMLElement | null;
+            if (loadMoreContainer) {
+              const hiddenMatchingCount = Array.from(root.querySelectorAll(".gallery-item.hidden")).filter((item) => {
+                if (value === "all") return true;
+                // @ts-ignore
+                const cats = (item.getAttribute("data-categories") || "")
+                  .split(",").map((s) => s.trim().toLowerCase()).filter(Boolean);
+                return cats.includes(value);
+              }).length;
+              loadMoreContainer.style.display = hiddenMatchingCount === 0 ? "none" : "";
+            }
           }
         });
 
-        // PhotoSwipe
-        const gridId = root.querySelector(".grid")?.id;
-        if (gridId) {
-          import("photoswipe/lightbox")
-            .then(({ default: PhotoSwipeLightbox }) => {
-              const lightbox = new PhotoSwipeLightbox({
-                gallery: `#${gridId}`,
-                children: "a",
-                pswpModule: () => import("photoswipe"),
-              });
-              lightbox.init();
-            })
-            .catch((err) => console.error("[Gallery] PhotoSwipe failed:", err));
+        // PhotoSwipe — use section id to derive grid id, never rely on .grid querySelector
+        const gridId = root.id ? `${root.id}-grid` : null;
+        if (gridId && document.getElementById(gridId)) {
+          const lightbox = new PhotoSwipeLightbox({
+            gallery: `#${gridId}`,
+            children: "a[data-pswp-src]",
+            pswpModule: PhotoSwipe,
+          });
+          lightbox.init();
         }
       });
     }
 
-    // Run on load
     initGalleries();
-
-    // Run on Astro page swap (if View Transitions are used)
     document.addEventListener("astro:page-load", initGalleries);
   </script>
 </section>
