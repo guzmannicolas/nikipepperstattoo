@@ -8,7 +8,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<Layout title={`${t('contact.title')} - Niki Peppers`} description={t('contact.description')}>
+<Layout title={`${t('contact.title')} - ${t('home.title')}`} description={t('contact.description')}>
 	<section class="py-29 px-4 max-w-7xl mx-auto">
 		<!-- Hero Title Pages Section (componentized) -->
 		<HeroTitlePages lang={lang} t={t} ns="contact" />
@@ -217,12 +217,15 @@ const t = useTranslations(lang);
 			const backdrop = document.getElementById('contact-modal-backdrop');
 			const closeX = document.getElementById('contact-modal-close-x');
 			const acceptBtn = document.getElementById('contact-modal-accept');
-			const form = document.getElementById('contact-form');
-			const hpField = document.getElementById('hp-field');
-			const formStartInput = document.getElementById('form-start');
+			/** @type {HTMLFormElement | null} */
+			const form = /** @type {HTMLFormElement | null} */ (document.getElementById('contact-form'));
+			/** @type {HTMLInputElement | null} */
+			const hpField = /** @type {HTMLInputElement | null} */ (document.getElementById('hp-field'));
+			/** @type {HTMLInputElement | null} */
+			const formStartInput = /** @type {HTMLInputElement | null} */ (document.getElementById('form-start'));
 
 			let startTime = Date.now();
-			if (formStartInput) formStartInput.value = String(startTime);
+			if (formStartInput instanceof HTMLInputElement) formStartInput.value = String(startTime);
 
 			function openModal() {
 				if (!modal) return;
@@ -250,7 +253,8 @@ const t = useTranslations(lang);
 				if (e.key === 'Escape') closeModal();
 			});
 
-			function showInlineError(msg) {
+			/** @param {string} msg */
+			function showInlineError(msg: string) {
 				const existing = document.getElementById('contact-error');
 				if (existing) existing.remove();
 				const el = document.createElement('div');
@@ -265,7 +269,7 @@ const t = useTranslations(lang);
 					e.preventDefault();
 
 					// Honeypot check
-					if (hpField && hpField.value.trim() !== '') {
+					if (hpField instanceof HTMLInputElement && hpField.value.trim() !== '') {
 						showInlineError('Error sending message. Please try again later.');
 						return;
 					}
@@ -286,8 +290,14 @@ const t = useTranslations(lang);
 						return;
 					}
 
+					/** @type {HTMLButtonElement | null} */
 					const submitBtn = form.querySelector('button[type="submit"]');
-					if (submitBtn) submitBtn.disabled = true;
+					if (submitBtn instanceof HTMLButtonElement) submitBtn.disabled = true;
+					if (!(form instanceof HTMLFormElement)) {
+						showInlineError('Form error.');
+						if (submitBtn instanceof HTMLButtonElement) submitBtn.disabled = false;
+						return;
+					}
 					const formData = new FormData(form);
 
 					try {
@@ -302,7 +312,7 @@ const t = useTranslations(lang);
 							openModal();
 							form.reset();
 							startTime = Date.now();
-							if (formStartInput) formStartInput.value = String(startTime);
+							if (formStartInput instanceof HTMLInputElement) formStartInput.value = String(startTime);
 							const existing = document.getElementById('contact-error');
 							if (existing) existing.remove();
 						} else {
@@ -313,7 +323,7 @@ const t = useTranslations(lang);
 					} catch (err) {
 						showInlineError('Network error. Please try again later.');
 					} finally {
-						if (submitBtn) submitBtn.disabled = false;
+						if (submitBtn instanceof HTMLButtonElement) submitBtn.disabled = false;
 					}
 				});
 			}

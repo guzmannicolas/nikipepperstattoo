@@ -8,7 +8,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<Layout title={`${t('biography.title')} - Niki Peppers`} description={t('biography.description')}>
+<Layout title={`${t('biography.title')} - ${t('home.title')}`} description={t('biography.description')}>
 	<section class="py-29 px-4 max-w-7xl mx-auto">
 		<!-- Hero Title Pages Section (componentized) -->
 		<HeroTitlePages lang={lang} t={t} ns="biography" />
