@@ -23,9 +23,42 @@ const btnLabel = label ?? (t ? t('tattoos.loadMore') : 'Load More');
       // Only respond to direct clicks on the button
       try { e.preventDefault(); } catch (err) {}
       const root = btn.closest && btn.closest('section.gallery-component') ? btn.closest('section.gallery-component') : document;
+
+      // Determine active filter
+      const activeBtn = root.querySelector ? root.querySelector('.filter-btn[aria-pressed="true"]') : null;
+      const activeValue = activeBtn
+        ? String(activeBtn.getAttribute('data-value') || activeBtn.getAttribute('data-filter') || 'all').trim().toLowerCase()
+        : 'all';
+
+      // Only reveal hidden items that match the active filter
       const hiddenItems = Array.from(root.querySelectorAll('.gallery-item.hidden'));
-      hiddenItems.forEach(it => it.classList.remove('hidden'));
-      btn.style.display = 'none';
+      hiddenItems.forEach((it) => {
+        if (activeValue === 'all') {
+          it.classList.remove('hidden');
+        } else {
+          const cats = (it.getAttribute('data-categories') || '')
+            .split(',')
+            .map((s) => s.trim().toLowerCase())
+            .filter(Boolean);
+          if (cats.includes(activeValue)) {
+            it.classList.remove('hidden');
+          }
+        }
+      });
+
+      // Hide Load More if no more hidden items match the active filter
+      const stillHidden = Array.from(root.querySelectorAll('.gallery-item.hidden')).filter((it) => {
+        if (activeValue === 'all') return true;
+        const cats = (it.getAttribute('data-categories') || '')
+          .split(',')
+          .map((s) => s.trim().toLowerCase())
+          .filter(Boolean);
+        return cats.includes(activeValue);
+      });
+      if (stillHidden.length === 0) {
+        const container = btn.closest('#load-more-container');
+        if (container) container.style.display = 'none';
+      }
     }, true);
   })();
 </script>

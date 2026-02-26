@@ -48,7 +48,7 @@ const defaultButtons = [
 ];
 ---
 
-<section id={id} class="gallery-component">
+<section id={id} class="gallery-component" data-show-initial={showInitialCount}>
   <div class="mb-8 text-center">
     <slot name="filters">
       <FilterButtons buttons={defaultButtons} />
@@ -199,13 +199,34 @@ const defaultButtons = [
             });
             btn.classList.add("active");
             btn.setAttribute("aria-pressed", "true");
-            root.querySelectorAll(".gallery-item").forEach((item) => {
-              // @ts-ignore
-              const cats = (item.getAttribute("data-categories") || "")
-                .split(",").map((s) => s.trim().toLowerCase()).filter(Boolean);
-              const match = value === "all" || cats.includes(value);
-              item.classList.toggle("hidden", !match);
-            });
+
+            if (value === "all") {
+              const limit = parseInt(root.getAttribute("data-show-initial") || "6", 10);
+              root.querySelectorAll(".gallery-item").forEach((item) => {
+                const idx = parseInt(item.getAttribute("data-index") || "0", 10);
+                item.classList.toggle("hidden", idx >= limit);
+              });
+            } else {
+              root.querySelectorAll(".gallery-item").forEach((item) => {
+                // @ts-ignore
+                const cats = (item.getAttribute("data-categories") || "")
+                  .split(",").map((s) => s.trim().toLowerCase()).filter(Boolean);
+                item.classList.toggle("hidden", !cats.includes(value));
+              });
+            }
+
+            // Update Load More button visibility based on active filter
+            const loadMoreContainer = root.querySelector("#load-more-container") as HTMLElement | null;
+            if (loadMoreContainer) {
+              const hiddenMatchingCount = Array.from(root.querySelectorAll(".gallery-item.hidden")).filter((item) => {
+                if (value === "all") return true;
+                // @ts-ignore
+                const cats = (item.getAttribute("data-categories") || "")
+                  .split(",").map((s) => s.trim().toLowerCase()).filter(Boolean);
+                return cats.includes(value);
+              }).length;
+              loadMoreContainer.style.display = hiddenMatchingCount === 0 ? "none" : "";
+            }
           }
         });
 
