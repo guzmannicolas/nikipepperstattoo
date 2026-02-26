@@ -189,7 +189,7 @@ const defaultButtons = [
 
             // Update Load More button visibility based on active filter
             const loadMoreContainer = root.querySelector("#load-more-container");
-            if (loadMoreContainer) {
+            if (loadMoreContainer instanceof HTMLElement) {
               const hiddenMatchingCount = Array.from(root.querySelectorAll(".gallery-item.hidden")).filter((item) => {
                 if (value === "all") return true;
                 // @ts-ignore
