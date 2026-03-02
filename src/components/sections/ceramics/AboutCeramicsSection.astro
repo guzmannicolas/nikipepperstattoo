@@ -1,24 +1,123 @@
 ---
 const { t } = Astro.props as { t: any };
+
+const techniques = [
+  { key: 'technique1', icon: '🤲', label: t('ceramics.technique1') },
+  { key: 'technique2', icon: '🎡', label: t('ceramics.technique2') },
+  { key: 'technique3', icon: '🎨', label: t('ceramics.technique3') },
+  { key: 'technique4', icon: '🔥', label: t('ceramics.technique4') },
+];
 ---
 
-<section class="py-20 px-4 bg-neutral-50 border-y border-neutral-200">
-  <div class="max-w-4xl mx-auto">
-    <h2 class="text-3xl font-bold mb-6 text-center text-black">{t('ceramics.aboutTitle')}</h2>
-    <div class="grid md:grid-cols-2 gap-8 items-start">
-      <div>
-        <p class="text-neutral-600 text-lg mb-4">{t('ceramics.aboutText1')}</p>
-        <p class="text-neutral-600 text-lg">{t('ceramics.aboutText2')}</p>
+<section class="relative py-28 px-4 overflow-hidden bg-white" id="about-ceramics">
+  <!-- Decorative background blobs -->
+  <div class="absolute -top-32 -left-32 w-96 h-96 bg-green-100 rounded-full opacity-40 blur-3xl pointer-events-none"></div>
+  <div class="absolute -bottom-24 -right-24 w-80 h-80 bg-stone-200 rounded-full opacity-50 blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-5xl mx-auto relative z-10">
+
+    <!-- Section label -->
+    <div class="ceramic-reveal flex items-center gap-3 mb-6 justify-center">
+      <span class="block w-10 h-px bg-green-500"></span>
+      <span class="text-green-600 uppercase tracking-widest text-xs font-semibold">{t('ceramics.techniquesTitle')}</span>
+      <span class="block w-10 h-px bg-green-500"></span>
+    </div>
+
+    <!-- Title -->
+    <h2 class="ceramic-reveal text-4xl md:text-5xl font-bold text-center text-neutral-900 mb-16 leading-tight">
+      {t('ceramics.aboutTitle')}
+    </h2>
+
+    <!-- Main content grid -->
+    <div class="grid md:grid-cols-2 gap-16 items-start mb-20">
+
+      <!-- Text block -->
+      <div class="ceramic-reveal space-y-6">
+        <p class="text-neutral-600 text-lg leading-relaxed">{t('ceramics.aboutText1')}</p>
+        <p class="text-neutral-500 text-base leading-relaxed">{t('ceramics.aboutText2')}</p>
+
+        <!-- Decorative quote line -->
+        <div class="border-l-4 border-green-400 pl-5 mt-8">
+          <p class="text-neutral-400 italic text-sm leading-relaxed">
+            "Every piece starts as raw earth and ends as a story you can hold in your hands."
+          </p>
+        </div>
       </div>
-      <div>
-        <h3 class="text-xl font-bold mb-4 text-green-600">{t('ceramics.techniquesTitle')}</h3>
-        <ul class="space-y-2 text-neutral-600">
-          <li>• {t('ceramics.technique1')}</li>
-          <li>• {t('ceramics.technique2')}</li>
-          <li>• {t('ceramics.technique3')}</li>
-          <li>• {t('ceramics.technique4')}</li>
-        </ul>
+
+      <!-- Techniques cards -->
+      <div class="grid grid-cols-2 gap-4">
+        {techniques.map((t_item, i) => (
+          <div
+            class="ceramic-card group relative bg-neutral-50 border border-neutral-200 rounded-2xl p-6 flex flex-col gap-3 hover:border-green-400 hover:shadow-lg transition-all duration-300 cursor-default"
+            style={`--delay: ${i * 80}ms`}
+          >
+            <span class="text-3xl group-hover:scale-110 transition-transform duration-300 origin-left">{t_item.icon}</span>
+            <span class="text-sm font-medium text-neutral-700 leading-snug">{t_item.label}</span>
+            <!-- subtle hover underline -->
+            <span class="absolute bottom-0 left-0 h-0.5 w-0 bg-green-400 rounded-full group-hover:w-full transition-all duration-500"></span>
+          </div>
+        ))}
       </div>
     </div>
+
+    <!-- Bottom divider stat strip -->
+    <div class="ceramic-reveal grid grid-cols-3 divide-x divide-neutral-200 border border-neutral-200 rounded-2xl overflow-hidden">
+      {[
+        { value: '100%', label: 'Handmade' },
+        { value: '10+', label: 'Years of craft' },
+        { value: '∞', label: 'Stories told' },
+      ].map(stat => (
+        <div class="py-8 px-6 text-center bg-neutral-50 hover:bg-green-50 transition-colors duration-300">
+          <p class="text-3xl font-bold text-neutral-900 mb-1">{stat.value}</p>
+          <p class="text-xs uppercase tracking-widest text-neutral-400">{stat.label}</p>
+        </div>
+      ))}
+    </div>
+
   </div>
 </section>
+
+<style>
+  /* Initial states for reveal animation */
+  .ceramic-reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .ceramic-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .ceramic-card {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+    transition:
+      opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) var(--delay, 0ms),
+      transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) var(--delay, 0ms),
+      border-color 0.3s,
+      box-shadow 0.3s;
+  }
+  .ceramic-card.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+
+  document
+    .querySelectorAll('#about-ceramics .ceramic-reveal, #about-ceramics .ceramic-card')
+    .forEach((el) => observer.observe(el));
+</script>
