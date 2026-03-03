@@ -1,24 +1,235 @@
 ---
 const { t } = Astro.props as { t: any };
+
+const techniques = [
+  { key: 'technique1', icon: '🤲' },
+  { key: 'technique2', icon: '⚙️' },
+  { key: 'technique3', icon: '🎨' },
+  { key: 'technique4', icon: '🔥' },
+];
 ---
 
-<section class="py-20 px-4 bg-neutral-50 border-y border-neutral-200">
-  <div class="max-w-4xl mx-auto">
-    <h2 class="text-3xl font-bold mb-6 text-center text-black">{t('ceramics.aboutTitle')}</h2>
-    <div class="grid md:grid-cols-2 gap-8 items-start">
-      <div>
-        <p class="text-neutral-600 text-lg mb-4">{t('ceramics.aboutText1')}</p>
-        <p class="text-neutral-600 text-lg">{t('ceramics.aboutText2')}</p>
+<section class="about-ceramics py-24 px-4 relative overflow-hidden">
+  <!-- Fondo decorativo -->
+  <div class="bg-blob bg-blob-1" aria-hidden="true"></div>
+  <div class="bg-blob bg-blob-2" aria-hidden="true"></div>
+
+  <div class="max-w-5xl mx-auto relative z-10">
+
+    <!-- Título con línea decorativa -->
+    <div class="section-header text-center mb-16 reveal">
+      <span class="section-eyebrow">Handmade with love</span>
+      <h2 class="text-4xl md:text-5xl font-bold mt-2 mb-4 text-neutral-900">
+        {t('ceramics.aboutTitle')}
+      </h2>
+      <div class="title-line" aria-hidden="true"></div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+
+      <!-- Textos -->
+      <div class="reveal reveal-left">
+        <p class="text-neutral-600 text-lg leading-relaxed mb-5">
+          {t('ceramics.aboutText1')}
+        </p>
+        <p class="text-neutral-600 text-lg leading-relaxed">
+          {t('ceramics.aboutText2')}
+        </p>
       </div>
-      <div>
-        <h3 class="text-xl font-bold mb-4 text-green-600">{t('ceramics.techniquesTitle')}</h3>
-        <ul class="space-y-2 text-neutral-600">
-          <li>• {t('ceramics.technique1')}</li>
-          <li>• {t('ceramics.technique2')}</li>
-          <li>• {t('ceramics.technique3')}</li>
-          <li>• {t('ceramics.technique4')}</li>
+
+      <!-- Técnicas -->
+      <div class="reveal reveal-right">
+        <h3 class="text-sm font-semibold uppercase tracking-widest text-green-600 mb-6">
+          {t('ceramics.techniquesTitle')}
+        </h3>
+        <ul class="techniques-list space-y-3">
+          {techniques.map(({ key, icon }, i) => (
+            <li class="technique-item" style={`--delay: ${i * 80}ms`}>
+              <span class="technique-icon" aria-hidden="true">{icon}</span>
+              <span class="text-neutral-700 font-medium">{t(`ceramics.${key}`)}</span>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
+
+    <!-- Stat strip -->
+    <div class="stats-strip reveal reveal-up">
+      <div class="stat-item">
+        <span class="stat-number">100%</span>
+        <span class="stat-label">Handmade</span>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat-item">
+        <span class="stat-number">+5</span>
+        <span class="stat-label">Years of craft</span>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat-item">
+        <span class="stat-number">∞</span>
+        <span class="stat-label">Stories told</span>
+      </div>
+    </div>
+
   </div>
 </section>
+
+<style>
+  .about-ceramics {
+    background: #fafaf9;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  /* ── Blobs decorativos ── */
+  .bg-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  .bg-blob-1 {
+    width: 400px; height: 400px;
+    background: #bbf7d0;
+    top: -100px; right: -100px;
+  }
+  .bg-blob-2 {
+    width: 300px; height: 300px;
+    background: #fed7aa;
+    bottom: -80px; left: -80px;
+  }
+
+  /* ── Header ── */
+  .section-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #16a34a;
+  }
+  .title-line {
+    width: 48px;
+    height: 3px;
+    background: linear-gradient(90deg, #16a34a, #86efac);
+    border-radius: 9999px;
+    margin: 0 auto;
+  }
+
+  /* ── Técnicas ── */
+  .technique-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .technique-item:hover {
+    transform: translateX(6px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+  }
+  .technique-icon {
+    font-size: 1.25rem;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0fdf4;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  /* ── Stats ── */
+  .stats-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    padding: 24px 32px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  }
+  .stat-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #16a34a;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #9ca3af;
+  }
+  .stat-divider {
+    width: 1px;
+    height: 40px;
+    background: #e5e7eb;
+    flex-shrink: 0;
+  }
+
+  /* ── Animaciones de entrada ── */
+  .reveal {
+    opacity: 0;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal-left  { transform: translateX(-28px); }
+  .reveal-right { transform: translateX(28px); }
+  .reveal-up    { transform: translateY(24px); }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  /* Técnicas: stagger delay al aparecer */
+  .reveal.visible .technique-item {
+    animation: fadeSlideIn 0.4s ease both;
+    animation-delay: var(--delay, 0ms);
+  }
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateX(12px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  @media (max-width: 640px) {
+    .stats-strip {
+      flex-direction: column;
+      gap: 16px;
+    }
+    .stat-divider {
+      width: 40px; height: 1px;
+    }
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+
+  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+</script>
