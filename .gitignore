@@ -1,8 +1,10 @@
-# Build output
+# Build output — NEVER commit these
 dist/
 .astro/
 .next/
 out/
+.vercel/
+.vercel/output/
 
 # Dependencies
 node_modules/

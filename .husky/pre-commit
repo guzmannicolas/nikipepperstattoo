@@ -1,0 +1,22 @@
+#!/bin/sh
+# Pre-commit hook: bloquea archivos de build que no deben ir al repo
+
+BLOCKED_PATTERNS=".vercel/output dist/ .astro/"
+FAILED=0
+
+for pattern in $BLOCKED_PATTERNS; do
+  if git diff --cached --name-only | grep -q "^$pattern"; then
+    echo "❌ ERROR: Intentando commitear archivos de build: $pattern"
+    echo "   Estos archivos son generados automáticamente y NO deben ir al repo."
+    echo "   Ejecuta: git rm -r --cached $pattern"
+    FAILED=1
+  fi
+done
+
+if [ $FAILED -eq 1 ]; then
+  echo ""
+  echo "🚫 Commit bloqueado. Elimina los archivos de build del staging area."
+  exit 1
+fi
+
+exit 0
