@@ -62,10 +62,10 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, wordsliderhero, ctaPrima
 
   const containerRef = useRef(null);
   const { scrollY } = useScroll();
-  const yBackground = useTransform(scrollY, [0, 1000], [0, 400]); 
+  const yBackground = useTransform(scrollY, [0, 1000], [0, 400]);
   const yContent = useTransform(scrollY, [0, 1000], [0, 200]);
 
-  
+
   // Render del componente
   return (
     <section className="relative min-h-[100dvh] flex flex-col justify-center overflow-hidden pt-24 md:pt-24">
@@ -78,12 +78,12 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, wordsliderhero, ctaPrima
           style={{ y: yBackground }}
         />
         {/* Imagen PNG encima para detalles (punta superior de la composición) */}
-          <motion.img
-            src="/images/home/background-hero.png"
-            alt="Hero overlay"
-            style={{ y: yBackground }}
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none object-[70%_center] md:object-center opacity-90"
-          />
+        <motion.img
+          src="/images/home/background-hero.jpeg"
+          alt="Hero overlay"
+          style={{ y: yBackground }}
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none object-[70%_center] md:object-center opacity-90"
+        />
       </div>
 
       {/* Contenedor centrado con paddings responsivos - Flex Grow para ocupar espacio */}
@@ -138,18 +138,18 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, wordsliderhero, ctaPrima
       </div>
 
       {/* Marquee full-width - Ahora en flujo relativo al final */}
-      <motion.div 
+      <motion.div
         className="w-full py-8 md:py-12 pointer-events-none z-0 relative"
         style={{ y: yContent }}
       >
-          <div className="inline-flex animate-marquee text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-black uppercase tracking-widest text-black/80 whitespace-nowrap">
-            <div className="flex items-center gap-8 md:gap-12 pr-8 md:pr-12 font-serif">
-              {wordsliderhero}
-            </div>
-            <div className="flex items-center gap-8 md:gap-12 pr-8 md:pr-12 font-serif">
-              {wordsliderhero}
-            </div>
+        <div className="inline-flex animate-marquee text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-black uppercase tracking-widest text-black/80 whitespace-nowrap">
+          <div className="flex items-center gap-8 md:gap-12 pr-8 md:pr-12 font-serif">
+            {wordsliderhero}
           </div>
+          <div className="flex items-center gap-8 md:gap-12 pr-8 md:pr-12 font-serif">
+            {wordsliderhero}
+          </div>
+        </div>
       </motion.div>
     </section>
   );
