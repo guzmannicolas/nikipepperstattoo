@@ -126,8 +126,8 @@
     "serviceSelect": "Select a service",
     "serviceTattoo": "Tattoo",
     "sizeLabel": "Project Size (if applicable)",
-    "sizeLarge": "Large (6-12")",
-    "sizeMedium": "Medium (2-6")",
+    "sizeLarge": "Large (6-12\")",
+    "sizeMedium": "Medium (2-6\")",,
     "sizeSelect": "Select a size",
     "sizeSmall": "Small (up to 2")",
     "sizeXLarge": "Extra Large (12"+)",
@@ -315,7 +315,7 @@
     "murals": "Murals",
     "orders": "Orders",
     "tattoos": "Tattoos",
-    "works": "Artworks"
+    "works": "Paintings"
   },
   "orders": {
     "ceramicButton": "Order Ceramic",
