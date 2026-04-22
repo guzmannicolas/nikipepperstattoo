@@ -36,7 +36,7 @@
       "oil": "Óleo sobre Lienzo",
       "watercolor": "Acuarela"
     },
-    "title": "Obras",
+    "title": "Pinturas",
     "viewDetails": "Ver Detalles",
     "year": "Año"
   },
@@ -93,7 +93,7 @@
     "technique4": "Cocción en horno",
     "techniques": "Técnicas",
     "techniquesTitle": "Técnicas",
-    "title": "Trabajos en Cerámica"
+    "title": "Ceramic Works"
   },
   "contact": {
     "description": "Ponete en contacto para reservas y consultas",
@@ -168,7 +168,7 @@
       }
     },
     "categories": {
-      "artworks": "Obras",
+      "artworks": "Cerámica",
       "ceramics": "Cerámica",
       "general": "General",
       "orders": "Comisiones y Pedidos",
@@ -181,7 +181,7 @@
     "questions": {
       "artworks": {
         "mediums": "¿Qué técnicas utilizas?",
-        "prints": "¿Ofreces prints?",
+        "prints": "¿Ofereces prints?",
         "purchase": "¿Las obras originales están a la venta?"
       },
       "ceramics": {

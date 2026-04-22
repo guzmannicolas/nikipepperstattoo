@@ -36,7 +36,7 @@
       "oil": "Oil on Canvas",
       "watercolor": "Watercolor"
     },
-    "title": "Artworks",
+    "title": "Paintings",
     "viewDetails": "View Details",
     "year": "Year"
   },
@@ -129,8 +129,8 @@
     "sizeLarge": "Large (6-12\")",
     "sizeMedium": "Medium (2-6\")",
     "sizeSelect": "Select a size",
-    "sizeSmall": "Small (up to 2")",
-    "sizeXLarge": "Extra Large (12"+)",
+    "sizeSmall": "Small (up to 2\\")",
+    "sizeXLarge": "Extra Large (12\\"+)",
     "socialText": "Follow me on social media to see my latest works and updates.",
     "socialTitle": "Social Media",
     "submitButton": "Send Message",
@@ -168,7 +168,7 @@
       }
     },
     "categories": {
-      "artworks": "Artworks",
+      "artworks": "Ceramics",
       "ceramics": "Ceramics",
       "general": "General",
       "orders": "Commissions & Orders",
@@ -301,7 +301,7 @@
     "step2Title": "Concept",
     "step3Desc": "Finalize design and quote",
     "step3Title": "Approval",
-    "step4Desc": "Ejecute the mural on-site",
+    "step4Desc": "Execute the mural on-site",
     "step4Title": "Painting",
     "step5Desc": "Final touches and sealing",
     "step5Title": "Completion",
