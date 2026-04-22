@@ -120,7 +120,7 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, wordsliderhero, ctaPrima
               variants={itemVariants}
             >
               <a
-                href={`/${lang === 'en' ? '' : lang + '/'}works`}
+                href={`/${lang === 'en' ? '' : lang + '/'}biography`}
                 className="px-8 py-4 rounded-full font-semibold transition-all border-2 text-center w-full sm:w-auto transform hover:scale-105 bg-green-500 text-white border-transparent hover:bg-green-600"
               >
                 {ctaPrimary}
