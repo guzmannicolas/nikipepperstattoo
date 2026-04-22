@@ -35,11 +35,11 @@ const isActive = (base: string) => {
 				<img id="navbar-logo" src="/titulo-header.png" alt="Niki Peppers" class="h-20 w-auto" />
 			</a>
 			<div id="nav-links" class="hidden md:flex space-x-6 items-center  font-serif text-xl">
+				<a href={hrefFor('biography')} class={ `nav-link text-black relative ${isActive('biography') ? 'text-green-500' : ''}` }>{t("nav.biography")}</a>
 				<a href={hrefFor('tattoos')} class={ `nav-link text-black relative ${isActive('tattoos') ? 'text-green-500' : ''}` }>{t("nav.tattoos")}</a>
 				<a href={hrefFor('works')} class={ `nav-link text-black relative ${isActive('works') ? 'text-green-500' : ''}` }>{t("nav.works")}</a>
 				<a href={hrefFor('ceramics')} class={ `nav-link text-black relative ${isActive('ceramics') ? 'text-green-500' : ''}` }>{t("nav.ceramics")}</a>
 				<a href={hrefFor('murals')} class={ `nav-link text-black relative ${isActive('murals') ? 'text-green-500' : ''}` }>{t("nav.murals")}</a>
-				<a href={hrefFor('biography')} class={ `nav-link text-black relative ${isActive('biography') ? 'text-green-500' : ''}` }>{t("nav.biography")}</a>
 				<a href={hrefFor('faqs')} class={ `nav-link text-black relative ${isActive('faqs') ? 'text-green-500' : ''}` }>{t("nav.faqs")}</a>
 				<a href={hrefFor('contact')} class={ `nav-link text-black relative ${isActive('contact') ? 'text-green-500' : ''}` }>{t("nav.contact")}</a>
 
@@ -94,11 +94,11 @@ const isActive = (base: string) => {
 	class="hidden md:hidden fixed inset-0 bg-white z-40 flex flex-col justify-center items-center space-y-8"
 >
 	<div class="flex flex-col items-center space-y-6 font-serif text-3xl">
+			<a href={hrefFor('biography')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('biography') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.biography")}</a>
 			<a href={hrefFor('tattoos')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('tattoos') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.tattoos")}</a>
 			<a href={hrefFor('works')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('works') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.works")}</a>
 			<a href={hrefFor('ceramics')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('ceramics') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.ceramics")}</a>
 			<a href={hrefFor('murals')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('murals') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.murals")}</a>
-			<a href={hrefFor('biography')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('biography') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.biography")}</a>
 			<a href={hrefFor('faqs')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('faqs') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.faqs")}</a>
 			<a href={hrefFor('contact')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('contact') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.contact")}</a>
 			<div class="flex gap-4 mt-8">
