@@ -1,14 +1,29 @@
 ---
+/**
+ * StylesSection.astro
+ * -------------------
+ * This is an Astro Server-Side component. Its primary job is to:
+ * 1. Prepare the data (the "cards" array) based on the current language.
+ * 2. Import the necessary image assets so Astro can optimize them.
+ * 3. Pass all this data to a "Client Island" (React component) for interactivity.
+ */
+
 import StylesSectionLogic from "./StylesSectionLogic";
+// We import images directly so Astro's asset pipeline can process them (AVIF/WebP conversion)
 import koiFish from "../../../assets/tattoos/bird-tattoo-forearm-orange-grey-feathers.jpg";
 import redPoppies from "../../../assets/tattoos/red-poppies-blue-cornflowers-arm-tattoo.jpeg";
 import blueFlower from "../../../assets/tattoos/koi-fish-tattoo-lily-pads-water-lilies.jpeg";
 
 const { t, lang } = Astro.props;
 
+// Helper to handle URL prefixing for multi-language support
 const basePath = typeof lang === "string" && lang !== "en" ? `/${lang}` : "";
 const tattoosHref = `${basePath}/tattoos`;
 
+/**
+ * Definition of the featured styles.
+ * Each object contains the key for filtering, localized text, and the image source.
+ */
 const cards = [
   {
     key: "botanical",
@@ -40,6 +55,10 @@ const cards = [
 ];
 ---
 
+<!-- 
+  The component is hydrated only when it becomes visible in the viewport 
+  (client:visible) to save initial load resources.
+-->
 <StylesSectionLogic
   client:visible
   heading={t("home.stylesTitle")}
