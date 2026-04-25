@@ -2,7 +2,7 @@
   "nav": {
     "tattoos": "Tatuajes",
     "ceramics": "Cerámica",
-    "works": "Obras",
+    "works": "Pinturas",
     "faqs": "Preguntas",
     "orders": "Pedidos",
     "murals": "Murales",
@@ -36,7 +36,7 @@
     "viewGallery": "Ver Galería",
     "bookSession": "Agendar Consulta",
     "stylesTitle": "Estilos de Tatuaje",
-    "stylesIntro": "Explora varios estilos de tatuaje, desde color completo hasta fineline delicado, cada uno con su estética y encanto.",
+    "stylesIntro": "Explora varios estilos de tatuaje, desde color completo hasta cover ups delicados, cada uno con su estética y encanto.",
     "style1Desc": "",
     "style2Title": "",
     "style2Desc": "",
@@ -50,17 +50,17 @@
       "title": "Tradicional",
       "description": "Estilo clásico con líneas audaces y colores vibrantes."
     },
-    "fineline": {
-      "title": "Fineline",
-      "description": "Diseños delicados con líneas finas y detalles sutiles."
+    "botanical": {
+      "title": "Botánico",
+      "description": "Diseños delicados inspirados en la flora y la naturaleza."
     },
     "animals": {
       "title": "Animales",
       "description": "Tatuajes inspirados en la fauna, llenos de simbolismo y detalle."
     },
-    "colour": {
-      "title": "Color",
-      "description": "Diseños vibrantes que exploran la expresividad del color."
+    "coverups": {
+      "title": "Cover ups",
+      "description": "Transformando antiguos tatuajes en nuevas obras de arte."
     },
     "newsletterTitle": "Mantente Informada",
     "newsletterDescription": "Suscríbete para recibir novedades, ofertas especiales y ver los últimos trabajos.",
@@ -70,9 +70,9 @@
     "aboutTitle": "Sobre Mí",
     "aboutText1": "Soy artista visual y tatuadora, y mi obra se mueve entre el dibujo, la pintura y la cerámica. A través de mis creaciones, exploro la relación entre el cuerpo, la naturaleza y la sensibilidad humana. Mi trabajo está fuertemente influenciado por el ecofeminismo, la conexión con el entorno y las emociones que nos atraviesan. Como tatuadora, me especializo en diseños delicados, con una estética orgánica y fluida, muchas veces inspirados en elementos naturales como flores y plantas.",
     "aboutText2": "Para muchas de mis clientas, tatuarse es un acto simbólico, un gesto de transformación o resignificación personal, y me encanta poder acompañarlas en ese proceso. En mi obra pictórica y cerámica, también investigo el vínculo entre lo humano y lo natural, creando imágenes y objetos que evocan la fortaleza, la ternura y la armonía con el mundo que nos rodea. Cada pieza que realizo, ya sea un tatuaje, una pintura o una pieza de cerámica, es un diálogo entre mi universo artístico y quienes lo habitan.",
-    "aboutArtistTitle": "¿Buscas algo parecido a mi estilo?",
-    "aboutArtistSubtitle": "Soy Niki Peppers, una artista multidisciplinaria apasionada por transformar ideas en arte. Mi trabajo abarca tatuajes, cerámica, murales y pinturas, cada pieza creada con dedicación y creatividad. Desde arte corporal intrincado hasta piezas de cerámica hechas a mano y murales a gran escala, doy vida a historias a través de diversos medios. Cada creación es una expresión única del arte que conecta con el alma.",
-    "aboutArtistButton": "Descubre Mi Trabajo",
+    "aboutArtistTitle": "Declaración artística",
+    "aboutArtistSubtitle": "Mi obra nace de una incomodidad: la sensación de estar desconectada de la naturaleza y, al mismo tiempo, de mi propio cuerpo. Trabajo desde ese lugar de tensión, explorando cómo los sistemas culturales —el patriarcado, el capitalismo y la vida urbana— moldean nuestra percepción de lo natural, lo femenino y lo instintivo. A través de la pintura, la escultura y el tatuaje, desarrollo imágenes donde el cuerpo femenino se fusiona, resiste o se transforma en relación con su entorno. Me interesa representar cuerpos no hegemónicos, vulnerables y, a la vez, poderosos; cuerpos que escapan a la domesticación y se acercan a lo salvaje como una forma de libertad. Mi práctica está profundamente influenciada por el ecofeminismo, entendiendo la conexión entre la explotación de la naturaleza y la opresión de los cuerpos feminizados. En este cruce, aparecen preguntas sobre pertenencia, identidad y memoria: ¿qué significa volver a la naturaleza cuando hemos sido históricamente separadas de ella? El agua, la tierra, los animales y los paisajes funcionan como símbolos de transformación, pérdida y resistencia. En ellos proyecto tanto la ansiedad contemporánea como la posibilidad de reconexión. Mi obra no busca dar respuestas, sino abrir espacios de reflexión sobre cómo habitamos nuestros cuerpos y el mundo.",
+    "aboutArtistButton": "Descubre Mi Biografia",
     "learnMore": "Conoce más sobre mi trabajo",
     "photoPlaceholder": "Foto de la Artista"
   },
@@ -86,17 +86,13 @@
     "filters": {
       "all": "Todos",
       "botanical": "Botánico",
-      "colour": "Color",
-      "fineline": "Fineline",
       "animals": "Animales",
-      "otros": "Otros"
+      "coverups": "Cover ups"
     },
     "filterAll": "Todos",
     "filterBotanical": "Botánico",
-    "filterColour": "Color",
-    "filterFineline": "Fineline",
     "filterAnimals": "Animales",
-    "filterOtros": "Otros",
+    "filterCoverups": "Cover ups",
     "tattooPlaceholder": "Tatuaje Placeholder",
     "customDesign": "Diseño Personalizado",
     "loadMore": "Cargar Más",
@@ -130,7 +126,7 @@
     "ctaButton": "Contáctame"
   },
   "artworks": {
-    "title": "Obras",
+    "title": "Pinturas",
     "description": "Una colección de pinturas que exploran diferentes temas y técnicas a través de varias series.",
     "technique": "Técnica",
     "dimensions": "Medidas",
@@ -172,11 +168,11 @@
   },
   "faqs": {
     "title": "Preguntas Frecuentes",
-    "description": "Respuestas sobre tatuajes, cerámica, obras, comisiones y reservas.",
+    "description": "Respuestas sobre tatuajes, cerámica, pinturas, comisiones y reservas.",
     "categories": {
       "tattoos": "Tatuajes",
       "ceramics": "Cerámica",
-      "artworks": "Obras",
+      "artworks": "Pinturas",
       "orders": "Comisiones y Pedidos",
       "general": "General"
     },
@@ -192,7 +188,7 @@
         "safe": "¿Las piezas de cerámica son aptas para lavavajillas/microondas?"
       },
       "artworks": {
-        "purchase": "¿Las obras originales están a la venta?",
+        "purchase": "¿Las pinturas originales están a la venta?",
         "prints": "¿Ofreces prints?",
         "mediums": "¿Qué técnicas utilizas?"
       },
@@ -217,7 +213,7 @@
         "safe": "La mayoría de las piezas funcionales son aptas para lavavajillas y microondas salvo que se indique lo contrario. Las piezas escultóricas son solo decorativas."
       },
       "artworks": {
-        "purchase": "Sí, algunas obras están disponibles. Si te interesa una pieza o una comisión, escribime para ver disponibilidad y precio.",
+        "purchase": "Sí, algunas pinturas están disponibles. Si te interesa una pieza o una comisión, escribime para ver disponibilidad y precio.",
         "prints": "Puede haber ediciones limitadas de ciertos trabajos. Consultá por ediciones y tamaños vigentes.",
         "mediums": "Principalmente óleo y acrílico sobre lienzo, acuarela sobre papel y técnica mixta según la serie."
       },
@@ -335,10 +331,10 @@
     "title": "Biografía",
     "description": "Mi viaje a través del arte y la creatividad",
     "greeting": "¡Hola! Soy Niki Peppers",
-    "bio1": "Desde pequeña asistió a varios talleres donde comenzó a desarrollar su estilo, partiendo del retrato.",
-    "bio2": "A los 19 años comenzó a cursar la Licenciatura en Artes Visuales en la Universidad Nacional de las Artes (Buenos Aires), eligiendo finalmente la orientación en Pintura. Su paso por la universidad fue significativo, ya que pudo experimentar con otras disciplinas como la escultura y la instalación.",
-    "bio3": "También asistió a talleres con artistas reconocidos, como el taller de cerámica de Adriana Cerviño y talleres de pintura con Lean Frizzera y Ricardo Celma.",
-    "bio4": "Paralelamente, comenzó a tatuar de manera autodidacta a los 19 años y, desde 2019, cuenta con su propio estudio de tatuajes en Buenos Aires.",
+    "bio1": "Nicole Teper es una artista visual y tatuadora argentina basada en Melbourne. Su práctica interdisciplinaria incluye pintura, escultura y tatuaje, y se centra en la exploración del vínculo entre el cuerpo, la naturaleza y los sistemas de poder que atraviesan ambos.",
+    "bio2": "Desde una perspectiva ecofeminista, su obra reflexiona sobre la desconexión contemporánea con lo natural y la forma en que el patriarcado y el capitalismo han influido en la construcción de la subjetividad y el territorio.",
+    "bio3": "Su trabajo presenta cuerpos no hegemónicos en relación con paisajes orgánicos, animales y elementos naturales, generando imágenes que oscilan entre lo íntimo y lo político. A través de estos cruces, aborda temas como la identidad, la memoria, la transformación y la resistencia, proponiendo una mirada crítica sobre las formas en que habitamos nuestros cuerpos y el mundo.",
+    "bio4": "Es Licenciada en Artes Visuales. Actualmente desarrolla su producción artística en paralelo a su práctica como tatuadora, donde crea piezas botánicas a color, manteniendo un diálogo constante entre ambas disciplinas.",
     "specialtiesTitle": "Especialidades",
     "specialty1Title": "Tatuaje",
     "specialty1Desc": "Diseños fotorrealistas y arte corporal personalizado",

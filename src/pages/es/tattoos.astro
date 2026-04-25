@@ -13,12 +13,12 @@ const t = useTranslations(lang);
 
 const tattooImages = import.meta.glob(
 	"/src/assets/tattoos/*.{jpeg,jpg,png,avif}",
-	{ eager: true }
+	{ eager: true },
 );
 
 // Leer filtro de la query
 const url = new URL(Astro.url);
-const filterParam = url.searchParams.get('filter') || 'all';
+const filterParam = url.searchParams.get("filter") || "all";
 
 let galleryItems = tattoosData.items.map((item) => {
 	const srcPath = item.images && item.images[0] ? item.images[0].path : "";
@@ -37,13 +37,16 @@ let galleryItems = tattoosData.items.map((item) => {
 		displayCategories: localizedCategories,
 	};
 });
-if (filterParam && filterParam !== 'all') {
-	galleryItems = galleryItems.filter(item => {
+if (filterParam && filterParam !== "all") {
+	galleryItems = galleryItems.filter((item) => {
 		if (!item.categories) return false;
 		if (Array.isArray(item.categories)) {
 			return item.categories.includes(filterParam);
 		}
-		return String(item.categories).split(',').map(s => s.trim()).includes(filterParam);
+		return String(item.categories)
+			.split(",")
+			.map((s) => s.trim())
+			.includes(filterParam);
 	});
 }
 ---
@@ -68,31 +71,25 @@ if (filterParam && filterParam !== 'all') {
 							{
 								label: t("tattoos.filterAll"),
 								value: "all",
-								active: filterParam === 'all',
+								active: filterParam === "all",
 							},
 							{
 								label: t("tattoos.filterBotanical"),
 								value: "botanical",
-								active: filterParam === 'botanical',
-							},
-							{
-								label: t("tattoos.filterColour"),
-								value: "colour",
-								active: filterParam === 'colour',
-							},
-							{
-								label: t("tattoos.filterFineline"),
-								value: "fineline",
-								active: filterParam === 'fineline',
+								active: filterParam === "botanical",
 							},
 							{
 								label: t("tattoos.filterAnimals"),
 								value: "animals",
-								active: filterParam === 'animals',
+								active: filterParam === "animals",
 							},
-							{ label: t("tattoos.filterOtros"), value: "otros", active: filterParam === 'otros' },
+							{
+								label: t("tattoos.filterCoverups"),
+								value: "coverups",
+								active: filterParam === "coverups",
+							},
 						];
-												return <FilterButtons buttons={buttons} />;
+						return <FilterButtons buttons={buttons} />;
 					})()
 				}
 			</div>

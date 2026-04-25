@@ -1,53 +1,50 @@
 ---
-
 import StylesSectionLogic from "./StylesSectionLogic";
-import koiFish from "../../../assets/tattoos/koi-fish-tattoo-lily-pads-water-lilies.jpeg";
+import koiFish from "../../../assets/tattoos/bird-tattoo-forearm-orange-grey-feathers.jpg";
 import redPoppies from "../../../assets/tattoos/red-poppies-blue-cornflowers-arm-tattoo.jpeg";
-import blueFlower from "../../../assets/tattoos/blue-flower-tattoo-green-leaves-forearm.jpg";
+import blueFlower from "../../../assets/tattoos/koi-fish-tattoo-lily-pads-water-lilies.jpeg";
 
 const { t, lang } = Astro.props;
 
-const basePath = typeof lang === 'string' && lang !== 'en' ? `/${lang}` : '';
+const basePath = typeof lang === "string" && lang !== "en" ? `/${lang}` : "";
 const tattoosHref = `${basePath}/tattoos`;
-
 
 const cards = [
   {
-    key: 'animals',
-    title: t('tattoos.filterAnimals'),
-    description: t('home.animals.description'),
-    badge: t('tattoos.filterAnimals'),
-    image: koiFish.src,
-    filterLabel: t('tattoos.filterAnimals'),
-    href: tattoosHref,
-  },
-  {
-    key: 'colour',
-    title: t('tattoos.filterColour'),
-    description: t('home.colour.description'),
-    badge: t('tattoos.filterColour'),
+    key: "botanical",
+    title: t("tattoos.filterBotanical"),
+    description: t("home.botanical.description"),
+    badge: t("tattoos.filterBotanical"),
     image: redPoppies.src,
-    filterLabel: t('tattoos.filterColour'),
+    filterLabel: t("tattoos.filterBotanical"),
     href: tattoosHref,
   },
   {
-    key: 'fineline',
-    title: t('home.fineline.title'),
-    description: t('home.fineline.description'),
-    badge: t('home.fineline.title'),
+    key: "animals",
+    title: t("tattoos.filterAnimals"),
+    description: t("home.animals.description"),
+    badge: t("tattoos.filterAnimals"),
+    image: koiFish.src,
+    filterLabel: t("tattoos.filterAnimals"),
+    href: tattoosHref,
+  },
+  {
+    key: "coverups",
+    title: t("tattoos.filterCoverups"),
+    description: t("home.coverups.description"),
+    badge: t("tattoos.filterCoverups"),
     image: blueFlower.src,
-    filterLabel: t('tattoos.filterFineline'),
+    filterLabel: t("tattoos.filterCoverups"),
     href: tattoosHref,
   },
 ];
-
 ---
 
 <StylesSectionLogic
   client:visible
-  heading={t('home.stylesTitle')}
-  intro={t('home.stylesIntro')}
+  heading={t("home.stylesTitle")}
+  intro={t("home.stylesIntro")}
   cards={cards}
-  ctaAllLabel={t('tattoos.filterAll')}
+  ctaAllLabel={t("tattoos.filterAll")}
   ctaAllHref={tattoosHref}
 />

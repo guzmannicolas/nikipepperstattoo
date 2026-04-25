@@ -2,7 +2,7 @@
   "nav": {
     "tattoos": "Tattoos",
     "ceramics": "Ceramics",
-    "works": "Artworks",
+    "works": "Paintings",
     "faqs": "FAQs",
     "orders": "Orders",
     "murals": "Murals",
@@ -36,7 +36,7 @@
     "viewGallery": "View Gallery",
     "bookSession": "Book a Consultation",
     "stylesTitle": "Tattoo Styles",
-    "stylesIntro": "Explore a variety of tattoo styles, from full color to delicate fineline, each with its own unique aesthetic and appeal.",
+    "stylesIntro": "Explore a variety of tattoo styles, from full color to delicate cover up, each with its own unique aesthetic and appeal.",
     "style1Desc": "",
     "style2Title": "",
     "style2Desc": "",
@@ -50,17 +50,17 @@
       "title": "Traditional",
       "description": "Classic style with bold lines and vibrant colors."
     },
-    "fineline": {
-      "title": "Fineline",
-      "description": "Delicate designs with fine lines and subtle details."
+    "botanical": {
+      "title": "Botanical",
+      "description": "Delicate designs inspired by flora and nature."
     },
     "animals": {
       "title": "Animals",
       "description": "Tattoos inspired by fauna, full of symbolism and detail."
     },
-    "colour": {
-      "title": "Colour",
-      "description": "Vibrant designs that explore the expressiveness of color."
+    "coverups": {
+      "title": "Cover ups",
+      "description": "Transforming old tattoos into new pieces of art."
     },
     "newsletterTitle": "Stay Informed",
     "newsletterDescription": "Subscribe to receive news, special offers, and see the latest works.",
@@ -70,9 +70,9 @@
     "aboutTitle": "About Me",
     "aboutText1": "I am a visual artist and tattoo artist, and my work moves between drawing, painting, and ceramics. Through my creations, I explore the relationship between the body, nature, and human sensitivity. My work is strongly influenced by ecofeminism, the connection with the environment, and the emotions that permeate us. As a tattoo artist, I specialize in delicate designs with an organic and fluid aesthetic, often inspired by natural elements such as flowers and plants.",
     "aboutText2": "For many of my clients, getting a tattoo is a symbolic act, a gesture of transformation or personal resignification, and I love being able to accompany them in this process. In my painting and ceramic work, I also explore the connection between the human and the natural, creating images and objects that evoke strength, tenderness, and harmony with the world around us. Each piece I create, whether a tattoo, a painting, or a ceramic piece, is a dialogue between my artistic universe and those who inhabit it.",
-    "aboutArtistTitle": "Searching for something of my style?",
-    "aboutArtistSubtitle": "I'm Niki Peppers, a multidisciplinary artist passionate about transforming ideas into art. My work spans tattoos, ceramics, murals, and paintings, each piece crafted with dedication and creativity. From intricate body art to handcrafted ceramic pieces and large-scale murals, I bring stories to life through various mediums. Every creation is a unique expression of art that connects with the soul.",
-    "aboutArtistButton": "Discover My Work",
+    "aboutArtistTitle": "Statement",
+    "aboutArtistSubtitle": "My work is born from a sense of discomfort: the feeling of being disconnected from nature and, at the same time, from my own body. I work from that place of tension, exploring how cultural systems—patriarchy, capitalism, and urban life—shape our perception of the natural, the feminine, and the instinctive. Through painting, sculpture, and tattooing, I develop images where the female body merges with, resists, or transforms in relation to its environment. I am interested in representing non-hegemonic bodies, vulnerable yet powerful; bodies that escape domestication and approach the wild as a form of freedom. My practice is deeply influenced by ecofeminism, understanding the connection between the exploitation of nature and the oppression of feminized bodies. At this crossroads, questions about belonging, identity, and memory emerge: what does it mean to return to nature when we have been historically separated from it? Water, earth, animals, and landscapes function as symbols of transformation, loss, and resistance. In them, I project both contemporary anxiety and the possibility of reconnection. My work does not seek to provide answers, but to open spaces for reflection on how we inhabit our bodies and the world.",
+    "aboutArtistButton": "Discover My Biography",
     "learnMore": "Learn more about my work",
     "photoPlaceholder": "Artist Photo Placeholder"
   },
@@ -86,17 +86,14 @@
     "filters": {
       "all": "All",
       "botanical": "Botanical",
-      "colour": "Colour",
-      "fineline": "Fineline",
       "animals": "Animals",
+      "coverups": "Cover ups",
       "otros": "Others"
     },
     "filterAll": "All",
     "filterBotanical": "Botanical",
-    "filterColour": "Colour",
-    "filterFineline": "Fineline",
     "filterAnimals": "Animals",
-    "filterOtros": "Others",
+    "filterCoverups": "Cover ups",
     "tattooPlaceholder": "Tattoo Placeholder",
     "customDesign": "Custom Design",
     "loadMore": "Load More",
@@ -130,7 +127,7 @@
     "ctaButton": "Contact Me"
   },
   "artworks": {
-    "title": "Artworks",
+    "title": "Paintings",
     "description": "A collection of paintings exploring different themes and techniques through various series.",
     "technique": "Technique",
     "dimensions": "Dimensions",
@@ -172,11 +169,11 @@
   },
   "faqs": {
     "title": "Frequently Asked Questions",
-    "description": "Answers about tattoos, ceramics, artworks, commissions, and bookings.",
+    "description": "Answers about tattoos, ceramics, paintings, commissions, and bookings.",
     "categories": {
       "tattoos": "Tattoos",
       "ceramics": "Ceramics",
-      "artworks": "Artworks",
+      "artworks": "Paintings",
       "orders": "Commissions & Orders",
       "general": "General"
     },
@@ -335,10 +332,10 @@
     "title": "Biography",
     "description": "My journey through art and creativity",
     "greeting": "Hi! I'm Niki Peppers",
-    "bio1": "Since she was little, she attended several workshops where she began to develop her style, starting with portraiture.",
-    "bio2": "At 19, she began pursuing a Bachelor's degree in Visual Arts at the National University of the Arts (Buenos Aires), ultimately choosing to major in Painting. Her time at the university was significant, as she was able to experiment with other disciplines such as sculpture and installation.",
-    "bio3": "She also attended workshops with renowned artists, such as Adriana Cerviño's ceramics workshop and painting workshops with Lean Frizzera and Ricardo Celma.",
-    "bio4": "At the same time, she began tattooing as a self-taught artist at the age of 19 and, since 2019, has had her own tattoo studio in Buenos Aires.",
+    "bio1": "Nicole Teper is an Argentinian visual artist and tattoo artist based in Melbourne. Her interdisciplinary practice includes painting, sculpture, and tattooing, focusing on the relationship between the body, nature, and the systems of power that shape both.",
+    "bio2": "From an ecofeminist perspective, her work reflects on contemporary disconnection from the natural world and examines how patriarchal and capitalist structures influence subjectivity and territory.",
+    "bio3": "Her work features non-normative bodies in relation to organic landscapes, animals, and natural elements, creating imagery that moves between the intimate and the political. Through these intersections, she explores themes of identity, memory, transformation, and resistance, offering a critical perspective on how we inhabit both our bodies and our environment.",
+    "bio4": "She holds a degree in Visual Arts and currently develops her artistic practice alongside her work as a tattoo artist, specializing in botanical color pieces, maintaining an ongoing dialogue between both disciplines.",
     "specialtiesTitle": "Specialties",
     "specialty1Title": "Tattooing",
     "specialty1Desc": "Photorealistic designs and custom body art",

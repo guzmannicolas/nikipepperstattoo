@@ -1,7 +1,6 @@
 ---
 import { getLangFromUrl, useTranslations, languages } from "../i18n/utils";
 
-
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
@@ -25,24 +24,62 @@ const isActive = (base: string) => {
 };
 ---
 
-<nav id="navbar" class="fixed top-4 left-4 right-4 z-50 transition-all duration-300 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20">
+<nav
+	id="navbar"
+	class="fixed top-4 left-4 right-4 z-50 transition-all duration-300 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20"
+>
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-50">
 		<div class="flex justify-between items-center h-20">
 			<a
 				href={`/${lang === "en" ? "" : lang + "/"}`}
 				class="relative z-10"
 			>
-				<img id="navbar-logo" src="/titulo-header.png" alt="Niki Peppers" class="h-20 w-auto" />
+				<img
+					id="navbar-logo"
+					src="/titulo-header.png"
+					alt="Niki Peppers"
+					class="h-20 w-auto"
+				/>
 			</a>
-			<div id="nav-links" class="hidden md:flex space-x-6 items-center  font-serif text-xl">
-				<a href={hrefFor('biography')} class={ `nav-link text-black relative ${isActive('biography') ? 'text-green-500' : ''}` }>{t("nav.biography")}</a>
-				<a href={hrefFor('tattoos')} class={ `nav-link text-black relative ${isActive('tattoos') ? 'text-green-500' : ''}` }>{t("nav.tattoos")}</a>
-				<a href={hrefFor('works')} class={ `nav-link text-black relative ${isActive('works') ? 'text-green-500' : ''}` }>{t("nav.works")}</a>
-				<a href={hrefFor('ceramics')} class={ `nav-link text-black relative ${isActive('ceramics') ? 'text-green-500' : ''}` }>{t("nav.ceramics")}</a>
-				<a href={hrefFor('murals')} class={ `nav-link text-black relative ${isActive('murals') ? 'text-green-500' : ''}` }>{t("nav.murals")}</a>
-				<a href={hrefFor('faqs')} class={ `nav-link text-black relative ${isActive('faqs') ? 'text-green-500' : ''}` }>{t("nav.faqs")}</a>
-				<a href={hrefFor('contact')} class={ `nav-link text-black relative ${isActive('contact') ? 'text-green-500' : ''}` }>{t("nav.contact")}</a>
-
+			<div
+				id="nav-links"
+				class="hidden md:flex space-x-6 items-center font-serif text-xl"
+			>
+				<a
+					href={hrefFor("biography")}
+					class={`nav-link text-black relative ${isActive("biography") ? "text-green-500" : ""}`}
+					>{t("nav.biography")}</a
+				>
+				<a
+					href={hrefFor("works")}
+					class={`nav-link text-black relative ${isActive("works") ? "text-green-500" : ""}`}
+					>{t("nav.works")}</a
+				>
+				<a
+					href={hrefFor("tattoos")}
+					class={`nav-link text-black relative ${isActive("tattoos") ? "text-green-500" : ""}`}
+					>{t("nav.tattoos")}</a
+				>
+				<a
+					href={hrefFor("ceramics")}
+					class={`nav-link text-black relative ${isActive("ceramics") ? "text-green-500" : ""}`}
+					>{t("nav.ceramics")}</a
+				>
+				<a
+					href={hrefFor("murals")}
+					class={`nav-link text-black relative ${isActive("murals") ? "text-green-500" : ""}`}
+					>{t("nav.murals")}</a
+				>
+				<a
+					href={hrefFor("faqs")}
+					class={`nav-link text-black relative ${isActive("faqs") ? "text-green-500" : ""}`}
+					>{t("nav.faqs")}</a
+				>
+				<a
+					href={hrefFor("contact")}
+					class={`nav-link text-black relative ${isActive("contact") ? "text-green-500" : ""}`}
+					>{t("nav.contact")}</a
+				>
 
 				<!-- Language Switcher -->
 				<div
@@ -94,34 +131,60 @@ const isActive = (base: string) => {
 	class="hidden md:hidden fixed inset-0 bg-white z-40 flex flex-col justify-center items-center space-y-8"
 >
 	<div class="flex flex-col items-center space-y-6 font-serif text-3xl">
-			<a href={hrefFor('biography')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('biography') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.biography")}</a>
-			<a href={hrefFor('tattoos')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('tattoos') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.tattoos")}</a>
-			<a href={hrefFor('works')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('works') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.works")}</a>
-			<a href={hrefFor('ceramics')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('ceramics') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.ceramics")}</a>
-			<a href={hrefFor('murals')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('murals') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.murals")}</a>
-			<a href={hrefFor('faqs')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('faqs') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.faqs")}</a>
-			<a href={hrefFor('contact')} class={ `block active:scale-60 transition-transform duration-150 ${isActive('contact') ? 'text-green-500' : 'text-black hover:text-green-500'}` }>{t("nav.contact")}</a>
-			<div class="flex gap-4 mt-8">
-				{
-					Object.entries(languages).map(([l, label]) => (
-						<a
-							href={
-								l === "en" ? currentPath : `/${l}${currentPath}`
-							}
-							class:list={[
-								"px-4 py-2 rounded-full text-lg font-medium transition-colors",
-								l === lang
-									? "bg-green-500 text-white"
-									: "bg-neutral-100 text-neutral-700",
-							]}
-							onclick={`localStorage.setItem('preferred-language','${l}'); document.cookie = 'preferred-language=${l}; path=/; max-age=31536000'`}
-						>
-							{label}
-						</a>
-					))
-				}
-			</div>
+		<a
+			href={hrefFor("biography")}
+			class={`block active:scale-60 transition-transform duration-150 ${isActive("biography") ? "text-green-500" : "text-black hover:text-green-500"}`}
+			>{t("nav.biography")}</a
+		>
+		<a
+			href={hrefFor("works")}
+			class={`block active:scale-60 transition-transform duration-150 ${isActive("works") ? "text-green-500" : "text-black hover:text-green-500"}`}
+			>{t("nav.works")}</a
+		>
+		<a
+			href={hrefFor("tattoos")}
+			class={`block active:scale-60 transition-transform duration-150 ${isActive("tattoos") ? "text-green-500" : "text-black hover:text-green-500"}`}
+			>{t("nav.tattoos")}</a
+		>
+		<a
+			href={hrefFor("ceramics")}
+			class={`block active:scale-60 transition-transform duration-150 ${isActive("ceramics") ? "text-green-500" : "text-black hover:text-green-500"}`}
+			>{t("nav.ceramics")}</a
+		>
+		<a
+			href={hrefFor("murals")}
+			class={`block active:scale-60 transition-transform duration-150 ${isActive("murals") ? "text-green-500" : "text-black hover:text-green-500"}`}
+			>{t("nav.murals")}</a
+		>
+		<a
+			href={hrefFor("faqs")}
+			class={`block active:scale-60 transition-transform duration-150 ${isActive("faqs") ? "text-green-500" : "text-black hover:text-green-500"}`}
+			>{t("nav.faqs")}</a
+		>
+		<a
+			href={hrefFor("contact")}
+			class={`block active:scale-60 transition-transform duration-150 ${isActive("contact") ? "text-green-500" : "text-black hover:text-green-500"}`}
+			>{t("nav.contact")}</a
+		>
+		<div class="flex gap-4 mt-8">
+			{
+				Object.entries(languages).map(([l, label]) => (
+					<a
+						href={l === "en" ? currentPath : `/${l}${currentPath}`}
+						class:list={[
+							"px-4 py-2 rounded-full text-lg font-medium transition-colors",
+							l === lang
+								? "bg-green-500 text-white"
+								: "bg-neutral-100 text-neutral-700",
+						]}
+						onclick={`localStorage.setItem('preferred-language','${l}'); document.cookie = 'preferred-language=${l}; path=/; max-age=31536000'`}
+					>
+						{label}
+					</a>
+				))
+			}
 		</div>
+	</div>
 </div>
 
 <style>
@@ -151,78 +214,82 @@ const isActive = (base: string) => {
 </style>
 
 <script>
-/*
+	/*
 	Make navbar behavior robust across client-side navigation.
 	- Use delegated click handler so mobile toggle works even if node is replaced.
 	- Re-query `#navbar` inside the scroll handler so it affects the current DOM node.
 	- Make init idempotent to avoid duplicate listeners.
 */
-// TypeScript: declare custom window property
-declare global {
-	interface Window {
-		__navScriptsInitialized?: boolean;
+	// TypeScript: declare custom window property
+	declare global {
+		interface Window {
+			__navScriptsInitialized?: boolean;
+		}
 	}
-}
-(function () {
-	if (window.__navScriptsInitialized) return;
-	window.__navScriptsInitialized = true;
+	(function () {
+		if (window.__navScriptsInitialized) return;
+		window.__navScriptsInitialized = true;
 
-	// Delegated mobile menu toggle — works even if DOM nodes are replaced
-	document.addEventListener("click", (ev) => {
-		const btn = ev.target && (ev.target as HTMLElement).closest && (ev.target as HTMLElement).closest("#mobile-menu-btn");
-		if (btn) {
-			const mobileMenu = document.getElementById("mobile-menu");
-			const iconMenu = document.getElementById("icon-menu");
-			const iconClose = document.getElementById("icon-close");
-			
-			mobileMenu?.classList.toggle("hidden");
-			
-			if (mobileMenu?.classList.contains("hidden")) {
-				// Menu is closed
-				iconMenu?.classList.remove("opacity-0");
-				iconMenu?.classList.add("opacity-100");
-				iconClose?.classList.remove("opacity-100");
-				iconClose?.classList.add("opacity-0");
-			} else {
-				// Menu is open
-				iconMenu?.classList.remove("opacity-100");
-				iconMenu?.classList.add("opacity-0");
-				iconClose?.classList.remove("opacity-0");
-				iconClose?.classList.add("opacity-100");
+		// Delegated mobile menu toggle — works even if DOM nodes are replaced
+		document.addEventListener("click", (ev) => {
+			const btn =
+				ev.target &&
+				(ev.target as HTMLElement).closest &&
+				(ev.target as HTMLElement).closest("#mobile-menu-btn");
+			if (btn) {
+				const mobileMenu = document.getElementById("mobile-menu");
+				const iconMenu = document.getElementById("icon-menu");
+				const iconClose = document.getElementById("icon-close");
+
+				mobileMenu?.classList.toggle("hidden");
+
+				if (mobileMenu?.classList.contains("hidden")) {
+					// Menu is closed
+					iconMenu?.classList.remove("opacity-0");
+					iconMenu?.classList.add("opacity-100");
+					iconClose?.classList.remove("opacity-100");
+					iconClose?.classList.add("opacity-0");
+				} else {
+					// Menu is open
+					iconMenu?.classList.remove("opacity-100");
+					iconMenu?.classList.add("opacity-0");
+					iconClose?.classList.remove("opacity-0");
+					iconClose?.classList.add("opacity-100");
+				}
 			}
-		}
-	});
+		});
 
-	// Hide navbar on scroll
-	let lastScrollY = window.scrollY;
-	const navbar = document.getElementById("navbar");
+		// Hide navbar on scroll
+		let lastScrollY = window.scrollY;
+		const navbar = document.getElementById("navbar");
 
-	window.addEventListener("scroll", () => {
-		if (!navbar) return;
+		window.addEventListener(
+			"scroll",
+			() => {
+				if (!navbar) return;
 
-		const mobileMenu = document.getElementById("mobile-menu");
-		// Don't hide if mobile menu is open
-		if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
-			return;
-		}
+				const mobileMenu = document.getElementById("mobile-menu");
+				// Don't hide if mobile menu is open
+				if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
+					return;
+				}
 
-		const currentScrollY = window.scrollY;
-		
-		// Tolerance check to avoid jitter (Option 2)
-		if (Math.abs(currentScrollY - lastScrollY) < 5) return;
+				const currentScrollY = window.scrollY;
 
-		if (currentScrollY > lastScrollY && currentScrollY > 20) {
-			// Scrolling DOWN and passed threshold
-			navbar.classList.add("nav-hidden");
-		} else if (currentScrollY < lastScrollY) {
-			// Scrolling UP
-			navbar.classList.remove("nav-hidden");
-		}
+				// Tolerance check to avoid jitter (Option 2)
+				if (Math.abs(currentScrollY - lastScrollY) < 5) return;
 
-		lastScrollY = currentScrollY;
-	}, { passive: true });
+				if (currentScrollY > lastScrollY && currentScrollY > 20) {
+					// Scrolling DOWN and passed threshold
+					navbar.classList.add("nav-hidden");
+				} else if (currentScrollY < lastScrollY) {
+					// Scrolling UP
+					navbar.classList.remove("nav-hidden");
+				}
 
-
-
-})();
+				lastScrollY = currentScrollY;
+			},
+			{ passive: true },
+		);
+	})();
 </script>

@@ -12,16 +12,15 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<Layout title={`${t('home.title')} - ${t('home.subtitle')}`}>
-
+<Layout title={`${t("home.title")} - ${t("home.subtitle")}`}>
 	<!-- Hero Section (componentized) -->
 	<HeroSection lang={lang} t={t} />
 
-	<!-- Featured Work Section -->
-	<FeaturedWork lang={lang} t={t} />
-
 	<!-- About Artist Section (componentized) -->
 	<AboutArtistSection lang={lang} t={t} />
+
+	<!-- Featured Work Section -->
+	<FeaturedWork lang={lang} t={t} />
 
 	<!-- Styles Section (componentized) -->
 	<StylesSection t={t} />
@@ -30,5 +29,5 @@ const t = useTranslations(lang);
 	<NewsletterSection t={t} />
 
 	<!-- About Preview (componentized) -->
-	<AboutPreviewSection lang={lang} t={t} />
+	<!-- <AboutPreviewSection lang={lang} t={t} /> -->
 </Layout>

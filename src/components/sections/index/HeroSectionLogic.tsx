@@ -54,7 +54,7 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, wordsliderhero, ctaPrima
       opacity: 1,
       transition: {
         type: 'spring',
-        stiffness: 100,
+        stiffness: 40,
         damping: 10,
       },
     },
@@ -72,17 +72,10 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, wordsliderhero, ctaPrima
       {/* Capas de fondo: imagen base y overlay encima */}
       <div className="absolute inset-0 z-0">
         <motion.img
-          src="/images/home/background-bg-hero.jpg"
-          alt="Textured background"
-          className="w-full h-full object-cover"
-          style={{ y: yBackground }}
-        />
-        {/* Imagen PNG encima para detalles (punta superior de la composición) */}
-        <motion.img
           src="/images/home/background-hero.jpeg"
           alt="Hero overlay"
           style={{ y: yBackground }}
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none object-[70%_center] md:object-center opacity-90"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none object-[70%_center] md:object-center opacity-60"
         />
       </div>
 

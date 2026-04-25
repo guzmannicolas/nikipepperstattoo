@@ -104,7 +104,7 @@ const StylesSectionLogic: React.FC<StylesSectionProps> = ({
         >
           <style>{`.styles-carousel::-webkit-scrollbar{display:none;}`}</style>
           {tripledCards.map((style, idx) => {
-            const filterParam = style.key === 'animals' ? 'animals' : style.key === 'colour' ? 'colour' : 'fineline';
+            const filterParam = style.key;
             const cardHref = `${style.href}?filter=${encodeURIComponent(filterParam)}`;
             return (
               <article
@@ -145,7 +145,7 @@ const StylesSectionLogic: React.FC<StylesSectionProps> = ({
         viewport={{ once: true, amount: 0.3 }}
       >
         {cards.map((style, idx) => {
-          const filterParam = style.key === 'animals' ? 'animals' : style.key === 'colour' ? 'colour' : 'fineline';
+          const filterParam = style.key;
           const cardHref = `${style.href}?filter=${encodeURIComponent(filterParam)}`;
           return (
             <motion.article

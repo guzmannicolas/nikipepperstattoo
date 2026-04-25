@@ -27,8 +27,8 @@ const itemVariants: Variants = {
     filter: 'blur(0px)',
     transition: {
       type: 'spring',
-      stiffness: 80,
-      damping: 14,
+      stiffness: 30,
+      damping: 5,
     },
   },
 };
@@ -54,7 +54,7 @@ const AboutArtistSectionLogic: React.FC<AboutArtistProps> = ({
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.1 }}
         >
           <motion.h2
             className="text-4xl md:text-6xl font-serif mb-6 text-black leading-tight"
