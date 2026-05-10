@@ -93,6 +93,11 @@ const t = useTranslations(lang);
 							placeholder={t('contact.messagePlaceholder')}
 						></textarea>
 					</div>
+					<div
+						class="cf-turnstile"
+						data-sitekey="0x4AAAAAADMbfM6SjLeOkjjM"
+						data-theme="light"
+					></div>
 					<button
 						type="submit"
 						class="w-full px-8 py-3 bg-black hover:bg-neutral-800 rounded-lg font-semibold transition-colors text-white"
@@ -205,6 +210,7 @@ const t = useTranslations(lang);
 		</div>
 	</div>
 
+	<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
 			const RATE_LIMIT_MS = 2 * 60 * 1000; // 2 minutes between sends
@@ -301,10 +307,9 @@ const t = useTranslations(lang);
 					const formData = new FormData(form);
 
 					try {
-						const res = await fetch('https://formsubmit.co/ajax/nikipepperstattoo@gmail.com', {
+						const res = await fetch('/api/contact', {
 							method: 'POST',
 							body: formData,
-							headers: { 'Accept': 'application/json' }
 						});
 
 						if (res.ok) {
