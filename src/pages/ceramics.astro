@@ -34,11 +34,20 @@ const galleryItems = ceramicsData.items.map((item) => {
 		displayCategories: localizedCategories,
 	};
 });
+
+const ceramicsGallerySchema = {
+	"@context": "https://schema.org",
+	"@type": "ImageGallery",
+	name: "Ceramic Works - Niki Peppers",
+	description: t("ceramics.description"),
+	url: "https://nikipepperstattoo.com/ceramics",
+};
 ---
 
 <Layout
 	title={`${t("ceramics.title")} - Niki Peppers`}
 	description={t("ceramics.description")}
+	pageSchema={ceramicsGallerySchema}
 >
 	<section class="py-29 px-4 max-w-7xl mx-auto">
 		<!-- Hero Title Pages Section (componentized) -->

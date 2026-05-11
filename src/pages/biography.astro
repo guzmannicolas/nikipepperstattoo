@@ -8,11 +8,34 @@ import aboutImage from "../assets/home/Niki-about-me.avif";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+const personSchema = {
+	"@context": "https://schema.org",
+	"@type": "Person",
+	name: "Niki Peppers",
+	jobTitle: "Tattoo Artist & Visual Artist",
+	url: "https://nikipepperstattoo.com",
+	email: "nikipepperstattoo@gmail.com",
+	nationality: "Argentine",
+	workLocation: {
+		"@type": "Place",
+		address: {
+			"@type": "PostalAddress",
+			addressLocality: "Melbourne",
+			addressCountry: "AU",
+		},
+	},
+	sameAs: [
+		"https://instagram.com/nikipepperstattoo",
+		"https://facebook.com/nikipepperstattoo",
+	],
+};
 ---
 
 <Layout
 	title={`${t("biography.title")} - ${t("home.title")}`}
 	description={t("biography.description")}
+	pageSchema={personSchema}
 >
 	<section class="py-29 px-4 max-w-7xl mx-auto">
 		<!-- Hero Title Pages Section (componentized) -->

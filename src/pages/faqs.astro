@@ -98,11 +98,25 @@ const filterButtons = [
   { label: t("faqs.categories.orders"), value: "orders" },
   { label: t("faqs.categories.general"), value: "general" },
 ];
+
+const faqPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
 ---
 
 <Layout
   title={`${t("faqs.title")} - Niki Peppers`}
   description={t("faqs.description")}
+  pageSchema={faqPageSchema}
 >
   <section class="py-29 px-4 max-w-5xl mx-auto">
 		<!-- Hero Title Pages Section (componentized) -->

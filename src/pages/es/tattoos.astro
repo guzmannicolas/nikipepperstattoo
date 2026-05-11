@@ -49,11 +49,20 @@ if (filterParam && filterParam !== "all") {
 			.includes(filterParam);
 	});
 }
+
+const tattoosGallerySchema = {
+	"@context": "https://schema.org",
+	"@type": "ImageGallery",
+	name: "Tattoo Portfolio - Niki Peppers",
+	description: t("tattoos.description"),
+	url: "https://nikipepperstattoo.com/es/tattoos",
+};
 ---
 
 <Layout
 	title={`${t("tattoos.title")} - Niki Peppers`}
 	description={t("tattoos.description")}
+	pageSchema={tattoosGallerySchema}
 >
 	<section class="py-29 px-4 max-w-7xl mx-auto">
 		<!-- Hero Title Pages Section (componentized) -->
