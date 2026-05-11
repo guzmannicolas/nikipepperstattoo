@@ -9,25 +9,94 @@ import { ViewTransitions } from 'astro:transitions'
 interface Props {
 	title: string;
 	description?: string;
+	image?: string;
+	pageSchema?: object;
 }
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-const { title, description = 'Tattoo artist, ceramist, and visual artist' } = Astro.props;
+const { title, description = 'Tattoo artist, ceramist, and visual artist', image, pageSchema } = Astro.props;
+
+const siteUrl = 'https://nikipepperstattoo.com';
+const currentPath = Astro.url.pathname;
+const ogImage = image ?? `${siteUrl}/images/home/background-hero.jpeg`;
+const canonicalUrl = siteUrl + currentPath;
+
+let enUrl: string;
+let esUrl: string;
+if (lang === 'es') {
+	const withoutEs = currentPath.replace(/^\/es/, '') || '/';
+	enUrl = siteUrl + withoutEs;
+	esUrl = siteUrl + currentPath;
+} else {
+	enUrl = siteUrl + currentPath;
+	esUrl = siteUrl + '/es' + (currentPath === '/' ? '/' : currentPath);
+}
+
+const localBusinessSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'TattooParlor',
+	name: 'Niki Peppers Tattoo',
+	url: siteUrl,
+	email: 'nikipepperstattoo@gmail.com',
+	image: ogImage,
+	description: 'Multidisciplinary artist specializing in botanical tattoos, handmade ceramics, and visual art.',
+	address: {
+		'@type': 'PostalAddress',
+		addressLocality: 'Melbourne',
+		addressCountry: 'AU',
+	},
+	openingHours: ['Mo-Fr 10:00-19:00', 'Sa 10:00-16:00'],
+	sameAs: [
+		'https://instagram.com/nikipepperstattoo',
+		'https://facebook.com/nikipepperstattoo',
+	],
+};
 ---
 
 <!doctype html>
 <html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content={description} />
+		<meta name="author" content="Niki Peppers" />
+		<meta name="theme-color" content="#ffffff" />
+		<meta name="generator" content={Astro.generator} />
+
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Niki Peppers" />
+		<meta property="og:locale" content={lang === 'es' ? 'es_AR' : 'en_AU'} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:url" content={canonicalUrl} />
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+
+		<!-- Canonical & hreflang -->
+		<link rel="canonical" href={canonicalUrl} />
+		<link rel="alternate" hreflang="en" href={enUrl} />
+		<link rel="alternate" hreflang="es" href={esUrl} />
+		<link rel="alternate" hreflang="x-default" href={enUrl} />
+
 		<link rel="icon" type="image/png" href="/titulo-header.png" />
 		<link rel="icon" type="image/png" href="/logo-loading.png" sizes="192x192" />
 		<link rel="apple-touch-icon" href="/titulo-header.png" />
-		<meta name="generator" content={Astro.generator} />
+
 		<title>{title}</title>
 		<ViewTransitions />
+
+		<!-- LocalBusiness structured data -->
+		<script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+
+		<!-- Page-specific structured data -->
+		{pageSchema && <script type="application/ld+json" set:html={JSON.stringify(pageSchema)} />}
 	</head>
 	<body class="min-h-screen bg-white text-neutral-900">
 		<script is:inline>

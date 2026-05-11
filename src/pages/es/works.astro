@@ -34,11 +34,20 @@ const galleryItems = paintings.map((p) => {
 		image: imageModule ? (imageModule as any).default : "",
 	};
 });
+
+const worksGallerySchema = {
+	"@context": "https://schema.org",
+	"@type": "ImageGallery",
+	name: "Visual Artworks - Niki Peppers",
+	description: t("artworks.description"),
+	url: "https://nikipepperstattoo.com/es/works",
+};
 ---
 
 <Layout
 	title={`${t("artworks.title")} - Niki Peppers`}
 	description={t("artworks.description")}
+	pageSchema={worksGallerySchema}
 >
 	<section class="py-29 px-4 max-w-7xl mx-auto">
 		<!-- Hero Title Pages Section (componentized) -->
