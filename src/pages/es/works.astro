@@ -91,6 +91,12 @@ const worksGallerySchema = {
 									"On Demand",
 								value: "on_demand",
 							},
+							{
+								label:
+									t("artworks.filters.painting") ||
+									"Painting",
+								value: "painting",
+							},
 						];
 						return <FilterButtons buttons={buttons} />;
 					})()

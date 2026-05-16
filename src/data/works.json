@@ -223,4 +223,60 @@
     "image": "/src/assets/works/on_demand/pet-portrait.avif",
     "price": ""
   }
+  {
+    "id": "sin-titulo-1",
+    "title": {
+      "en": "Sin título",
+      "es": "Sin título"
+    },
+    "series": "painting",
+    "technique": "Oil",
+    "technique_es": "Óleo",
+    "dimensions": "",
+    "year": 2026,
+    "image": "/src/assets/works/painting/sin-titulo-1.avif",
+    "price": ""
+  },
+  {
+    "id": "sin-titulo-2",
+    "title": {
+      "en": "Sin título",
+      "es": "Sin título"
+    },
+    "series": "painting",
+    "technique": "Oil",
+    "technique_es": "Óleo",
+    "dimensions": "",
+    "year": 2026,
+    "image": "/src/assets/works/painting/sin-titulo-2.avif",
+    "price": ""
+  },
+  {
+    "id": "sin-titulo-3",
+    "title": {
+      "en": "Sin título",
+      "es": "Sin título"
+    },
+    "series": "painting",
+    "technique": "Oil",
+    "technique_es": "Óleo",
+    "dimensions": "",
+    "year": 2026,
+    "image": "/src/assets/works/painting/sin-titulo-3.avif",
+    "price": ""
+  },
+  {
+    "id": "sin-titulo-4",
+    "title": {
+      "en": "Sin título",
+      "es": "Sin título"
+    },
+    "series": "painting",
+    "technique": "Oil",
+    "technique_es": "Óleo",
+    "dimensions": "",
+    "year": 2026,
+    "image": "/src/assets/works/painting/sin-titulo-4.avif",
+    "price": ""
+  }
 ]
