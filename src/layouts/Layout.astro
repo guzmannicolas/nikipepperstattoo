@@ -4,7 +4,8 @@ import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import LoadingSplash from '../components/animation/loading/LoadingSplash.astro';
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
-import { ViewTransitions } from 'astro:transitions'
+import { ViewTransitions } from 'astro:transitions';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
 	title: string;
@@ -136,5 +137,6 @@ const localBusinessSchema = {
 			<slot />
 		</main>
 		<Footer />
+		<SpeedInsights />
 	</body>
 </html>
