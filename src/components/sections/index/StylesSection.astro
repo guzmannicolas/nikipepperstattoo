@@ -9,10 +9,15 @@
  */
 
 import StylesSectionLogic from "./StylesSectionLogic";
-// We import images directly so Astro's asset pipeline can process them (AVIF/WebP conversion)
-import koiFish from "../../../assets/tattoos/animals/bird-tattoo-forearm-orange-grey-feathers.avif";
-import redPoppies from "../../../assets/tattoos/botanical/red-poppies-blue-cornflowers-arm-tattoo.avif";
-import blueFlower from "../../../assets/tattoos/animals/koi-fish-tattoo-lily-pads-water-lilies.avif";
+
+const botanicalGlob = import.meta.glob('/src/assets/tattoos/botanical/*.avif', { eager: true });
+const animalsGlob   = import.meta.glob('/src/assets/tattoos/animals/*.avif',   { eager: true });
+const coverupsGlob  = import.meta.glob('/src/assets/tattoos/coverups/*.avif',  { eager: true });
+
+function firstSrc(glob: Record<string, any>, fallback: Record<string, any> = {}) {
+  const mod = (Object.values(glob)[0] ?? Object.values(fallback)[0]) as any;
+  return mod?.default?.src ?? '';
+}
 
 const { t, lang } = Astro.props;
 
@@ -30,7 +35,7 @@ const cards = [
     title: t("tattoos.filterBotanical"),
     description: t("home.botanical.description"),
     badge: t("tattoos.filterBotanical"),
-    image: redPoppies.src,
+    image: firstSrc(botanicalGlob),
     filterLabel: t("tattoos.filterBotanical"),
     href: tattoosHref,
   },
@@ -39,7 +44,7 @@ const cards = [
     title: t("tattoos.filterAnimals"),
     description: t("home.animals.description"),
     badge: t("tattoos.filterAnimals"),
-    image: koiFish.src,
+    image: firstSrc(animalsGlob),
     filterLabel: t("tattoos.filterAnimals"),
     href: tattoosHref,
   },
@@ -48,7 +53,7 @@ const cards = [
     title: t("tattoos.filterCoverups"),
     description: t("home.coverups.description"),
     badge: t("tattoos.filterCoverups"),
-    image: blueFlower.src,
+    image: firstSrc(coverupsGlob, botanicalGlob),
     filterLabel: t("tattoos.filterCoverups"),
     href: tattoosHref,
   },

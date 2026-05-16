@@ -1,10 +1,22 @@
 ---
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import tattooHero from "../../assets/tattoos/botanical/forearm-pink-lotus-tattoo-leaves.avif";
-import ceramicHero from "../../assets/ceramics/decorative/Mateta Pisces - Front.avif";
-import bioHero from "../../assets/home/Niki-about-me.avif";
-import worksHero from "../../assets/works/on_demand/pet-portrait.avif";
-import muralsHero from "../../assets/murals/abrazo-2018.jpeg";
+
+const tattooGlob  = import.meta.glob('/src/assets/tattoos/**/*.avif',          { eager: true });
+const ceramicGlob = import.meta.glob('/src/assets/ceramics/**/*.avif',         { eager: true });
+const bioGlob     = import.meta.glob('/src/assets/home/*.avif',                { eager: true });
+const worksGlob   = import.meta.glob('/src/assets/works/**/*.avif',            { eager: true });
+const muralsGlob  = import.meta.glob('/src/assets/murals/*.{jpeg,jpg,avif}',   { eager: true });
+
+function firstImg(glob: Record<string, any>) {
+  const mod = Object.values(glob)[0] as any;
+  return mod?.default ?? null;
+}
+
+const tattooHero  = firstImg(tattooGlob);
+const ceramicHero = firstImg(ceramicGlob);
+const bioHero     = firstImg(bioGlob);
+const worksHero   = firstImg(worksGlob);
+const muralsHero  = firstImg(muralsGlob);
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);

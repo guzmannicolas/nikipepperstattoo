@@ -1,25 +1,19 @@
 ---
 import FeaturedWorkLogic from './FeaturedWorkLogic';
 
-// Recibimos la función de traducción 't' desde el padre (index.astro)
 const { t } = Astro.props;
 
-// Import images
-import tattoo1 from "../../../assets/tattoos/botanical/blue-flower-tattoo-green-leaves-forearm.avif";
-import tattoo2 from "../../../assets/tattoos/botanical/pink-flower-forearm-tattoo-wrist-design.avif";
-import tattoo3 from "../../../assets/tattoos/botanical/red-poppies-blue-cornflowers-arm-tattoo.avif";
+const tattooGlob  = import.meta.glob('/src/assets/tattoos/**/*.avif',  { eager: true });
+const worksGlob   = import.meta.glob('/src/assets/works/**/*.avif',    { eager: true });
+const ceramicGlob = import.meta.glob('/src/assets/ceramics/**/*.avif', { eager: true });
 
-import work1 from "../../../assets/works/echoes_from_the_deep/orange-rose.avif";
-import work2 from "../../../assets/works/echoes_from_the_deep/river-rose-or-lily.avif";
-import work3 from "../../../assets/works/echoes_from_the_deep/mind-and-body.avif";
+function firstNSrc(glob: Record<string, any>, n: number) {
+  return Object.values(glob).slice(0, n).map((m: any) => m?.default?.src ?? '');
+}
 
-import ceramic1 from "../../../assets/ceramics/decorative/Coral candle holder.avif";
-import ceramic2 from "../../../assets/ceramics/functional/Kisses pot.avif";
-import ceramic3 from "../../../assets/ceramics/decorative/Leaf mask.avif";
-
-const col1Images = [tattoo1.src, tattoo2.src, tattoo3.src];
-const col2Images = [work1.src, work2.src, work3.src];
-const col3Images = [ceramic1.src, ceramic2.src, ceramic3.src];
+const col1Images = firstNSrc(tattooGlob,  3);
+const col2Images = firstNSrc(worksGlob,   3);
+const col3Images = firstNSrc(ceramicGlob, 3);
 
 // Usamos la función 't' que vino en las props para obtener los textos
 const title = t("featuredWork.title");
