@@ -208,6 +208,63 @@
       ],
       "category": "botanical, colour, coverups",
       "category_es": "botánico, color, línea fina"
+    },
+    {
+      "id": 12,
+      "slug": "blue-butterfly-poppies-wildflowers",
+      "title": {
+        "en": "Blue Butterfly with Poppies and Wildflowers",
+        "es": "Mariposa Azul con Amapolas y Flores Silvestres"
+      },
+      "description": "",
+      "price": "",
+      "images": [
+        {
+          "filename": "Blue Butterfly with Poppies and Wildflowers",
+          "path": "/src/assets/tattoos/coverups/blue-butterfly-poppies-wildflowers.avif",
+          "alt": "Blue Butterfly with Poppies and Wildflowers"
+        }
+      ],
+      "category": "botanical, colour, coverups",
+      "category_es": "botánico, color, coverup"
+    },
+    {
+      "id": 13,
+      "slug": "peony-poppies-monarch-butterfly",
+      "title": {
+        "en": "Peony and Poppies with Monarch Butterfly",
+        "es": "Peonía y Amapolas con Mariposa Monarca"
+      },
+      "description": "",
+      "price": "",
+      "images": [
+        {
+          "filename": "Peony and Poppies with Monarch Butterfly",
+          "path": "/src/assets/tattoos/coverups/peony-poppies-monarch-butterfly.avif",
+          "alt": "Peony and Poppies with Monarch Butterfly"
+        }
+      ],
+      "category": "botanical, colour, coverups",
+      "category_es": "botánico, color, coverup"
+    },
+    {
+      "id": 14,
+      "slug": "sunflowers-wildflowers-sleeve",
+      "title": {
+        "en": "Sunflowers and Wildflowers Sleeve",
+        "es": "Girasoles y Flores Silvestres"
+      },
+      "description": "",
+      "price": "",
+      "images": [
+        {
+          "filename": "Sunflowers and Wildflowers Sleeve",
+          "path": "/src/assets/tattoos/coverups/sunflowers-wildflowers-sleeve.avif",
+          "alt": "Sunflowers and Wildflowers Sleeve"
+        }
+      ],
+      "category": "botanical, colour, coverups",
+      "category_es": "botánico, color, coverup"
     }
   ]
 }
