@@ -12,12 +12,12 @@
       "images": [
         {
           "filename": "Mateta Pisces - Back",
-          "path": "/src/assets/ceramics/Mateta Pisces - Back.avif",
+          "path": "/src/assets/ceramics/decorative/Mateta Pisces - Back.avif",
           "alt": "Mateta Pisces - Back"
         },
         {
           "filename": "Mateta Pisces - Front",
-          "path": "/src/assets/ceramics/Mateta Pisces - Front.avif",
+          "path": "/src/assets/ceramics/decorative/Mateta Pisces - Front.avif",
           "alt": "Mateta Pisces - Front"
         }
       ],
@@ -36,7 +36,7 @@
       "images": [
         {
           "filename": "Kisses pot",
-          "path": "/src/assets/ceramics/Kisses pot.avif",
+          "path": "/src/assets/ceramics/functional/Kisses pot.avif",
           "alt": "Kisses pot"
         }
       ],
@@ -55,7 +55,7 @@
       "images": [
         {
           "filename": "Leaf mask",
-          "path": "/src/assets/ceramics/Leaf mask.avif",
+          "path": "/src/assets/ceramics/decorative/Leaf mask.avif",
           "alt": "Leaf mask"
         }
       ],
@@ -74,12 +74,12 @@
       "images": [
         {
           "filename": "Pisces bowl - Inside view",
-          "path": "/src/assets/ceramics/Pisces bowl - Inside view.avif",
+          "path": "/src/assets/ceramics/decorative/Pisces bowl - Inside view.avif",
           "alt": "Pisces bowl - Inside view"
         },
         {
           "filename": "Pisces bowl - Side view",
-          "path": "/src/assets/ceramics/Pisces bowl - Side view.avif",
+          "path": "/src/assets/ceramics/decorative/Pisces bowl - Side view.avif",
           "alt": "Pisces bowl - Side view"
         }
       ],
@@ -98,7 +98,7 @@
       "images": [
         {
           "filename": "Coral candle holder",
-          "path": "/src/assets/ceramics/Coral candle holder.avif",
+          "path": "/src/assets/ceramics/decorative/Coral candle holder.avif",
           "alt": "Coral candle holder"
         }
       ],
@@ -117,12 +117,12 @@
       "images": [
         {
           "filename": "Pop pot - Back",
-          "path": "/src/assets/ceramics/Pop pot - Back.avif",
+          "path": "/src/assets/ceramics/decorative/Pop pot - Back.avif",
           "alt": "Pop pot - Back"
         },
         {
           "filename": "Pop pot - Front",
-          "path": "/src/assets/ceramics/Pop pot - Front.avif",
+          "path": "/src/assets/ceramics/decorative/Pop pot - Front.avif",
           "alt": "Pop pot - Front"
         }
       ],
@@ -141,12 +141,12 @@
       "images": [
         {
           "filename": "Chrysanthemum bowl - Side view",
-          "path": "/src/assets/ceramics/Chrysanthemum bowl - Side view.avif",
+          "path": "/src/assets/ceramics/decorative/Chrysanthemum bowl - Side view.avif",
           "alt": "Chrysanthemum bowl - Side view"
         },
         {
           "filename": "Chrysanthemum bowl - Inside view",
-          "path": "/src/assets/ceramics/Chrysanthemum bowl - Inside view.avif",
+          "path": "/src/assets/ceramics/decorative/Chrysanthemum bowl - Inside view.avif",
           "alt": "Chrysanthemum bowl - Inside view"
         }
       ],

@@ -12,7 +12,7 @@
       "images": [
         {
           "filename": "Koi Fish with Water Lilies",
-          "path": "/src/assets/tattoos/koi-fish-tattoo-lily-pads-water-lilies.jpeg",
+          "path": "/src/assets/tattoos/animals/koi-fish-tattoo-lily-pads-water-lilies.jpeg",
           "alt": "Koi Fish with Water Lilies"
         }
       ],
@@ -31,7 +31,7 @@
       "images": [
         {
           "filename": "Pink Lotus with Leaves",
-          "path": "/src/assets/tattoos/forearm-pink-lotus-tattoo-leaves.jpg",
+          "path": "/src/assets/tattoos/botanical/forearm-pink-lotus-tattoo-leaves.jpg",
           "alt": "Pink Lotus with Leaves"
         }
       ],
@@ -50,7 +50,7 @@
       "images": [
         {
           "filename": "Pink Flower with Green Leaves",
-          "path": "/src/assets/tattoos/pink-flower-tattoo-green-leaves-petals.jpg",
+          "path": "/src/assets/tattoos/botanical/pink-flower-tattoo-green-leaves-petals.jpg",
           "alt": "Pink Flower with Green Leaves"
         }
       ],
@@ -69,7 +69,7 @@
       "images": [
         {
           "filename": "Red Poppies with Blue Cornflowers",
-          "path": "/src/assets/tattoos/red-poppies-blue-cornflowers-arm-tattoo.jpeg",
+          "path": "/src/assets/tattoos/botanical/red-poppies-blue-cornflowers-arm-tattoo.jpeg",
           "alt": "Red Poppies with Blue Cornflowers"
         }
       ],
@@ -88,7 +88,7 @@
       "images": [
         {
           "filename": "Bird with Orange and Grey Feathers",
-          "path": "/src/assets/tattoos/bird-tattoo-orange-grey-feathers-flowers.jpg",
+          "path": "/src/assets/tattoos/animals/bird-tattoo-orange-grey-feathers-flowers.jpg",
           "alt": "Bird with Orange and Grey Feathers"
         }
       ],
@@ -107,7 +107,7 @@
       "images": [
         {
           "filename": "Pink Flower Forearm",
-          "path": "/src/assets/tattoos/pink-flower-forearm-tattoo-wrist-design.jpg",
+          "path": "/src/assets/tattoos/botanical/pink-flower-forearm-tattoo-wrist-design.jpg",
           "alt": "Pink Flower Forearm"
         }
       ],
@@ -126,7 +126,7 @@
       "images": [
         {
           "filename": "Red Poppy Close-up",
-          "path": "/src/assets/tattoos/red-poppy-tattoo-chest-closeup.jpeg",
+          "path": "/src/assets/tattoos/botanical/red-poppy-tattoo-chest-closeup.jpeg",
           "alt": "Red Poppy Close-up"
         }
       ],
@@ -145,7 +145,7 @@
       "images": [
         {
           "filename": "Bird Forearm",
-          "path": "/src/assets/tattoos/bird-tattoo-forearm-orange-grey-feathers.jpg",
+          "path": "/src/assets/tattoos/animals/bird-tattoo-forearm-orange-grey-feathers.jpg",
           "alt": "Bird Forearm"
         }
       ],
@@ -164,7 +164,7 @@
       "images": [
         {
           "filename": "Blue-Green Succulent",
-          "path": "/src/assets/tattoos/blue-green-succulent-pink-yellow-flowers-tattoo.jpeg",
+          "path": "/src/assets/tattoos/botanical/blue-green-succulent-pink-yellow-flowers-tattoo.jpeg",
           "alt": "Blue-Green Succulent"
         }
       ],
@@ -183,7 +183,7 @@
       "images": [
         {
           "filename": "Purple and White Flower Forearm",
-          "path": "/src/assets/tattoos/purple-white-flower-forearm-tattoo-green-leaves.jpg",
+          "path": "/src/assets/tattoos/botanical/purple-white-flower-forearm-tattoo-green-leaves.jpg",
           "alt": "Purple and White Flower Forearm"
         }
       ],
@@ -202,7 +202,7 @@
       "images": [
         {
           "filename": "Blue Flower Forearm",
-          "path": "/src/assets/tattoos/blue-flower-tattoo-green-leaves-forearm.jpg",
+          "path": "/src/assets/tattoos/botanical/blue-flower-tattoo-green-leaves-forearm.jpg",
           "alt": "Blue Flower Forearm"
         }
       ],
