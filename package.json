@@ -17,6 +17,7 @@
     "@tailwindcss/vite": "^4.1.17",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
+    "@vercel/analytics": "^2.0.1",
     "astro": "^5.15.4",
     "framer-motion": "^12.23.25",
     "photoswipe": "^5.4.4",
