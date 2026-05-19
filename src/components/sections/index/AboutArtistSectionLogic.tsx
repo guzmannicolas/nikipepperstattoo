@@ -43,7 +43,7 @@ const AboutArtistSectionLogic: React.FC<AboutArtistProps> = ({
     <section className="relative overflow-hidden py-24 px-4 z-20 bg-white">
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/home/background-bg-hero.jpg"
+          src="/images/home/background-bg-hero.avif"
           alt=""
           className="w-full h-full object-cover rotate-180 opacity-60"
         />

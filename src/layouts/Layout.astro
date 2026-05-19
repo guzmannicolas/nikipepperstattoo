@@ -19,6 +19,7 @@ const { title, description = 'Tattoo artist, ceramist, and visual artist', image
 
 const siteUrl = 'https://nikipepperstattoo.com';
 const currentPath = Astro.url.pathname;
+const isHome = currentPath === '/' || currentPath === '/es' || currentPath === '/es/';
 const ogImage = image ?? `${siteUrl}/images/home/background-hero.jpeg`;
 const canonicalUrl = siteUrl + currentPath;
 
@@ -84,6 +85,9 @@ const localBusinessSchema = {
 		<link rel="alternate" hreflang="en" href={enUrl} />
 		<link rel="alternate" hreflang="es" href={esUrl} />
 		<link rel="alternate" hreflang="x-default" href={enUrl} />
+
+		<!-- Preload LCP image on home page only -->
+		{isHome && <link rel="preload" as="image" href="/images/home/background-hero.avif" type="image/avif" fetchpriority="high" />}
 
 		<link rel="icon" type="image/png" href="/titulo-header.png" />
 		<link rel="icon" type="image/png" href="/logo-loading.png" sizes="192x192" />

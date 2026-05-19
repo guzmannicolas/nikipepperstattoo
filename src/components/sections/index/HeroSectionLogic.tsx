@@ -22,14 +22,13 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, wordsliderhero, ctaPrima
   useEffect(() => {
     const splash = document.getElementById('loading-splash');
     const isSplashVisible = splash && window.getComputedStyle(splash).display !== 'none';
-
     if (isSplashVisible) {
+      controls.set('hidden');
       const onDone = () => controls.start('visible');
       document.addEventListener('splash:done', onDone, { once: true });
       return () => document.removeEventListener('splash:done', onDone);
-    } else {
-      controls.start('visible');
     }
+    // No splash: content already visible via SSR, skip animation
   }, [controls]);
 
   // Variantes de animación (Framer Motion)
@@ -72,8 +71,13 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, wordsliderhero, ctaPrima
       {/* Capas de fondo: imagen base y overlay encima */}
       <div className="absolute inset-0 z-0">
         <motion.img
-          src="/images/home/background-hero.jpeg"
-          alt="Hero overlay"
+          src="/images/home/background-hero.avif"
+          alt=""
+          fetchPriority="high"
+          loading="eager"
+          decoding="sync"
+          width={1920}
+          height={1080}
           style={{ y: yBackground }}
           className="absolute inset-0 w-full h-full object-cover pointer-events-none object-[70%_center] md:object-center opacity-60"
         />
@@ -86,7 +90,7 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, wordsliderhero, ctaPrima
           <motion.div
             className="max-w-2xl lg:max-w-none"
             variants={containerVariants}
-            initial="hidden"
+            initial="visible"
             animate={controls}
             style={{ y: yContent }}
           >

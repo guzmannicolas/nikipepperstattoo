@@ -99,6 +99,10 @@ const defaultButtons = [
                 <img
                     src={src}
                     alt={alt}
+                    width={w}
+                    height={h}
+                    loading={i < 3 ? 'eager' : 'lazy'}
+                    decoding="async"
                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <!-- Series badge -->

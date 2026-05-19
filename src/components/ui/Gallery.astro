@@ -95,6 +95,10 @@ const defaultButtons = [
               <img
                 src={src}
                 alt={alt}
+                width={w}
+                height={h}
+                loading={i < 3 ? 'eager' : 'lazy'}
+                decoding="async"
                 class="w-full h-full object-cover aspect-square"
               />
               <div class="absolute inset-0 bg-black/0 hover:bg-black/40 transition-colors flex items-end opacity-0 hover:opacity-100">
