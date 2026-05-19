@@ -89,6 +89,9 @@ const displayCards = cards
             <img
               src={card.img.src}
               alt={card.alt}
+              width={card.img.width}
+              height={card.img.height}
+              decoding="async"
               class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
               loading="lazy"
             />

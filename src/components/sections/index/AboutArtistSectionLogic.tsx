@@ -45,6 +45,8 @@ const AboutArtistSectionLogic: React.FC<AboutArtistProps> = ({
         <img
           src="/images/home/background-bg-hero.avif"
           alt=""
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-cover rotate-180 opacity-60"
         />
       </div>

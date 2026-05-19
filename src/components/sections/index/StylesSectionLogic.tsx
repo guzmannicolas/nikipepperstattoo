@@ -148,6 +148,7 @@ const StylesSectionLogic: React.FC<StylesSectionProps> = ({
                   alt={style.title}
                   className="h-full w-full object-cover"
                   loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent" />
                 <div className="absolute inset-0 bg-black/20" />
@@ -187,6 +188,7 @@ const StylesSectionLogic: React.FC<StylesSectionProps> = ({
                   alt={style.title}
                   className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                   loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-black/38 to-transparent" />
               </div>

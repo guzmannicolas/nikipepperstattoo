@@ -107,6 +107,7 @@ const MobileLayout: React.FC<{
                   src={img.src}
                   alt={img.alt}
                   loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
                 <div
@@ -193,6 +194,7 @@ const TabletLayout: React.FC<{
                       src={src}
                       alt="Featured work"
                       loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -212,6 +214,7 @@ const TabletLayout: React.FC<{
                       src={src}
                       alt="Featured work"
                       loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -295,6 +298,7 @@ const DesktopLayout: React.FC<{
                         src={src}
                         alt="Tattoo work"
                         loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -315,6 +319,7 @@ const DesktopLayout: React.FC<{
                         src={src}
                         alt="Art work"
                         loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -335,6 +340,7 @@ const DesktopLayout: React.FC<{
                         src={src}
                         alt="Ceramic work"
                         loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover"
                       />
                     </div>
