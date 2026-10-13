@@ -9,14 +9,11 @@
  */
 
 import StylesSectionLogic from "./StylesSectionLogic";
+import { cover } from "../../../lib/portfolio";
 
-const botanicalGlob = import.meta.glob('/src/assets/tattoos/botanical/*.avif', { eager: true });
-const animalsGlob   = import.meta.glob('/src/assets/tattoos/animals/*.avif',   { eager: true });
-const coverupsGlob  = import.meta.glob('/src/assets/tattoos/coverups/*.avif',  { eager: true });
-
-function firstSrc(glob: Record<string, any>, fallback: Record<string, any> = {}) {
-  const mod = (Object.values(glob)[0] ?? Object.values(fallback)[0]) as any;
-  return mod?.default?.src ?? '';
+// First tattoo in each category (featured items first, then CMS order).
+function firstSrc(category: string) {
+  return (cover("tattoos", category) ?? cover("tattoos"))?.src ?? '';
 }
 
 const { t, lang } = Astro.props;
@@ -35,7 +32,7 @@ const cards = [
     title: t("tattoos.filterBotanical"),
     description: t("home.botanical.description"),
     badge: t("tattoos.filterBotanical"),
-    image: firstSrc(botanicalGlob),
+    image: firstSrc("botanical"),
     filterLabel: t("tattoos.filterBotanical"),
     href: tattoosHref,
   },
@@ -44,7 +41,7 @@ const cards = [
     title: t("tattoos.filterAnimals"),
     description: t("home.animals.description"),
     badge: t("tattoos.filterAnimals"),
-    image: firstSrc(animalsGlob),
+    image: firstSrc("animals"),
     filterLabel: t("tattoos.filterAnimals"),
     href: tattoosHref,
   },
@@ -53,7 +50,7 @@ const cards = [
     title: t("tattoos.filterCoverups"),
     description: t("home.coverups.description"),
     badge: t("tattoos.filterCoverups"),
-    image: firstSrc(coverupsGlob, botanicalGlob),
+    image: firstSrc("coverups"),
     filterLabel: t("tattoos.filterCoverups"),
     href: tattoosHref,
   },

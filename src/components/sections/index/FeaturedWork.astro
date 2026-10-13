@@ -1,19 +1,13 @@
 ---
 import FeaturedWorkLogic from './FeaturedWorkLogic';
+import { covers } from '../../../lib/portfolio';
 
 const { t } = Astro.props;
 
-const tattooGlob  = import.meta.glob('/src/assets/tattoos/**/*.avif',  { eager: true });
-const worksGlob   = import.meta.glob('/src/assets/works/**/*.avif',    { eager: true });
-const ceramicGlob = import.meta.glob('/src/assets/ceramics/**/*.avif', { eager: true });
-
-function firstNSrc(glob: Record<string, any>, n: number) {
-  return Object.values(glob).slice(0, n).map((m: any) => m?.default?.src ?? '');
-}
-
-const col1Images = firstNSrc(tattooGlob,  3);
-const col2Images = firstNSrc(worksGlob,   3);
-const col3Images = firstNSrc(ceramicGlob, 3);
+// Items marked "featured" in the CMS come first.
+const col1Images = covers('tattoos',  3).map((img) => img.src);
+const col2Images = covers('works',    3).map((img) => img.src);
+const col3Images = covers('ceramics', 3).map((img) => img.src);
 
 // Usamos la función 't' que vino en las props para obtener los textos
 const title = t("featuredWork.title");
