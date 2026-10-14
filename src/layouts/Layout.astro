@@ -18,7 +18,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const { title, description = 'Tattoo artist, ceramist, and visual artist', image, pageSchema } = Astro.props;
 
-const siteUrl = 'https://nikipepperstattoo.com';
+const siteUrl = 'https://nikipeppers.com';
 const currentPath = Astro.url.pathname;
 const isHome = currentPath === '/' || currentPath === '/es' || currentPath === '/es/';
 const ogImage = image ?? `${siteUrl}/images/home/background-hero.avif`;

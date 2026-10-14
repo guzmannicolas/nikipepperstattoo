@@ -8,7 +8,7 @@
 
 ## Proyecto
 
-- Site: https://nikipepperstattoo.com
+- Site: https://nikipeppers.com
 - Framework: Astro 5 (SSG estático), desplegado en Vercel
 - Package manager: **pnpm**
 - Idiomas: EN (default, sin prefijo) y ES (`/es/`)
