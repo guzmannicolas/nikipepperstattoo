@@ -30,7 +30,7 @@ async function cms(p) {
 }
 
 const fields = [
-  'id', 'section', 'slug', 'sort', 'featured', 'title_en', 'title_es', 'series', 'categories',
+  'id', 'section', 'slug', 'sort', 'featured', 'title_en', 'title_es', 'series', 'series_ref.key', 'categories',
   'technique_en', 'technique_es', 'description_en', 'description_es', 'dimensions', 'year', 'price',
   'images.sort', 'images.directus_files_id.id', 'images.directus_files_id.filename_download',
   'images.directus_files_id.title',
@@ -39,11 +39,24 @@ const { data: items } = await (await cms(
   `/items/portfolio_items?limit=-1&sort=sort,id&fields=${fields}&filter[status][_eq]=published`,
 )).json();
 
+// Series (filter buttons + "About the series" on the works page), in the client's CMS order.
+const { data: seriesRows } = await (await cms(
+  '/items/portfolio_series?limit=-1&sort=sort,id&fields=key,name_en,name_es,description_en,description_es',
+)).json();
+const series = seriesRows.map((s) => ({
+  key: s.key,
+  name: { en: s.name_en ?? s.key, es: s.name_es || s.name_en || s.key },
+  description: s.description_en ? { en: s.description_en, es: s.description_es || s.description_en } : null,
+}));
+for (const item of items) item.series = item.series_ref?.key ?? item.series ?? null;
+
 // Fresh output folders for the CMS-managed sections only (home/, addimage/ stay untouched).
 for (const s of SECTIONS) await rm(path.join(ROOT, 'src/assets', s), { recursive: true, force: true });
 
-const safe = (s) => String(s).replace(/[\/\\]/g, '-');
+// Lowercase extensions: the page globs only match .jpg/.avif/..., not .JPG from phones.
+const safe = (s) => String(s).replace(/[\/\\]/g, '-').replace(/\.[^.]+$/, (ext) => ext.toLowerCase());
 const usedPaths = new Set();
+const SUPPORTED = ['.avif', '.jpg', '.jpeg', '.png', '.webp', '.gif'];
 
 function subfolder(item) {
   const cats = item.categories ?? [];
@@ -59,10 +72,24 @@ async function download(item) {
     .sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0));
   const out = [];
   for (const { directus_files_id: file } of images) {
-    let rel = path.posix.join('/src/assets', item.section, subfolder(item), safe(file.filename_download));
+    let name = safe(file.filename_download);
+    let url = `/assets/${file.id}`;
+    // Formats Astro can't optimize (e.g. .heic, .tiff) are converted to JPG by the CMS.
+    if (!SUPPORTED.includes(path.extname(name))) {
+      name = name.replace(/\.[^.]*$/, '') + '.jpg';
+      url += '?format=jpg';
+    }
+    let rel = path.posix.join('/src/assets', item.section, subfolder(item), name);
     if (usedPaths.has(rel)) rel = rel.replace(/([^/]+)$/, `${file.id.slice(0, 8)}-$1`);
+    let bytes;
+    try {
+      bytes = Buffer.from(await (await cms(url)).arrayBuffer());
+    } catch (err) {
+      if (!url.includes('?format=')) throw err; // CMS down: fail the build, keep the live site
+      console.warn(`[fetch-cms] skipping image "${file.filename_download}" of item ${item.id}: ${err.message}`);
+      continue;
+    }
     usedPaths.add(rel);
-    const bytes = Buffer.from(await (await cms(`/assets/${file.id}`)).arrayBuffer());
     await mkdir(path.dirname(path.join(ROOT, rel)), { recursive: true });
     await writeFile(path.join(ROOT, rel), bytes);
     out.push({ path: rel, title: file.title || path.parse(file.filename_download).name });
@@ -121,6 +148,7 @@ await writeFile(path.join(ROOT, 'src/data/tattoos.json'), json({ items: bySectio
 await writeFile(path.join(ROOT, 'src/data/ceramics.json'), json({ items: bySection.ceramics }));
 await writeFile(path.join(ROOT, 'src/data/works.json'), json(bySection.works));
 await writeFile(path.join(ROOT, 'src/data/murals.json'), json(bySection.murals));
+await writeFile(path.join(ROOT, 'src/data/series.json'), json(series));
 
 console.log(`[fetch-cms] ${items.length} items, ${imageCount} images from ${BASE} (` +
   SECTIONS.map((s) => `${s}: ${bySection[s].length}`).join(', ') + ')');

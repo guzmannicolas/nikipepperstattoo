@@ -20,4 +20,5 @@
 - Requiere `DIRECTUS_URL` y `DIRECTUS_TOKEN` (variables de Vercel, o `.env` local — ver `.env.example`).
 - Las imágenes de la home / cross-promo salen de `src/lib/portfolio.ts`: primero los items marcados "featured" en el CMS, después el orden del CMS.
 - Etiquetas en español de las categorías: `src/data/category-labels.es.json`.
+- Series de works (botones de filtro + "About the series"): se crean en el CMS (colección Series, nombre/descripción EN/ES); se generan en `src/data/series.json` y se leen con `src/lib/series.ts`.
 - Niki publica desde el CMS con el botón "Publish website" (dispara el deploy hook de Vercel).
