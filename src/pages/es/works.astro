@@ -7,7 +7,7 @@ import GalleryPlus from "../../components/ui/GalleryPlus.astro";
 import FilterButtons from "../../components/buttons/FilterButtons.astro";
 import AboutSeriesSection from "../../components/sections/works/AboutSeriesSection.astro";
 import worksData from "../../data/works.json";
-import { seriesName, seriesWithWorks } from "../../lib/series";
+import { categoryName, filterButtons } from "../../lib/categories";
 import HeroTitlePages from "../../components/sections/HeroTitlePages.astro";
 
 const lang = getLangFromUrl(Astro.url);
@@ -25,7 +25,7 @@ const galleryItems = paintings.map((p) => {
 	const imageModule = images[imagePath];
 	const localizedTitle = p.title?.[lang] || p.title?.en || "";
 	const localizedTechnique = lang === "es" ? p.technique_es || p.technique : p.technique;
-	const displayCategories = seriesName(p.series, lang);
+	const displayCategories = categoryName("works", p.series, lang);
 	return {
 		...p,
 		title: localizedTitle,
@@ -62,18 +62,8 @@ const worksGallerySchema = {
 			<div slot="filters">
 				{
 					(() => {
-						// One button per series that has works (series are managed in the CMS).
-						const buttons = [
-							{
-								label: t("artworks.filters.all") || "All",
-								value: "all",
-								active: true,
-							},
-							...seriesWithWorks().map((s) => ({
-								label: s.name[lang],
-								value: s.key,
-							})),
-						];
+						// One button per series (managed in the CMS).
+						const buttons = filterButtons("works", lang, t("artworks.filters.all") || "All");
 						return <FilterButtons buttons={buttons} />;
 					})()
 				}

@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import ceramicsData from "../../data/ceramics.json";
+import { filterButtons } from "../../lib/categories";
 import FilterButtons from "../../components/buttons/FilterButtons.astro";
 import Gallery from "../../components/ui/Gallery.astro";
 import CrossPromo from "../../components/calltoaction/CrossPromo.astro";
@@ -25,7 +26,7 @@ const galleryItems = ceramicsData.items.map((item) => {
 	const localizedCategories =
 		lang === "es"
 			? item.category_es || item.category || ""
-			: item.category || "";
+			: item.category_en || item.category || "";
 	return {
 		image,
 		title: localizedTitle,
@@ -63,25 +64,8 @@ const ceramicsGallerySchema = {
 			<div slot="filters">
 				{
 					(() => {
-						const buttons = [
-							{
-								label: t("ceramics.filters.all"),
-								value: "all",
-								active: true,
-							},
-							{
-								label: t("ceramics.filters.functional"),
-								value: "functional",
-							},
-							{
-								label: t("ceramics.filters.decorative"),
-								value: "decorative",
-							},
-							{
-								label: t("ceramics.filters.sculptural"),
-								value: "sculptural",
-							},
-						];
+						// One button per category (managed in the CMS).
+						const buttons = filterButtons("ceramics", lang, t("ceramics.filters.all"));
 						return <FilterButtons buttons={buttons} />;
 					})()
 				}

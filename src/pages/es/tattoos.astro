@@ -7,6 +7,7 @@ import HeroTitlePages from "../../components/sections/HeroTitlePages.astro";
 import Gallery from "../../components/ui/Gallery.astro";
 import CTASection from "../../components/calltoaction/CTASection.astro";
 import tattoosData from "../../data/tattoos.json";
+import { filterButtons } from "../../lib/categories";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -28,7 +29,7 @@ let galleryItems = tattoosData.items.map((item) => {
 	const localizedCategories =
 		lang === "es"
 			? item.category_es || item.category || ""
-			: item.category || "";
+			: item.category_en || item.category || "";
 	return {
 		image,
 		title: localizedTitle,
@@ -76,28 +77,8 @@ const tattoosGallerySchema = {
 			<div slot="filters">
 				{
 					(() => {
-						const buttons = [
-							{
-								label: t("tattoos.filterAll"),
-								value: "all",
-								active: filterParam === "all",
-							},
-							{
-								label: t("tattoos.filterBotanical"),
-								value: "botanical",
-								active: filterParam === "botanical",
-							},
-							{
-								label: t("tattoos.filterAnimals"),
-								value: "animals",
-								active: filterParam === "animals",
-							},
-							{
-								label: t("tattoos.filterCoverups"),
-								value: "coverups",
-								active: filterParam === "coverups",
-							},
-						];
+						// One button per category (managed in the CMS).
+						const buttons = filterButtons("tattoos", lang, t("tattoos.filterAll"));
 						return <FilterButtons buttons={buttons} />;
 					})()
 				}

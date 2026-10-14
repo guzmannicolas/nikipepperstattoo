@@ -1,12 +1,12 @@
 // Pulls Niki's published portfolio from the CMS before every build/dev run and writes it
 // in the same shape the site has always used:
-//   src/data/{tattoos,works,ceramics,murals}.json
+//   src/data/{tattoos,works,ceramics,murals}.json, src/data/categories.json
 //   src/assets/{tattoos,works,ceramics,murals}/<subfolder>/<image>
 // Both outputs are generated (gitignored). Edit content in the CMS, not here.
 //
 // Needs DIRECTUS_URL and DIRECTUS_TOKEN (Vercel env vars, or a local .env file).
 // If the CMS is unreachable the build fails, so Vercel keeps serving the last good deploy.
-import { mkdir, rm, writeFile, readFile } from 'node:fs/promises';
+import { mkdir, rm, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 
@@ -21,7 +21,6 @@ if (!BASE || !TOKEN) {
 
 const SECTIONS = ['tattoos', 'works', 'ceramics', 'murals'];
 const ROOT = process.cwd();
-const labelsEs = JSON.parse(await readFile(path.join(ROOT, 'src/data/category-labels.es.json'), 'utf8'));
 
 async function cms(p) {
   const res = await fetch(BASE + p, { headers: { Authorization: `Bearer ${TOKEN}` } });
@@ -30,7 +29,7 @@ async function cms(p) {
 }
 
 const fields = [
-  'id', 'section', 'slug', 'sort', 'featured', 'title_en', 'title_es', 'series', 'series_ref.key', 'categories',
+  'id', 'section', 'slug', 'sort', 'featured', 'title_en', 'title_es', 'category_links.sort', 'category_links.portfolio_categories_id.key',
   'technique_en', 'technique_es', 'description_en', 'description_es', 'dimensions', 'year', 'price',
   'images.sort', 'images.directus_files_id.id', 'images.directus_files_id.filename_download',
   'images.directus_files_id.title',
@@ -39,16 +38,30 @@ const { data: items } = await (await cms(
   `/items/portfolio_items?limit=-1&sort=sort,id&fields=${fields}&filter[status][_eq]=published`,
 )).json();
 
-// Series (filter buttons + "About the series" on the works page), in the client's CMS order.
-const { data: seriesRows } = await (await cms(
-  '/items/portfolio_series?limit=-1&sort=sort,id&fields=key,name_en,name_es,description_en,description_es',
+// Categories per section (tattoo styles, ceramic types, works series…), in the client's CMS order.
+const { data: categoryRows } = await (await cms(
+  '/items/portfolio_categories?limit=-1&sort=sort,id' +
+  '&fields=section,key,name_en,name_es,description_en,description_es,show_in_filters',
 )).json();
-const series = seriesRows.map((s) => ({
-  key: s.key,
-  name: { en: s.name_en ?? s.key, es: s.name_es || s.name_en || s.key },
-  description: s.description_en ? { en: s.description_en, es: s.description_es || s.description_en } : null,
-}));
-for (const item of items) item.series = item.series_ref?.key ?? item.series ?? null;
+const categories = {};
+for (const c of categoryRows) {
+  (categories[c.section] ??= []).push({
+    key: c.key,
+    name: { en: c.name_en ?? c.key, es: c.name_es || c.name_en || c.key },
+    description: c.description_en ? { en: c.description_en, es: c.description_es || c.description_en } : null,
+    showInFilters: c.show_in_filters !== false,
+  });
+}
+const nameOf = (section, key, lang) => categories[section]?.find((c) => c.key === key)?.name[lang] ?? key;
+
+// Each item's category keys, in the order she linked them.
+for (const item of items) {
+  item.categories = [...(item.category_links ?? [])]
+    .sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0))
+    .map((l) => l.portfolio_categories_id?.key)
+    .filter(Boolean);
+  item.series = item.section === 'works' ? (item.categories[0] ?? null) : null;
+}
 
 // Fresh output folders for the CMS-managed sections only (home/, addimage/ stay untouched).
 for (const s of SECTIONS) await rm(path.join(ROOT, 'src/assets', s), { recursive: true, force: true });
@@ -98,7 +111,7 @@ async function download(item) {
 }
 
 const title = (i) => ({ en: i.title_en ?? '', es: i.title_es || i.title_en || '' });
-const catsEs = (cats) => cats.map((c) => labelsEs[c] ?? c).join(', ');
+const catNames = (section, cats, lang) => cats.map((c) => nameOf(section, c, lang)).join(', ');
 const bySection = Object.fromEntries(SECTIONS.map((s) => [s, []]));
 let imageCount = 0;
 
@@ -123,7 +136,8 @@ for (const item of items) {
       price: item.price ?? '',
       images: images.map((im) => ({ filename: im.title, path: im.path, alt: im.title })),
       category: cats.join(', '),
-      category_es: catsEs(cats),
+      category_en: catNames(item.section, cats, 'en'),
+      category_es: catNames(item.section, cats, 'es'),
     });
   } else if (item.section === 'works') {
     list.push({
@@ -148,7 +162,7 @@ await writeFile(path.join(ROOT, 'src/data/tattoos.json'), json({ items: bySectio
 await writeFile(path.join(ROOT, 'src/data/ceramics.json'), json({ items: bySection.ceramics }));
 await writeFile(path.join(ROOT, 'src/data/works.json'), json(bySection.works));
 await writeFile(path.join(ROOT, 'src/data/murals.json'), json(bySection.murals));
-await writeFile(path.join(ROOT, 'src/data/series.json'), json(series));
+await writeFile(path.join(ROOT, 'src/data/categories.json'), json(categories));
 
 console.log(`[fetch-cms] ${items.length} items, ${imageCount} images from ${BASE} (` +
   SECTIONS.map((s) => `${s}: ${bySection[s].length}`).join(', ') + ')');

@@ -19,6 +19,5 @@
 - `scripts/fetch-cms.mjs` corre antes de `pnpm dev` / `pnpm build` y genera `src/data/{tattoos,works,ceramics,murals}.json` y `src/assets/{tattoos,works,ceramics,murals}/` (gitignored, no editar a mano).
 - Requiere `DIRECTUS_URL` y `DIRECTUS_TOKEN` (variables de Vercel, o `.env` local — ver `.env.example`).
 - Las imágenes de la home / cross-promo salen de `src/lib/portfolio.ts`: primero los items marcados "featured" en el CMS, después el orden del CMS.
-- Etiquetas en español de las categorías: `src/data/category-labels.es.json`.
-- Series de works (botones de filtro + "About the series"): se crean en el CMS (colección Series, nombre/descripción EN/ES); se generan en `src/data/series.json` y se leen con `src/lib/series.ts`.
+- Categorías (estilos de tattoo, tipos de cerámica, series de works): se crean en el CMS (Categories, nombre/descripción EN/ES, "show in filters"). Se generan en `src/data/categories.json` y se leen con `src/lib/categories.ts` (botones de filtro, "About the series", cards de estilos de la home).
 - Niki publica desde el CMS con el botón "Publish website" (dispara el deploy hook de Vercel).

@@ -49,7 +49,7 @@ src/data/tattoos.json
 src/data/works.json
 src/data/ceramics.json
 src/data/murals.json
-src/data/series.json
+src/data/categories.json
 src/assets/tattoos/
 src/assets/works/
 src/assets/ceramics/

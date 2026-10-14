@@ -1,6 +1,6 @@
 ---
 import { useTranslations } from "../../../i18n/utils";
-import { seriesWithWorks } from "../../../lib/series";
+import { categoriesWithItems } from "../../../lib/categories";
 
 interface Props {
     lang: "en" | "es";
@@ -10,7 +10,7 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 // Series and their descriptions come from the CMS (only series that have a description).
-const currentSeries = seriesWithWorks()
+const currentSeries = categoriesWithItems("works")
     .filter((s) => s.description)
     .map((s) => ({ title: s.name[lang], description: s.description![lang] }));
 ---
