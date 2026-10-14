@@ -158,6 +158,7 @@ for (const item of items) {
 }
 
 const json = (v) => JSON.stringify(v, null, 2) + '\n';
+await mkdir(path.join(ROOT, 'src/data'), { recursive: true }); // only generated files live here, so git has no folder
 await writeFile(path.join(ROOT, 'src/data/tattoos.json'), json({ items: bySection.tattoos }));
 await writeFile(path.join(ROOT, 'src/data/ceramics.json'), json({ items: bySection.ceramics }));
 await writeFile(path.join(ROOT, 'src/data/works.json'), json(bySection.works));
