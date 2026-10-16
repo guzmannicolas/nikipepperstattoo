@@ -1,6 +1,7 @@
 // Pulls Niki's published portfolio from the CMS before every build/dev run and writes it
 // in the same shape the site has always used:
 //   src/data/{tattoos,works,ceramics,murals}.json, src/data/categories.json
+//   src/data/profile.json (her contact details: "Mi sitio" → Contacto in the CMS)
 //   src/assets/{tattoos,works,ceramics,murals}/<subfolder>/<image>
 // Both outputs are generated (gitignored). Edit content in the CMS, not here.
 //
@@ -157,8 +158,31 @@ for (const item of items) {
   }
 }
 
+// Contact details (contact page, footer, data for Google). Without them the build stops, so
+// Vercel keeps serving the last good deploy.
+const { data: [p] } = await (await cms(
+  '/items/site_profile?limit=1&fields=whatsapp,email,location_es,location_en,hours_es,hours_en,instagram_url,facebook_url,youtube_url',
+)).json();
+if (!p) {
+  console.error('[fetch-cms] No "Mi sitio" (site_profile) for this site in the CMS: the contact details live there.');
+  process.exit(1);
+}
+const both = (base) => (p[`${base}_es`] || p[`${base}_en`]
+  ? { en: p[`${base}_en`] || p[`${base}_es`], es: p[`${base}_es`] || p[`${base}_en`] }
+  : null);
+const profile = {
+  whatsapp: p.whatsapp?.replace(/\D/g, '') || null,
+  email: p.email || null,
+  location: both('location'),
+  hours: both('hours'),
+  instagram: p.instagram_url || null,
+  facebook: p.facebook_url || null,
+  youtube: p.youtube_url || null,
+};
+
 const json = (v) => JSON.stringify(v, null, 2) + '\n';
 await mkdir(path.join(ROOT, 'src/data'), { recursive: true }); // only generated files live here, so git has no folder
+await writeFile(path.join(ROOT, 'src/data/profile.json'), json(profile));
 await writeFile(path.join(ROOT, 'src/data/tattoos.json'), json({ items: bySection.tattoos }));
 await writeFile(path.join(ROOT, 'src/data/ceramics.json'), json({ items: bySection.ceramics }));
 await writeFile(path.join(ROOT, 'src/data/works.json'), json(bySection.works));

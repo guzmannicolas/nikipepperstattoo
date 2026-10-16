@@ -90,9 +90,32 @@ export function initContactForm(root: HTMLElement) {
 		$("[data-images-label]").textContent = key === "murals" ? config.imageLabels.murals : config.imageLabels.default;
 		markInvalid("service", false);
 	}
+	// After a choice, glide to the next thing to fill: the service's first question, the next
+	// question after a single choice (not after multi-choice: people may pick several), and
+	// "Your details" after the last one. Nothing moves if it's already comfortably in view.
+	const details = $("[data-details]");
+	const questionsOf = (key: string) => [...root.querySelectorAll<HTMLElement>(`[data-service-fields="${key}"] [data-question]`)];
+	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	function glideTo(target: HTMLElement) {
+		setTimeout(() => {
+			const top = target.getBoundingClientRect().top;
+			const view = window.innerHeight;
+			if (top > view * 0.15 && top < view * 0.6) return;
+			window.scrollTo({ top: window.scrollY + top - view * 0.25, behavior: reduceMotion ? "auto" : "smooth" });
+		}, 250); // let the selection show first
+	}
 	form.addEventListener("change", (e) => {
-		const target = e.target as HTMLInputElement;
-		if (target.name === "service") showService(target.value);
+		const target = e.target as HTMLInputElement | HTMLSelectElement;
+		if (target.name === "service") {
+			showService(target.value);
+			glideTo(questionsOf(target.value)[0] ?? details);
+			return;
+		}
+		const question = target.closest<HTMLElement>("[data-question]");
+		if (question && (question.dataset.type === "single" || question.dataset.type === "select")) {
+			const list = questionsOf(service());
+			glideTo(list[list.indexOf(question) + 1] ?? details);
+		}
 	});
 	const preset = new URLSearchParams(location.search).get("service");
 	const presetInput = preset && form.querySelector<HTMLInputElement>(`input[name="service"][value="${CSS.escape(preset)}"]`);

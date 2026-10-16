@@ -20,7 +20,6 @@
     "ctaButton": "Agendar Consulta",
     "aboutFooter": "Artista multidisciplinaria especializada en tatuajes botánicos, cerámica artesanal y arte visual. Cada pieza cuenta una historia.",
     "email": "Email",
-    "location": "Melbourne, Australia",
     "rights": "Todos los derechos reservados.",
     "madeWith": "Hecho con",
     "by": "por Niki Peppers"
@@ -223,7 +222,7 @@
         "payments": "Acepto medios digitales comunes y transferencias. Los detalles se comparten al agendar."
       },
       "general": {
-        "location": "Estoy en Melbourne, Australia. Algunos proyectos se pueden coordinar a distancia—preguntame sin problema.",
+        "location": "Estoy en Capital Federal, Argentina. Algunos proyectos se pueden coordinar a distancia—preguntame sin problema.",
         "reply": "Suelo responder en 1–3 días hábiles. Si es urgente, aclaralo en el mensaje."
       }
     },
@@ -332,7 +331,7 @@
     "title": "Biografía",
     "description": "Mi viaje a través del arte y la creatividad",
     "greeting": "¡Hola! Soy Niki Peppers",
-    "bio1": "Nicole Teper es una artista visual y tatuadora argentina basada en Melbourne. Su práctica interdisciplinaria incluye pintura, escultura y tatuaje, y se centra en la exploración del vínculo entre el cuerpo, la naturaleza y los sistemas de poder que atraviesan ambos.",
+    "bio1": "Nicole Teper es una artista visual y tatuadora argentina basada en Buenos Aires. Su práctica interdisciplinaria incluye pintura, escultura y tatuaje, y se centra en la exploración del vínculo entre el cuerpo, la naturaleza y los sistemas de poder que atraviesan ambos.",
     "bio2": "Desde una perspectiva ecofeminista, su obra reflexiona sobre la desconexión contemporánea con lo natural y la forma en que el patriarcado y el capitalismo han influido en la construcción de la subjetividad y el territorio.",
     "bio3": "Su trabajo presenta cuerpos no hegemónicos en relación con paisajes orgánicos, animales y elementos naturales, generando imágenes que oscilan entre lo íntimo y lo político. A través de estos cruces, aborda temas como la identidad, la memoria, la transformación y la resistencia, proponiendo una mirada crítica sobre las formas en que habitamos nuestros cuerpos y el mundo.",
     "bio4": "Es Licenciada en Artes Visuales. Actualmente desarrolla su producción artística en paralelo a su práctica como tatuadora, donde crea piezas botánicas a color, manteniendo un diálogo constante entre ambas disciplinas.",
@@ -374,12 +373,10 @@
     "emailTitle": "Email",
     "whatsappTitle": "WhatsApp",
     "locationTitle": "Ubicación",
-    "locationText": "Ubicación del Estudio",
     "locationNote": "(Dirección exacta proporcionada al reservar)",
     "socialTitle": "Redes Sociales",
     "socialText": "Seguime en redes sociales para ver mis últimos trabajos y actualizaciones.",
     "hoursTitle": "Horario de Atención",
-    "hoursText": "A coordinar · horario de Argentina (GMT−3)",
     "hoursNote": "* Solo con cita previa",
     "form": {
       "serviceQuestion": "¿Qué te gustaría crear?",

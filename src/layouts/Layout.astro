@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { profile, socials, postalAddress } from "../lib/profile";
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import LoadingSplash from '../components/animation/loading/LoadingSplash.astro';
@@ -40,18 +41,11 @@ const localBusinessSchema = {
 	'@type': 'TattooParlor',
 	name: 'Niki Peppers Tattoo',
 	url: siteUrl,
-	email: 'nikipepperstattoo@gmail.com',
+	email: profile.email,
 	image: ogImage,
 	description: 'Multidisciplinary artist specializing in botanical tattoos, handmade ceramics, and visual art.',
-	address: {
-		'@type': 'PostalAddress',
-		addressLocality: 'Melbourne',
-		addressCountry: 'AU',
-	},
-	sameAs: [
-		'https://instagram.com/nikipepperstattoo',
-		'https://facebook.com/nikipepperstattoo',
-	],
+	address: postalAddress(),
+	sameAs: socials.map((s) => s.href),
 };
 ---
 

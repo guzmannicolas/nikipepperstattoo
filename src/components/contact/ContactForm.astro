@@ -5,8 +5,9 @@
 // Client logic: ./contact-form.ts
 import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
-import { cover, type Section } from "../../lib/portfolio";
+import { cover, covers, type Section } from "../../lib/portfolio";
 import { categoriesWithItems, type Lang } from "../../lib/categories";
+import { profile } from "../../lib/profile";
 
 interface Props {
 	lang: Lang;
@@ -35,10 +36,18 @@ type Option = { value: string; text: string; image?: ImageMetadata | null };
 type Question = { key: string; type: "select" | "single" | "multi" | "text" | "number"; options?: Option[] };
 const opts = (service: string, key: string, values: string[]): Option[] =>
 	values.map((value) => ({ value, text: f(`q.${service}.${key}.options.${value}`) }));
-const fromCms = (section: Section): Option[] => [
-	...categoriesWithItems(section).map((c) => ({ value: c.key, text: c.name[lang], image: cover(section, c.key) })),
-	{ value: "unsure", text: f("notSure") },
-];
+// Each category shows a different photo when it can (one piece may be in several categories).
+const fromCms = (section: Section): Option[] => {
+	const used = new Set<string>();
+	return [
+		...categoriesWithItems(section).map((c) => {
+			const image = covers(section, 20, c.key).find((img) => !used.has(img.src)) ?? cover(section, c.key);
+			if (image) used.add(image.src);
+			return { value: c.key, text: c.name[lang], image };
+		}),
+		{ value: "unsure", text: f("notSure") },
+	];
+};
 const QUESTIONS: Record<string, Question[]> = {
 	tattoos: [
 		{ key: "placement", type: "select", options: opts("tattoos", "placement", ["forearm", "upperArm", "shoulder", "back", "chest", "ribs", "thigh", "calf", "ankleFoot", "handWrist", "neck", "other"]) },
@@ -162,7 +171,7 @@ const legend = "text-xs uppercase tracking-[0.2em] text-neutral-500 mb-4";
 		))}
 
 		<!-- 3. Who + message -->
-		<fieldset class="space-y-6">
+		<fieldset class="space-y-6" data-details>
 			<legend class={legend}>{f("yourDetails")}</legend>
 			<div class="grid sm:grid-cols-2 gap-6">
 				<div>
@@ -222,7 +231,7 @@ const legend = "text-xs uppercase tracking-[0.2em] text-neutral-500 mb-4";
 	</div>
 
 	<noscript>
-		<p class="mt-4 text-neutral-700">{f("noscript")} <a class="underline" href="mailto:nikipepperstattoo@gmail.com">nikipepperstattoo@gmail.com</a>.</p>
+		<p class="mt-4 text-neutral-700">{f("noscript")} <a class="underline" href={`mailto:${profile.email}`}>{profile.email}</a>.</p>
 	</noscript>
 </div>
 

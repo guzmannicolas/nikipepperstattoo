@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { profile, socials, postalAddress } from "../../lib/profile";
 import CrossPromo from "../../components/calltoaction/CrossPromo.astro";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import HeroTitlePages from "../../components/sections/HeroTitlePages.astro";
@@ -15,20 +16,13 @@ const personSchema = {
 	name: "Niki Peppers",
 	jobTitle: "Tattoo Artist & Visual Artist",
 	url: "https://nikipeppers.com",
-	email: "nikipepperstattoo@gmail.com",
+	email: profile.email,
 	nationality: "Argentine",
 	workLocation: {
 		"@type": "Place",
-		address: {
-			"@type": "PostalAddress",
-			addressLocality: "Melbourne",
-			addressCountry: "AU",
-		},
+		address: postalAddress(),
 	},
-	sameAs: [
-		"https://instagram.com/nikipepperstattoo",
-		"https://facebook.com/nikipepperstattoo",
-	],
+	sameAs: socials.map((s) => s.href),
 };
 ---
 
