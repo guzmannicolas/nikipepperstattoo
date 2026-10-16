@@ -9,55 +9,39 @@
  */
 
 import StylesSectionLogic from "./StylesSectionLogic";
+import { getLangFromUrl } from "../../../i18n/utils";
+import { cover } from "../../../lib/portfolio";
+import { categoriesWithItems, type Lang } from "../../../lib/categories";
 
-const botanicalGlob = import.meta.glob('/src/assets/tattoos/botanical/*.avif', { eager: true });
-const animalsGlob   = import.meta.glob('/src/assets/tattoos/animals/*.avif',   { eager: true });
-const coverupsGlob  = import.meta.glob('/src/assets/tattoos/coverups/*.avif',  { eager: true });
-
-function firstSrc(glob: Record<string, any>, fallback: Record<string, any> = {}) {
-  const mod = (Object.values(glob)[0] ?? Object.values(fallback)[0]) as any;
-  return mod?.default?.src ?? '';
+// First tattoo in each category (featured items first, then CMS order).
+function firstSrc(category: string) {
+  return (cover("tattoos", category) ?? cover("tattoos"))?.src ?? '';
 }
 
-const { t, lang } = Astro.props;
+const { t } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
 
 // Helper to handle URL prefixing for multi-language support
 const basePath = typeof lang === "string" && lang !== "en" ? `/${lang}` : "";
 const tattoosHref = `${basePath}/tattoos`;
 
 /**
- * Definition of the featured styles.
- * Each object contains the key for filtering, localized text, and the image source.
+ * Featured styles: tattoo categories from the CMS that have a description and a filter
+ * button (in the client's order), up to 3. The card links to /tattoos?filter=<key>.
  */
-const cards = [
-  {
-    key: "botanical",
-    title: t("tattoos.filterBotanical"),
-    description: t("home.botanical.description"),
-    badge: t("tattoos.filterBotanical"),
-    image: firstSrc(botanicalGlob),
-    filterLabel: t("tattoos.filterBotanical"),
+const cardLang: Lang = lang === "es" ? "es" : "en";
+const cards = categoriesWithItems("tattoos")
+  .filter((c) => c.showInFilters && c.description)
+  .slice(0, 3)
+  .map((c) => ({
+    key: c.key,
+    title: c.name[cardLang],
+    description: c.description![cardLang],
+    badge: c.name[cardLang],
+    image: firstSrc(c.key),
+    filterLabel: c.name[cardLang],
     href: tattoosHref,
-  },
-  {
-    key: "animals",
-    title: t("tattoos.filterAnimals"),
-    description: t("home.animals.description"),
-    badge: t("tattoos.filterAnimals"),
-    image: firstSrc(animalsGlob),
-    filterLabel: t("tattoos.filterAnimals"),
-    href: tattoosHref,
-  },
-  {
-    key: "coverups",
-    title: t("tattoos.filterCoverups"),
-    description: t("home.coverups.description"),
-    badge: t("tattoos.filterCoverups"),
-    image: firstSrc(coverupsGlob, botanicalGlob),
-    filterLabel: t("tattoos.filterCoverups"),
-    href: tattoosHref,
-  },
-];
+  }));
 ---
 
 <!-- 

@@ -1,0 +1,246 @@
+---
+// Contact form. Sends to the CMS's shared contact-form endpoint (one for every client site), which
+// saves the message in Niki's panel (Consultas) and emails her. Contract: ~/cms docs/features/contact-form.md.
+// The questions of each service are data (QUESTIONS below); their texts live in i18n contact.form.q.
+// Client logic: ./contact-form.ts
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import { cover, covers, type Section } from "../../lib/portfolio";
+import { categoriesWithItems, type Lang } from "../../lib/categories";
+import { profile } from "../../lib/profile";
+
+interface Props {
+	lang: Lang;
+	t: (key: string) => string;
+}
+const { lang, t } = Astro.props;
+const f = (key: string) => t(`contact.form.${key}`);
+
+const env = (name: string) => process.env[name] || import.meta.env[name];
+const cms = (env("DIRECTUS_URL") || "https://cms.nicoguzmandev.com").replace(/\/$/, "");
+const config = {
+	endpoint: env("CONTACT_FORM_URL") || `${cms}/contact-form/${new URL(Astro.site!).host}`,
+	siteKey: env("PUBLIC_TURNSTILE_SITE_KEY") || "0x4AAAAAADMbfM6SjLeOkjjM",
+	lang,
+	placeholders: Object.fromEntries(["tattoos", "works", "ceramics", "murals", "other"].map((s) => [s, f(`messagePlaceholder.${s}`)])),
+	imageLabels: { default: f("images.label"), murals: f("images.labelMurals") },
+	messages: {
+		...Object.fromEntries(["required", "invalid", "captcha", "captchaPending", "too_many", "too_large", "server", "network"].map((k) => [k, f(`errors.${k}`)])),
+		tooMany: f("images.tooMany"), tooBig: f("images.tooBig"), notImage: f("images.notImage"), remove: f("images.remove"),
+		submit: f("submit"), sending: f("sending"), successText: f("success.text"),
+	},
+};
+
+// --- questions per service ---------------------------------------------------------------------
+type Option = { value: string; text: string; image?: ImageMetadata | null };
+type Question = { key: string; type: "select" | "single" | "multi" | "text" | "number"; options?: Option[] };
+const opts = (service: string, key: string, values: string[]): Option[] =>
+	values.map((value) => ({ value, text: f(`q.${service}.${key}.options.${value}`) }));
+// Each category shows a different photo when it can (one piece may be in several categories).
+const fromCms = (section: Section): Option[] => {
+	const used = new Set<string>();
+	return [
+		...categoriesWithItems(section).map((c) => {
+			const image = covers(section, 20, c.key).find((img) => !used.has(img.src)) ?? cover(section, c.key);
+			if (image) used.add(image.src);
+			return { value: c.key, text: c.name[lang], image };
+		}),
+		{ value: "unsure", text: f("notSure") },
+	];
+};
+const QUESTIONS: Record<string, Question[]> = {
+	tattoos: [
+		{ key: "placement", type: "select", options: opts("tattoos", "placement", ["forearm", "upperArm", "shoulder", "back", "chest", "ribs", "thigh", "calf", "ankleFoot", "handWrist", "neck", "other"]) },
+		{ key: "size", type: "single", options: opts("tattoos", "size", ["small", "medium", "large", "xlarge"]) },
+		{ key: "style", type: "multi", options: fromCms("tattoos") },
+		{ key: "first", type: "single", options: opts("tattoos", "first", ["yes", "no"]) },
+		{ key: "availability", type: "text" },
+	],
+	works: [
+		{ key: "interest", type: "single", options: opts("works", "interest", ["buy", "commission"]) },
+		{ key: "series", type: "multi", options: fromCms("works") },
+		{ key: "piece", type: "text" },
+	],
+	ceramics: [
+		{ key: "type", type: "multi", options: fromCms("ceramics") },
+		{ key: "quantity", type: "number" },
+		{ key: "deadline", type: "text" },
+	],
+	murals: [
+		{ key: "space", type: "single", options: opts("murals", "space", ["indoor", "outdoor"]) },
+		{ key: "wallSize", type: "text" },
+		{ key: "location", type: "text" },
+		{ key: "timeline", type: "text" },
+	],
+	other: [],
+};
+const SERVICES: { key: string; image: ImageMetadata | null }[] = [
+	{ key: "tattoos", image: cover("tattoos") },
+	{ key: "works", image: cover("works") },
+	{ key: "ceramics", image: cover("ceramics") },
+	{ key: "murals", image: cover("murals") },
+	{ key: "other", image: null },
+];
+
+const input = "w-full px-4 py-3 bg-white border-2 border-neutral-200 rounded-lg focus:outline-none focus:border-green-500 transition-colors text-black aria-[invalid=true]:border-red-400";
+const label = "block text-sm font-semibold mb-2 text-black";
+const chip = "inline-flex items-center gap-2 rounded-full border-2 border-neutral-200 px-4 py-1.5 text-black cursor-pointer select-none transition-colors hover:border-neutral-400 has-[:checked]:border-green-500 has-[:checked]:bg-green-50 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-green-500/40";
+const imageChip = "inline-flex items-center gap-2 rounded-xl border-2 border-neutral-200 p-1 pr-3 text-black cursor-pointer select-none transition-colors hover:border-neutral-400 has-[:checked]:border-green-500 has-[:checked]:bg-green-50 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-green-500/40";
+const legend = "text-xs uppercase tracking-[0.2em] text-neutral-500 mb-4";
+---
+
+<div data-contact-form class="relative scroll-mt-28">
+	<script type="application/json" data-config set:html={JSON.stringify(config)} />
+
+	<form novalidate class="space-y-10" data-form>
+		<!-- 1. What -->
+		<fieldset>
+			<legend class="text-2xl font-semibold text-black mb-4">{f("serviceQuestion")}</legend>
+			<div class="grid grid-cols-2 sm:grid-cols-3 gap-3" data-field="service">
+				{SERVICES.map((s) => (
+					<label class:list={[
+						"group relative flex flex-col rounded-xl border-2 border-neutral-200 overflow-hidden cursor-pointer bg-white transition hover:border-neutral-400 has-[:checked]:border-green-500 has-[:checked]:ring-2 has-[:checked]:ring-green-500/30 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-green-500/40",
+						!s.image && "col-span-2 sm:col-span-1", // "Something else": a full-width button on phones
+					]}>
+						<input type="radio" name="service" value={s.key} class="sr-only" />
+						{s.image ? (
+							<Image src={s.image} alt="" width={360} class="h-24 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+						) : (
+							<span class="h-24 w-full hidden sm:flex items-center justify-center bg-neutral-100 text-neutral-400" aria-hidden="true">
+								<svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5h16v11H9l-5 4V5z" /><path stroke-linecap="round" d="M8 9.5h8M8 12.5h5" /></svg>
+							</span>
+						)}
+						<span class:list={["block px-3 py-2.5", !s.image && "py-3.5 text-center sm:py-2.5 sm:text-left"]}>
+							<span class="block font-semibold text-black leading-tight">{f(`services.${s.key}.title`)}</span>
+							<span class="block text-sm text-neutral-500 leading-snug mt-0.5">{f(`services.${s.key}.hint`)}</span>
+						</span>
+					</label>
+				))}
+			</div>
+		</fieldset>
+
+		<!-- 2. Questions of the chosen service -->
+		{Object.entries(QUESTIONS).filter(([, qs]) => qs.length).map(([service, qs]) => (
+			<fieldset data-service-fields={service} hidden class="space-y-6">
+				<legend class={legend}>{f("aboutProject")}</legend>
+				{qs.map((q) => {
+					const id = `q-${service}-${q.key}`;
+					const text = f(`q.${service}.${q.key}.label`);
+					const placeholder = t(`contact.form.q.${service}.${q.key}.placeholder`);
+					const hasPlaceholder = !placeholder.startsWith("contact.form.");
+					return (
+						<div data-question={q.key} data-label={text} data-type={q.type}>
+							{q.type === "single" || q.type === "multi" ? (
+								<fieldset>
+									<legend class={label}>
+										{text} <span class="font-normal text-neutral-400">· {q.type === "multi" ? f("pickSeveral") : f("optional")}</span>
+									</legend>
+									<div class="flex flex-wrap gap-2">
+										{q.options!.map((o) => (
+											<label class={o.image ? imageChip : chip}>
+												<input type={q.type === "multi" ? "checkbox" : "radio"} name={id} value={o.value} data-text={o.text} class="sr-only" />
+												{o.image && <Image src={o.image} alt="" width={96} height={96} class="h-10 w-10 rounded-lg object-cover" />}
+												<span>{o.text}</span>
+											</label>
+										))}
+									</div>
+								</fieldset>
+							) : q.type === "select" ? (
+								<>
+									<label for={id} class={label}>{text} <span class="font-normal text-neutral-400">· {f("optional")}</span></label>
+									<select id={id} class={input}>
+										<option value="">{hasPlaceholder ? placeholder : ""}</option>
+										{q.options!.map((o) => <option value={o.value}>{o.text}</option>)}
+									</select>
+								</>
+							) : (
+								<>
+									<label for={id} class={label}>{text} <span class="font-normal text-neutral-400">· {f("optional")}</span></label>
+									<input
+										id={id}
+										type={q.type === "number" ? "number" : "text"}
+										min={q.type === "number" ? 1 : undefined}
+										max={q.type === "number" ? 999 : undefined}
+										maxlength={q.type === "text" ? 200 : undefined}
+										placeholder={hasPlaceholder ? placeholder : undefined}
+										class={input}
+									/>
+								</>
+							)}
+						</div>
+					);
+				})}
+			</fieldset>
+		))}
+
+		<!-- 3. Who + message -->
+		<fieldset class="space-y-6" data-details>
+			<legend class={legend}>{f("yourDetails")}</legend>
+			<div class="grid sm:grid-cols-2 gap-6">
+				<div>
+					<label for="cf-name" class={label}>{t("contact.nameLabel")} *</label>
+					<input id="cf-name" name="name" type="text" autocomplete="name" maxlength="100" placeholder={t("contact.namePlaceholder")} class={input} data-field="name" />
+				</div>
+				<div>
+					<label for="cf-email" class={label}>{t("contact.emailLabel")} *</label>
+					<input id="cf-email" name="email" type="email" autocomplete="email" maxlength="200" placeholder={t("contact.emailPlaceholder")} class={input} data-field="email" />
+				</div>
+			</div>
+			<div>
+				<label for="cf-phone" class={label}>{t("contact.phoneLabel")} <span class="font-normal text-neutral-400">· {f("optional")}</span></label>
+				<input id="cf-phone" name="phone" type="tel" autocomplete="tel" maxlength="40" placeholder={t("contact.phonePlaceholder")} class={input} data-field="phone" />
+			</div>
+			<div>
+				<label for="cf-message" class={label}>{t("contact.messageLabel")} *</label>
+				<textarea id="cf-message" name="message" rows="6" maxlength="5000" placeholder={config.placeholders.other} class={`${input} resize-y`} data-field="message"></textarea>
+			</div>
+
+			<!-- Reference images (compressed in the browser before sending) -->
+			<div data-field="images">
+				<span class={label}>
+					<span data-images-label>{config.imageLabels.default}</span>
+					<span class="font-normal text-neutral-400">· {f("optional")}</span>
+				</span>
+				<label data-dropzone class="flex flex-col items-center justify-center gap-1 rounded-xl border-2 border-dashed border-neutral-300 px-4 py-6 text-center cursor-pointer transition-colors hover:border-green-500 data-[over]:border-green-500 data-[over]:bg-green-50 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-green-500/40">
+					<input type="file" accept="image/*" multiple class="sr-only" data-file-input />
+					<svg class="w-7 h-7 text-neutral-400 mb-1" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" /><circle cx="9" cy="10" r="2" /><path stroke-linejoin="round" d="m21 16-5-5-9 9" /></svg>
+					<span class="font-semibold text-black">{f("images.cta")}</span>
+					<span class="text-sm text-neutral-500">{f("images.hint")}</span>
+				</label>
+				<p class="text-sm text-red-600 mt-2 hidden" data-images-error></p>
+				<ul class="mt-3 grid grid-cols-5 gap-2" data-previews></ul>
+			</div>
+		</fieldset>
+
+		<!-- Honeypot: hidden from people, bots fill it -->
+		<input type="text" name="hp_field" tabindex="-1" autocomplete="off" aria-hidden="true" class="absolute -left-[9999px] w-px h-px opacity-0" />
+
+		<div class="space-y-4">
+			<div data-turnstile class="min-h-[65px]"></div>
+			<p role="alert" aria-live="polite" data-status class="hidden rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700"></p>
+			<button type="submit" data-submit class="w-full px-8 py-3 bg-black hover:bg-neutral-800 disabled:opacity-60 disabled:cursor-wait rounded-lg font-semibold transition-colors text-white">
+				{f("submit")}
+			</button>
+			<p class="text-center text-sm text-neutral-500">{f("privacy")}</p>
+		</div>
+	</form>
+
+	<!-- Shown after sending -->
+	<div data-success hidden class="rounded-2xl border-2 border-green-500/40 bg-green-50 px-6 py-12 text-center" tabindex="-1">
+		<svg class="mx-auto mb-4 w-12 h-12 text-green-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path stroke-linecap="round" stroke-linejoin="round" d="m8 12.5 2.5 2.5L16 9.5" /></svg>
+		<h2 class="text-3xl font-semibold text-black mb-3">{f("success.title")}</h2>
+		<p class="text-neutral-700 text-lg mb-8" data-success-text></p>
+		<button type="button" data-again class="px-6 py-2.5 rounded-lg border-2 border-black text-black font-semibold hover:bg-black hover:text-white transition-colors">{f("success.again")}</button>
+	</div>
+
+	<noscript>
+		<p class="mt-4 text-neutral-700">{f("noscript")} <a class="underline" href={`mailto:${profile.email}`}>{profile.email}</a>.</p>
+	</noscript>
+</div>
+
+<script>
+	import { initContactForm } from "./contact-form";
+	document.addEventListener("astro:page-load", () => {
+		document.querySelectorAll<HTMLElement>("[data-contact-form]").forEach(initContactForm);
+	});
+</script>

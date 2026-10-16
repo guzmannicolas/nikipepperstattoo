@@ -10,7 +10,7 @@ import HeroTitlePages from "../components/sections/HeroTitlePages.astro";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const muralImages = import.meta.glob("/src/assets/murals/*.{jpeg,jpg,png,avif}", { eager: true });
+const muralImages = import.meta.glob("/src/assets/murals/*.{jpeg,jpg,png,avif,webp}", { eager: true });
 
 const galleryItems = muralsData.map((item) => {
   const srcPath = item.image;

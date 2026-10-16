@@ -1,0 +1,104 @@
+---
+// The contact page, shared by /contact and /es/contact (language from the URL).
+import Layout from "../../layouts/Layout.astro";
+import CrossPromo from "../calltoaction/CrossPromo.astro";
+import HeroTitlePages from "../sections/HeroTitlePages.astro";
+import ContactForm from "./ContactForm.astro";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { profile, whatsapp, socials, localized } from "../../lib/profile";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+<Layout title={`${t('contact.title')} - ${t('home.title')}`} description={t('contact.description')}>
+	<section class="py-29 px-4 max-w-7xl mx-auto">
+		<!-- Hero Title Pages Section (componentized) -->
+		<HeroTitlePages lang={lang} t={t} ns="contact" />
+
+		<div class="grid lg:grid-cols-[3fr_2fr] gap-12 lg:gap-16 items-start">
+			<div>
+				<ContactForm lang={lang} t={t} />
+			</div>
+
+			<!-- Contact Info -->
+			<div class="space-y-8">
+				<div class="bg-white p-8 rounded-xl border-2 border-neutral-200">
+					<h2 class="text-2xl font-bold mb-6 text-black">{t('contact.infoTitle')}</h2>
+					<div class="space-y-4">
+						{profile.email && (
+						<div class="flex items-start gap-4">
+							<div class="w-10 h-10 bg-green-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+								<svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+								</svg>
+							</div>
+							<div>
+								<h3 class="font-semibold mb-1 text-black">{t('contact.emailTitle')}</h3>
+								<a href={`mailto:${profile.email}`} class="text-neutral-600 hover:text-green-600 transition-colors break-all">
+									{profile.email}
+								</a>
+							</div>
+						</div>
+						)}
+						{whatsapp && (
+						<div class="flex items-start gap-4">
+							<div class="w-10 h-10 bg-green-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+								<svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+								</svg>
+							</div>
+							<div>
+								<h3 class="font-semibold mb-1 text-black">{t('contact.whatsappTitle')}</h3>
+								<a href={whatsapp?.href} target="_blank" rel="noopener noreferrer" class="text-neutral-600 hover:text-green-600 transition-colors">
+									{whatsapp?.label}
+								</a>
+							</div>
+						</div>
+						)}
+						{profile.location && (
+						<div class="flex items-start gap-4">
+							<div class="w-10 h-10 bg-green-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+								<svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+								</svg>
+							</div>
+							<div>
+								<h3 class="font-semibold mb-1 text-black">{t('contact.locationTitle')}</h3>
+								<p class="text-neutral-600">
+									{localized(profile.location, lang)}<br/>
+									<span class="text-sm">{t('contact.locationNote')}</span>
+								</p>
+							</div>
+						</div>
+						)}
+					</div>
+				</div>
+
+				<div class="bg-white p-8 rounded-xl border-2 border-neutral-200">
+					<h2 class="text-2xl font-bold mb-4 text-black">{t('contact.socialTitle')}</h2>
+					<p class="text-neutral-600 mb-6">
+						{t('contact.socialText')}
+					</p>
+					<div class="flex gap-4">
+						{socials.map((social) => (
+							<a href={social.href} target="_blank" rel="noopener noreferrer" class="w-12 h-12 bg-green-500/10 hover:bg-green-500/20 rounded-lg flex items-center justify-center transition-colors" aria-label={social.name}>
+								<svg class="w-6 h-6 text-green-500" fill="currentColor" viewBox="0 0 24 24" set:html={social.icon} />
+							</a>
+						))}
+					</div>
+				</div>
+
+				<div class="bg-neutral-50 p-8 rounded-xl border-2 border-neutral-200">
+					<h3 class="text-xl font-bold mb-3 text-black">{t('contact.hoursTitle')}</h3>
+					<p class="text-neutral-600">{localized(profile.hours, lang)}</p>
+					<p class="text-neutral-500 text-sm mt-4">
+						{t('contact.hoursNote')}
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<CrossPromo />
+</Layout>

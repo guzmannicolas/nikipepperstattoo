@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { profile, socials, postalAddress } from "../lib/profile";
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import LoadingSplash from '../components/animation/loading/LoadingSplash.astro';
@@ -18,7 +19,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const { title, description = 'Tattoo artist, ceramist, and visual artist', image, pageSchema } = Astro.props;
 
-const siteUrl = 'https://nikipepperstattoo.com';
+const siteUrl = 'https://nikipeppers.com';
 const currentPath = Astro.url.pathname;
 const isHome = currentPath === '/' || currentPath === '/es' || currentPath === '/es/';
 const ogImage = image ?? `${siteUrl}/images/home/background-hero.avif`;
@@ -40,19 +41,11 @@ const localBusinessSchema = {
 	'@type': 'TattooParlor',
 	name: 'Niki Peppers Tattoo',
 	url: siteUrl,
-	email: 'nikipepperstattoo@gmail.com',
+	email: profile.email,
 	image: ogImage,
 	description: 'Multidisciplinary artist specializing in botanical tattoos, handmade ceramics, and visual art.',
-	address: {
-		'@type': 'PostalAddress',
-		addressLocality: 'Melbourne',
-		addressCountry: 'AU',
-	},
-	openingHours: ['Mo-Fr 10:00-19:00', 'Sa 10:00-16:00'],
-	sameAs: [
-		'https://instagram.com/nikipepperstattoo',
-		'https://facebook.com/nikipepperstattoo',
-	],
+	address: postalAddress(),
+	sameAs: socials.map((s) => s.href),
 };
 ---
 

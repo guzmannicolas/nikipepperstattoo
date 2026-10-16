@@ -42,3 +42,16 @@ Thumbs.db
 
 .vercel
 .env*.local
+
+# Portfolio content is managed in the CMS (cms.nicoguzmandev.com) and generated
+# at build time by scripts/fetch-cms.mjs. Do not commit these.
+src/data/tattoos.json
+src/data/works.json
+src/data/ceramics.json
+src/data/murals.json
+src/data/categories.json
+src/data/profile.json
+src/assets/tattoos/
+src/assets/works/
+src/assets/ceramics/
+src/assets/murals/

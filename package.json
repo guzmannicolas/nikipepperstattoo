@@ -4,8 +4,9 @@
   "version": "0.0.1",
   "packageManager": "pnpm@10.33.0",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "fetch-cms": "node scripts/fetch-cms.mjs",
+    "dev": "node scripts/fetch-cms.mjs && astro dev",
+    "build": "node scripts/fetch-cms.mjs && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "prepare": "husky"

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nikipepperstattoo.com/sitemap-index.xml
+Sitemap: https://nikipeppers.com/sitemap-index.xml

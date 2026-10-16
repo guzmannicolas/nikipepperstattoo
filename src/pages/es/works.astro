@@ -7,6 +7,7 @@ import GalleryPlus from "../../components/ui/GalleryPlus.astro";
 import FilterButtons from "../../components/buttons/FilterButtons.astro";
 import AboutSeriesSection from "../../components/sections/works/AboutSeriesSection.astro";
 import worksData from "../../data/works.json";
+import { categoryName, filterButtons } from "../../lib/categories";
 import HeroTitlePages from "../../components/sections/HeroTitlePages.astro";
 
 const lang = getLangFromUrl(Astro.url);
@@ -15,7 +16,7 @@ const t = useTranslations(lang);
 const paintings = worksData;
 
 const images = import.meta.glob(
-	"/src/assets/works/**/*.{jpeg,jpg,png,gif,avif}",
+	"/src/assets/works/**/*.{jpeg,jpg,png,gif,avif,webp}",
 	{ eager: true },
 );
 
@@ -24,7 +25,7 @@ const galleryItems = paintings.map((p) => {
 	const imageModule = images[imagePath];
 	const localizedTitle = p.title?.[lang] || p.title?.en || "";
 	const localizedTechnique = lang === "es" ? p.technique_es || p.technique : p.technique;
-	const displayCategories = t(`artworks.filters.${p.series}`) || p.series;
+	const displayCategories = categoryName("works", p.series, lang);
 	return {
 		...p,
 		title: localizedTitle,
@@ -40,7 +41,7 @@ const worksGallerySchema = {
 	"@type": "ImageGallery",
 	name: "Visual Artworks - Niki Peppers",
 	description: t("artworks.description"),
-	url: "https://nikipepperstattoo.com/es/works",
+	url: "https://nikipeppers.com/es/works",
 };
 ---
 
@@ -61,43 +62,8 @@ const worksGallerySchema = {
 			<div slot="filters">
 				{
 					(() => {
-						const buttons = [
-							{
-								label: t("artworks.filters.all") || "All",
-								value: "all",
-								active: true,
-							},
-							{
-								label:
-									t("artworks.filters.echoes") ||
-									"Echoes from the deep",
-								value: "echoes",
-							},
-							{
-								label:
-									t("artworks.filters.gestures") ||
-									"Amidst gestures...",
-								value: "gestures",
-							},
-							{
-								label:
-									t("artworks.filters.childhood") ||
-									"Childhood",
-								value: "childhood",
-							},
-							{
-								label:
-									t("artworks.filters.on_demand") ||
-									"On Demand",
-								value: "on_demand",
-							},
-							{
-								label:
-									t("artworks.filters.painting") ||
-									"Painting",
-								value: "painting",
-							},
-						];
+						// One button per series (managed in the CMS).
+						const buttons = filterButtons("works", lang, t("artworks.filters.all") || "All");
 						return <FilterButtons buttons={buttons} />;
 					})()
 				}

@@ -1,22 +1,15 @@
 ---
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { cover } from "../../lib/portfolio";
 
-const tattooGlob  = import.meta.glob('/src/assets/tattoos/**/*.avif',          { eager: true });
-const ceramicGlob = import.meta.glob('/src/assets/ceramics/**/*.avif',         { eager: true });
-const bioGlob     = import.meta.glob('/src/assets/home/*.avif',                { eager: true });
-const worksGlob   = import.meta.glob('/src/assets/works/**/*.avif',            { eager: true });
-const muralsGlob  = import.meta.glob('/src/assets/murals/*.{jpeg,jpg,avif}',   { eager: true });
+const bioGlob     = import.meta.glob('/src/assets/home/*.avif', { eager: true });
+const bioHero     = (Object.values(bioGlob)[0] as any)?.default ?? null;
 
-function firstImg(glob: Record<string, any>) {
-  const mod = Object.values(glob)[0] as any;
-  return mod?.default ?? null;
-}
-
-const tattooHero  = firstImg(tattooGlob);
-const ceramicHero = firstImg(ceramicGlob);
-const bioHero     = firstImg(bioGlob);
-const worksHero   = firstImg(worksGlob);
-const muralsHero  = firstImg(muralsGlob);
+// Section covers come from the CMS (featured items first, then CMS order).
+const tattooHero  = cover("tattoos");
+const ceramicHero = cover("ceramics");
+const worksHero   = cover("works");
+const muralsHero  = cover("murals");
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
