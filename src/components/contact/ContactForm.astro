@@ -98,16 +98,19 @@ const legend = "text-xs uppercase tracking-[0.2em] text-neutral-500 mb-4";
 			<legend class="text-2xl font-semibold text-black mb-4">{f("serviceQuestion")}</legend>
 			<div class="grid grid-cols-2 sm:grid-cols-3 gap-3" data-field="service">
 				{SERVICES.map((s) => (
-					<label class="group relative flex flex-col rounded-xl border-2 border-neutral-200 overflow-hidden cursor-pointer bg-white transition hover:border-neutral-400 has-[:checked]:border-green-500 has-[:checked]:ring-2 has-[:checked]:ring-green-500/30 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-green-500/40">
+					<label class:list={[
+						"group relative flex flex-col rounded-xl border-2 border-neutral-200 overflow-hidden cursor-pointer bg-white transition hover:border-neutral-400 has-[:checked]:border-green-500 has-[:checked]:ring-2 has-[:checked]:ring-green-500/30 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-green-500/40",
+						!s.image && "col-span-2 sm:col-span-1", // "Something else": a full-width button on phones
+					]}>
 						<input type="radio" name="service" value={s.key} class="sr-only" />
 						{s.image ? (
 							<Image src={s.image} alt="" width={360} class="h-24 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
 						) : (
-							<span class="h-24 w-full flex items-center justify-center bg-neutral-100 text-neutral-400" aria-hidden="true">
+							<span class="h-24 w-full hidden sm:flex items-center justify-center bg-neutral-100 text-neutral-400" aria-hidden="true">
 								<svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5h16v11H9l-5 4V5z" /><path stroke-linecap="round" d="M8 9.5h8M8 12.5h5" /></svg>
 							</span>
 						)}
-						<span class="block px-3 py-2.5">
+						<span class:list={["block px-3 py-2.5", !s.image && "py-3.5 text-center sm:py-2.5 sm:text-left"]}>
 							<span class="block font-semibold text-black leading-tight">{f(`services.${s.key}.title`)}</span>
 							<span class="block text-sm text-neutral-500 leading-snug mt-0.5">{f(`services.${s.key}.hint`)}</span>
 						</span>
