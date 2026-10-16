@@ -369,24 +369,7 @@
     "emailPlaceholder": "tu@email.com",
     "phoneLabel": "Teléfono",
     "phonePlaceholder": "+54 9 11 1234-5678",
-    "serviceLabel": "Tipo de Servicio",
-    "serviceSelect": "Selecciona un servicio",
-    "serviceTattoo": "Tatuaje",
-    "serviceCeramic": "Comisión de Cerámica",
-    "serviceMural": "Proyecto de Mural",
-    "serviceOther": "Otro",
-    "sizeLabel": "Tamaño del Proyecto (si aplica)",
-    "sizeSelect": "Selecciona un tamaño",
-    "sizeSmall": "Pequeño (hasta 5cm)",
-    "sizeMedium": "Mediano (5-15cm)",
-    "sizeLarge": "Grande (15-30cm)",
-    "sizeXLarge": "Extra Grande (+30cm)",
     "messageLabel": "Mensaje",
-    "messagePlaceholder": "Contame sobre tu idea de proyecto, ubicación preferida, imágenes de referencia, etc.",
-    "submitButton": "Enviar Mensaje",
-    "thanksTitle": "¡Gracias!",
-    "thanksMessage": "¡Gracias! Recibí tu mensaje y te contactaré pronto.",
-    "thanksAccept": "Aceptar",
     "infoTitle": "Información de Contacto",
     "emailTitle": "Email",
     "whatsappTitle": "WhatsApp",
@@ -403,6 +386,167 @@
     "hoursSaturdayTime": "10:00 - 16:00",
     "hoursSunday": "Domingo:",
     "hoursSundayTime": "Cerrado",
-    "hoursNote": "* Solo con cita previa"
+    "hoursNote": "* Solo con cita previa",
+    "form": {
+      "serviceQuestion": "¿Qué te gustaría crear?",
+      "services": {
+        "tattoos": {
+          "title": "Un tatuaje",
+          "hint": "Diseños propios y cover ups"
+        },
+        "works": {
+          "title": "Una pintura",
+          "hint": "Comprar una obra o encargar una"
+        },
+        "ceramics": {
+          "title": "Cerámica",
+          "hint": "Piezas hechas a mano, a pedido"
+        },
+        "murals": {
+          "title": "Un mural",
+          "hint": "Paredes interiores o exteriores"
+        },
+        "other": {
+          "title": "Otra cosa",
+          "hint": "Consultas, colaboraciones…"
+        }
+      },
+      "aboutProject": "Sobre tu proyecto",
+      "optional": "opcional",
+      "pickSeveral": "Podés elegir varios",
+      "notSure": "Todavía no sé",
+      "q": {
+        "tattoos": {
+          "placement": {
+            "label": "¿En qué parte del cuerpo?",
+            "placeholder": "Elegí una zona",
+            "options": {
+              "forearm": "Antebrazo",
+              "upperArm": "Brazo",
+              "shoulder": "Hombro",
+              "back": "Espalda",
+              "chest": "Pecho",
+              "ribs": "Costillas",
+              "thigh": "Muslo",
+              "calf": "Pantorrilla",
+              "ankleFoot": "Tobillo o pie",
+              "handWrist": "Mano o muñeca",
+              "neck": "Cuello",
+              "other": "Otra zona"
+            }
+          },
+          "size": {
+            "label": "Tamaño aproximado",
+            "options": {
+              "small": "Chico · hasta 5 cm",
+              "medium": "Mediano · 5–15 cm",
+              "large": "Grande · 15–30 cm",
+              "xlarge": "Muy grande · más de 30 cm"
+            }
+          },
+          "style": {
+            "label": "¿Qué estilo te gusta?"
+          },
+          "first": {
+            "label": "¿Es tu primer tatuaje?",
+            "options": {
+              "yes": "Sí",
+              "no": "No"
+            }
+          },
+          "availability": {
+            "label": "¿Cuándo podrías venir?",
+            "placeholder": "ej.: tardes entre semana, desde marzo"
+          }
+        },
+        "works": {
+          "interest": {
+            "label": "¿Qué estás buscando?",
+            "options": {
+              "buy": "Una pintura que vi",
+              "commission": "Un encargo nuevo"
+            }
+          },
+          "series": {
+            "label": "¿Qué serie te interesó?"
+          },
+          "piece": {
+            "label": "Título de la obra",
+            "placeholder": "Si lo sabés"
+          }
+        },
+        "ceramics": {
+          "type": {
+            "label": "¿Qué tipo de pieza?"
+          },
+          "quantity": {
+            "label": "¿Cuántas piezas?",
+            "placeholder": "1"
+          },
+          "deadline": {
+            "label": "¿Para cuándo la necesitás?",
+            "placeholder": "ej.: para un cumpleaños en mayo"
+          }
+        },
+        "murals": {
+          "space": {
+            "label": "¿Dónde está la pared?",
+            "options": {
+              "indoor": "Interior",
+              "outdoor": "Exterior"
+            }
+          },
+          "wallSize": {
+            "label": "Medidas aproximadas de la pared",
+            "placeholder": "ej.: 4 × 2,5 m"
+          },
+          "location": {
+            "label": "Ciudad y barrio",
+            "placeholder": "¿Dónde queda?"
+          },
+          "timeline": {
+            "label": "¿Para cuándo te gustaría?",
+            "placeholder": "ej.: este verano"
+          }
+        }
+      },
+      "yourDetails": "Tus datos",
+      "messagePlaceholder": {
+        "tattoos": "Contame tu idea: qué significa para vos, elementos que te gustarían, algo que prefieras evitar…",
+        "works": "Contame qué pintura te gustó o qué encargo tenés en mente…",
+        "ceramics": "Contame sobre la pieza: para qué es, colores, tamaño…",
+        "murals": "Contame sobre el espacio y tu idea para la pared…",
+        "other": "¿En qué te puedo ayudar?"
+      },
+      "images": {
+        "label": "Imágenes de referencia",
+        "labelMurals": "Fotos de la pared y referencias",
+        "cta": "Agregar imágenes",
+        "hint": "Hasta 5 · arrastralas acá o tocá para elegir",
+        "remove": "Quitar imagen",
+        "tooMany": "Podés agregar hasta 5 imágenes.",
+        "tooBig": "Esa imagen es muy pesada (máx. 10 MB).",
+        "notImage": "Solo archivos de imagen."
+      },
+      "submit": "Enviar mensaje",
+      "sending": "Enviando…",
+      "privacy": "Solo voy a usar tus datos para responderte.",
+      "success": {
+        "title": "¡Mensaje enviado!",
+        "text": "Gracias, {name}. Recibí tu mensaje y te voy a responder a {email} pronto.",
+        "again": "Enviar otro mensaje"
+      },
+      "errors": {
+        "required": "Completá los campos marcados.",
+        "invalid": "Revisá los campos marcados.",
+        "captcha": "La verificación no funcionó. Probá de nuevo.",
+        "captchaPending": "Esperá un momento a que termine la verificación.",
+        "too_many": "Enviaste varios mensajes en poco tiempo. Probá de nuevo en unos minutos.",
+        "too_large": "Las imágenes son muy pesadas. Quitá alguna y probá de nuevo.",
+        "server": "Algo falló de mi lado. Probá de nuevo o escribime por email.",
+        "network": "Sin conexión. Revisá tu internet y probá de nuevo."
+      },
+      "noscript": "Este formulario necesita JavaScript. También podés escribirme a"
+    }
   }
 }
