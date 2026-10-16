@@ -54,7 +54,7 @@ const HeroSectionLogic: React.FC<HeroProps> = ({ title, wordsliderhero, ctaPrima
       transition: {
         type: 'spring',
         stiffness: 40,
-        damping: 10,
+        damping: 22,
       },
     },
   };

@@ -9,16 +9,16 @@ export interface Button {
 const { buttons = [] as Button[] } = Astro.props;
 ---
 
-<div class="flex flex-wrap justify-center relative mb-12 filter-carousel">
-  <!-- left arrow (mobile only) -->
+<div class="flex items-center gap-2 mb-12 filter-carousel">
+  <!-- left arrow (mobile only) — hidden until user scrolls right -->
   <button
     type="button"
-    class="filter-prev md:hidden absolute left-1 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white/95 flex items-center justify-center shadow-md text-lg text-neutral-800"
+    class="filter-prev md:hidden flex-shrink-0 w-9 h-9 rounded-full bg-white border border-neutral-200 items-center justify-center shadow-md text-neutral-800 hidden"
     aria-label="Anterior filtros"
   >&lt;</button>
 
   <div
-    class="filter-scroll js-filter-scroll flex gap-4 px-4 py-2 overflow-x-auto md:overflow-visible md:flex-wrap no-scrollbar scroll-snap-x snap-mandatory"
+    class="filter-scroll js-filter-scroll flex gap-3 py-2 overflow-x-auto md:overflow-visible md:flex-wrap md:justify-center no-scrollbar min-w-0 flex-1"
     role="tablist"
     aria-label="Filtros"
   >
@@ -41,7 +41,7 @@ const { buttons = [] as Button[] } = Astro.props;
   <!-- right arrow (mobile only) -->
   <button
     type="button"
-    class="filter-next md:hidden absolute right-1 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white/95 flex items-center justify-center shadow-md text-lg text-neutral-800"
+    class="filter-next md:hidden flex-shrink-0 w-9 h-9 rounded-full bg-white border border-neutral-200 items-center justify-center shadow-md text-neutral-800 flex"
     aria-label="Siguiente filtros"
   >&gt;</button>
 </div>
@@ -72,8 +72,8 @@ const { buttons = [] as Button[] } = Astro.props;
 
     const update = () => {
       if (!prev || !next) return;
-      prev.style.display = scroller.scrollLeft > 2 ? 'flex' : '';
-      next.style.display = scroller.scrollLeft + scroller.clientWidth < scroller.scrollWidth - 2 ? 'flex' : '';
+      prev.style.display = scroller.scrollLeft > 2 ? 'flex' : 'none';
+      next.style.display = scroller.scrollLeft + scroller.clientWidth < scroller.scrollWidth - 2 ? 'flex' : 'none';
     };
 
     const amount = () => Math.min(Math.round(scroller.clientWidth * 0.7), 360);
